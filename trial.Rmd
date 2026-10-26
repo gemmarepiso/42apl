@@ -1,0 +1,365 @@
+---
+title: "Re-Evaluating Phonological Representation in the Early Bilingual Mind: The Case of Catalan Mid Vowels"
+subtitle: "42.º Encontro Nacional da Associação Portuguesa de Linguística"
+author: "Gemma Repiso Puigdelliura"
+institute: |
+  Universitat Autònoma de Barcelona
+  <br><br>
+  <img src="logo_with_light_bg.png" width="160px"/>
+date: "October 2026"
+output: 
+  xaringan::moon_reader:
+    self_contained: false
+    includes:
+      after_body: sync.html
+    css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
+    lib_dir: libs
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r setup-knitr, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  dev = "svg",         # Renders as crisp vector graphics
+  fig.width = 7,       # Aspect ratio width
+  fig.height = 4.2,    # Aspect ratio height
+  out.width = "100%",  # Stretches plot to fit slide/column width
+  dpi = 300            # Fallback high resolution
+)
+library(ggplot2)
+library(showtext)
+
+# 1. Download and register a Unicode/IPA-compatible font
+font_add_google("Noto Sans", "noto")
+showtext_auto()  # Enables showtext rendering for all ggplot objects
+
+```
+
+
+```{css, echo = FALSE, eval = FALSE}
+
+.center2 {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.regression table {
+  font-size: 12px;     
+}
+
+.caption {
+  font-size: .6rem;
+}
+
+.center-text {
+  text-align: center;
+  font-size: 7rem;
+}
+
+@media print {
+  body, html, .remark-slides-area, .remark-notes-area {
+    height: 100% !important;
+    width: 100% !important;
+    overflow: visible;
+    display: inline-block;
+  }
+    
+  p1 { 
+    color: red; 
+    top: 15cm !important; 
+    position: relative !important; 
+    left: 1cm !important;
+  }
+}
+
+.logo-container {
+  background-color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Custom Xaringan Card Hover Effect */
+div[style*="box-shadow"] {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+div[style*="box-shadow"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.1) !important;
+}
+
+
+```
+
+
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+
+style_duo(
+  # Palette: Oxford Navy & Slate Steel (Formal / Academic)
+  primary_color    = "#0A2540", # Oxford Navy
+  secondary_color  = "#3B6978", # Muted Slate Steel
+  text_color       = "#1F2937", # High-contrast Dark Charcoal
+  background_color = "#FFFFFF", # Crisp Pure White
+  
+  # Typography: Unified Noto Sans font family matching ggplot figures
+  header_font_google = google_font("Noto Sans", "700"),
+  text_font_google   = google_font("Noto Sans", "400", "400i", "700"),
+  code_font_google   = google_font("Noto Sans Mono", "400"),
+  
+  # Sizing & Hierarchical Ratios
+  text_font_size      = "0.8rem",
+  header_h1_font_size = "1.8em",
+  header_h2_font_size = "1.2rem",
+  header_h3_font_size = "1.1rem",
+  
+  # Custom CSS for Professional Structure
+  extra_css = list(
+    ".remark-slide-content" = list(
+      "padding"     = "2.5em 4em 2.5em 4em",
+      "line-height" = "1.6"
+    ),
+    "blockquote" = list(
+      "border-left"   = "4px solid #0A2540",
+      "background"    = "#F3F4F6",
+      "padding"       = "0.8em 1.2em",
+      "border-radius" = "0.5px", # Sharp lines look more formal than rounded edges
+      "font-style"    = "italic",
+      "color"         = "#374151"
+    ),
+    ".inverse" = list(
+      "background-color" = "#0A2540",
+      "color"            = "#FFFFFF"
+    ),
+    ".inverse h1, .inverse h2, .inverse h3" = list(
+      "color" = "#FFFFFF"
+    )
+  )
+)
+
+# Global Theme Settings for Plots
+theme_keynote <- function() {
+  theme_minimal(base_size = 14, base_family = "noto") +
+    theme(
+      panel.border = element_rect(color = "grey80", fill = NA, linewidth = 0.5),
+      panel.grid.minor = element_blank(),
+      legend.position = "bottom",
+      plot.title = element_text(face = "bold", size = 14),
+      plot.subtitle = element_text(size = 11, color = "grey30")
+    )
+}
+
+group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00")
+
+```
+
+
+
+class: middle
+
+# .center[Presentation Roadmap]
+
+<div style="display: flex; flex-direction: column; gap: 0.65rem; max-width: 750px; margin: 0 auto;">
+
+  <!-- Card 01 -->
+  <div style="background: #F8FAFC; border-left: 4px solid #0A2540; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <div style="display: flex; align-items: center; margin-bottom: 0.15em;">
+      <span style="background: #0A2540; color: #FFFFFF; font-weight: 700; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-right: 8px; flex-shrink: 0;">01</span>
+      <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';"></h3>
+    </div>
+    <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
+      <strong style="color: #0A2540;">How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?</strong><br>
+      <span style="font-size: 0.68rem; color: #4B5563;"></span>
+    </p>
+  </div>
+
+--
+
+  <!-- Card 02 -->
+  <div style="background: #F8FAFC; border-left: 4px solid #3B6978; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <div style="display: flex; align-items: center; margin-bottom: 0.15em;">
+      <span style="background: #3B6978; color: #FFFFFF; font-weight: 700; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-right: 8px; flex-shrink: 0;">02</span>
+      <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';"></h3>
+    </div>
+    <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
+      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception, phonolexical encoding, and novel word learning?</strong><br>
+      <span style="font-size: 0.68rem; color: #4B5563;"></span>
+    </p>
+  </div>
+
+--
+
+  <!-- Card 03 -->
+  <div style="background: #F8FAFC; border-left: 4px solid #1E40AF; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <div style="display: flex; align-items: center; margin-bottom: 0.15em;">
+      <span style="background: #1E40AF; color: #FFFFFF; font-weight: 700; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-right: 8px; flex-shrink: 0;">03</span>
+      <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';"></h3>
+    </div>
+    <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
+      <strong style="color: #0A2540;">Do bilinguals adapt to variability in the input?</strong><br>
+      <span style="font-size: 0.68rem; color: #4B5563;"></span>
+    </p>
+  </div>
+
+</div>
+???
+
+
+Good morning, colleagues and members of the Association—of the Associação Portuguesa de Linguística. It is a true privilege to present here today at the Universidade do Algarve.
+
+And today, what I want to do is to re-evaluate how early bilinguals perceive, represent, and store speech sounds in long-term memory. Specifically, we will examine the case of the Catalan mid-vowel contrast /e/ versus /ɛ/—we will be talking a lot about it—which has served as a central testing ground for the speech system of early Catalan-Spanish bilinguals.
+
+Our goal today is to bridge classical perceptual frameworks with modern multi-tier architectural models, demonstrating that early bilingual speech representations are neither static nor structurally deficient. We will be asking the questions, more specifically:
+
+How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?
+
+How does the majority societal language affect pre-lexical perception, phono-lexical encoding, and novel word learning?
+
+Do bilinguals adapt to variability in the input? (This is going to be a recurring theme."
+---
+
+## Early bilingual Grammars
+
+
+* Early bilinguals are individuals who receive regular, continuous exposure to two languages during early childhood, acquiring them either simultaneously from birth or sequentially in their preschool years <small>(De Houwer, 2009; Kehoe, 2021; Mayr et al., 2021; Meisel, 2009)</small>.
+
+* While the two grammars of early bilingual speakers **develop largely independently**, they also **influence each other** throughout life in both childhood and adulthood <small>(e.g., Genesee, 1989; Kehoe, 2021; Mayr et al., 2021; Paradis & Genesee, 1996; Sundara, 2021)</small>.
+
+* This interaction often results in **crosslinguistic transfer patterns**, where speakers apply features or structures from one language when using the other <small>(e.g., Amengual, 2023, 2024; Bosch, 2021; Kehoe, 2021; Paradis & Genesee, 1996)</small>.
+
+
+???
+
+When we talk about early bilinguals, we refer to individuals who receive regular, continuous exposure to two languages from birth or early childhood. Classic research established that while their two grammars develop autonomously, they interact continuously throughout life. Crucially, early age of exposure alone does not guarantee balanced or static native-like competence. Instead, phonetic categories and lexical entries remain dynamic across the lifespan, and they are continuously shaped by shifts in language dominance, daily exposure, and community input.
+
+---
+
+## Modeling Early Bilingual Sound Systems
+
+
+* An early bilingual’s sound system operates within a shared phonetic space, where cross-linguistic interaction is bidirectional, continuous, and dynamic across the lifespan—fluctuating continuously according to shifts in language dominance, additional language acquisition, and environmental input <small>(e.g., Amengual, 2024; Amengual & Simonet, 2020; Birdsong & Amengual, 2021; Flege & Bohn, 2021; Grosjean, 2008; Kupisch et al., 2021; Natvig, 2021; Repiso-Puigdelliura, 2025; Simonet & Amengual, 2020)</small>.
+
+
+--
+
+
+
+*Regressive Drift in Early Bilinguals: L3 English Effect on L1 Vowels Language Dominance Mediates Phonetic Permeability (Repiso-Puigdelliura, 2025, *Glossa*)*
+
+.pull-left[
+<div style="background-color: #F8FAFC; border: 1px solid #CBD5E1; border-left: 4px solid #0072B2; padding: 10px 12px; border-radius: 6px; margin: 6px 0;">
+  <div style="color: #0072B2; margin-bottom: 6px; font-size: 0.80rem; font-weight: bold;">
+    Word-external vocalic sequences
+  </div>
+  <div style="margin-bottom: 8px;">
+    <div style="font-weight: bold; color: #1E293B; font-size: 0.73rem;">
+      1. Canonical L1 Catalan (continuous speech):
+    </div>
+    <div style="margin: 2px 0 0 8px; font-size: 0.68rem; color: #334155; line-height: 1.3;">
+      modal phonation (<code>[u.i]</code>):<br>
+      <span style="font-family: monospace; color: #0072B2; font-weight: 600; font-size: 0.66rem;"><em>Perú íntim</em> &#8594; [Pe.ˈru.ˈin.tim]</span>
+    </div>
+  </div>
+  <div>
+    <div style="font-weight: bold; color: #1E293B; font-size: 0.73rem;">
+      2. Regressive L3 Drift (Glottal Insertion):
+    </div>
+    <div style="margin: 2px 0 0 8px; font-size: 0.68rem; color: #334155; line-height: 1.3;">
+      Epenthetic glottal stop <code>[ʔ]</code> before stressed V2 (<code>[u.ˈʔi]</code>):<br>
+      <span style="font-family: monospace; color: #D55E00; font-weight: 600; font-size: 0.66rem;"><em>Perú íntim</em> &#8594; [Pe.ˈruˈʔin.tim]</span>
+    </div>
+  </div>
+</div>
+
+
+]
+
+.pull-right[
+
+
+
+```{r, out.width="90%", fig.align="center"}
+# ==============================================================================
+# Regressive Glottal Drift by L3 Rate & Prosodic Stress (Panel A Only)
+# Repiso-Puigdelliura (2025), Glossa
+# ==============================================================================
+
+library(ggplot2)
+library(dplyr)
+
+# 1. Generate Synthetic Data for Panel A
+x <- seq(0, 100, length.out = 150)
+
+logistic <- function(x, x0, k, max_val) {
+  max_val / (1 + exp(-k * (x - x0)))
+}
+
+df_plot <- data.frame(
+  x = rep(x, 4),
+  y = c(
+    logistic(x, 45, 0.08, 0.72), # Cat Stressed
+    logistic(x, 60, 0.05, 0.32), # Cat Unstressed
+    logistic(x, 40, 0.09, 0.81), # Spa Stressed
+    logistic(x, 55, 0.06, 0.38)  # Spa Unstressed
+  ),
+  Language = factor(rep(c("L1 Catalan", "L1 Catalan", "L1 Spanish", "L1 Spanish"), each = 150)),
+  Stress = factor(rep(c("V2 Stressed", "V2 Unstressed", "V2 Stressed", "V2 Unstressed"), each = 150)),
+  Group = factor(rep(c("L1 Catalan (V2 Stressed)", "L1 Catalan (V2 Unstressed)", 
+                        "L1 Spanish (V2 Stressed)", "L1 Spanish (V2 Unstressed)"), each = 150))
+)
+
+# 2. Plot Panel A
+p_panelA <- ggplot(df_plot, aes(x = x, y = y, color = Group, linetype = Stress)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = c(
+    "L1 Catalan (V2 Stressed)" = "#0072B2",
+    "L1 Catalan (V2 Unstressed)" = "#0072B2",
+    "L1 Spanish (V2 Stressed)" = "#D55E00",
+    "L1 Spanish (V2 Unstressed)" = "#D55E00"
+  )) +
+  scale_linetype_manual(values = c("V2 Stressed" = "solid", "V2 Unstressed" = "dashed")) +
+  scale_y_continuous(limits = c(0, 1.0), breaks = seq(0, 1, 0.2)) +
+  scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
+  labs(
+    title = "Regressive Glottal Drift by L3 Rate & Prosodic Stress",
+    subtitle = "Higher L3 English glottal marking rate increases glottal insertion in L1 Catalan & Spanish",
+    x = "L3 English Glottal Marking Rate (%)",
+    y = "Predicted Probability of L1 Glottal Insertion",
+    caption = "Repiso-Puigdelliura (2025), Glossa"
+  ) +
+  theme_minimal(base_family = "Noto Sans", base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", size = 12, color = "#0A2540"),
+    plot.subtitle = element_text(size = 9.5, color = "#3B6978"),
+    plot.caption = element_text(size = 8.5, color = "#64748B", face = "italic"),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+print(p_panelA)
+ggsave("glossa_regressive_glottal_drift.png", plot = p_panelA, width = 7, height = 5.2, dpi = 300)
+
+```
+
+]
+
+
+???
+
+To understand this cross-linguistic interaction, we must probably reject the notion of two isolated mental compartments. Instead, an early bilingual sound system probably operates as an integrated, multi-level architecture sharing a single—as an integrated, multi-level architecture. Early speech models, such as the Speech Learning Model, for example, proposed that bilinguals have a single phonetic space.
+
+Now, cross-linguistic interaction is bidirectional and continuous, and it dynamically fluctuates with real-time shifts in dominance in the environmental input. Crucially, this holds true even for sequential bilinguals. Let me here just digress for one second: to provide empirical evidence for this lifespan phonetic permeability, my 2025 study in Glossa evaluates regressive cross-linguistic influence from an L3 (in this case, English) into an L1 Catalan and Spanish (in this case, our early Catalan-Spanish bilinguals). Now, in canonical L1 Catalan and Spanish, vowel-to-vowel sequences across words, such as in perú íntim [parú íntim], the two vowels—the word-final vowel and the vowel-initial at the word boundary of the second word—are produced with a modal transition, so with continuous speech. But in English, there is an option of inserting a glottal stop, so this would sound something like perú [ʔ]íntim.So, what I found is that specifically for speakers who had had experience living abroad in English-speaking countries, they showed transfer from an L3 or a foreign language (L$n$, in this case) into their L1 Catalan and Spanish. This graph shows percentage of glottalization on the y-axis, and then use of glottal marking in their English, and that also correlated with exposure to English. Ultimately, this confirms that even early-acquired native sound systems remain permeable across the lifespan
+
+

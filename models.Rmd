@@ -1,0 +1,515 @@
+---
+title: "Re-Evaluating Phonological Representation in the Early Bilingual Mind: The Case of Catalan Mid Vowels"
+subtitle: "42.º Encontro Nacional da Associação Portuguesa de Linguística"
+author: "Gemma Repiso Puigdelliura"
+institute: |
+  Universitat Autònoma de Barcelona
+  <br><br>
+  <img src="logo_with_light_bg.png" width="160px"/>
+date: "October 2026"  # Optional: add presentation date
+output: 
+  xaringan::moon_reader:
+    self_contained: false
+    css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
+    lib_dir: libs
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r setup-knitr, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  dev = "svg",         # Renders as crisp vector graphics
+  fig.width = 7,       # Aspect ratio width
+  fig.height = 4.2,    # Aspect ratio height
+  out.width = "100%",  # Stretches plot to fit slide/column width
+  dpi = 300            # Fallback high resolution
+)
+library(ggplot2)
+library(showtext)
+
+# 1. Download and register a Unicode/IPA-compatible font
+font_add_google("Noto Sans", "noto")
+showtext_auto()  # Enables showtext rendering for all ggplot objects
+
+```
+
+
+```{css, echo = FALSE, eval = FALSE}
+
+.center2 {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.regression table {
+  font-size: 12px;     
+}
+
+.caption {
+  font-size: .6rem;
+}
+
+.center-text {
+  text-align: center;
+  font-size: 7rem;
+}
+
+@media print {
+  body, html, .remark-slides-area, .remark-notes-area {
+    height: 100% !important;
+    width: 100% !important;
+    overflow: visible;
+    display: inline-block;
+  }
+    
+  p1 { 
+    color: red; 
+    top: 15cm !important; 
+    position: relative !important; 
+    left: 1cm !important;
+  }
+}
+
+.logo-container {
+  background-color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Custom Xaringan Card Hover Effect */
+div[style*="box-shadow"] {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+div[style*="box-shadow"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.1) !important;
+}
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+
+style_duo(
+  # Palette: Oxford Navy & Slate Steel (Formal / Academic)
+  primary_color   = "#0A2540", # Oxford Navy
+  secondary_color = "#3B6978", # Muted Slate Steel
+  text_color      = "#1F2937", # High-contrast Dark Charcoal
+  background_color = "#FFFFFF", # Crisp Pure White
+  
+  # Typography: Classical Academic Serif Headers paired with Clean Professional Body
+  header_font_google = google_font("Merriweather", "700"),
+  text_font_google   = google_font("Source Sans Pro", "400", "400i", "700"),
+  code_font_google   = google_font("Source Code Pro", "400"),
+  
+  # Sizing & Hierarchical Ratios
+  text_font_size      = "0.8rem",
+  header_h1_font_size = "1.8em",
+  header_h2_font_size = "1.2rem",
+  header_h3_font_size = "1.1rem",
+  
+  # Custom CSS for Professional Structure
+  extra_css = list(
+    ".remark-slide-content" = list(
+      "padding"     = "2.5em 4em 2.5em 4em",
+      "line-height" = "1.6"
+    ),
+    "blockquote" = list(
+      "border-left"   = "4px solid #0A2540",
+      "background"    = "#F3F4F6",
+      "padding"       = "0.8em 1.2em",
+      "border-radius" = "0.5px", # Sharp lines look more formal than rounded edges
+      "font-style"    = "italic",
+      "color"         = "#374151"
+    ),
+    ".inverse" = list(
+      "background-color" = "#0A2540",
+      "color"            = "#FFFFFF"
+    ),
+    ".inverse h1, .inverse h2, .inverse h3" = list(
+      "color" = "#FFFFFF"
+    )
+  )
+)
+
+# Global Theme Settings for Plots
+theme_keynote <- function() {
+  theme_minimal(base_size = 14, base_family = "noto") +
+    theme(
+      panel.border = element_rect(color = "grey80", fill = NA, linewidth = 0.5),
+      panel.grid.minor = element_blank(),
+      legend.position = "bottom",
+      plot.title = element_text(face = "bold", size = 14),
+      plot.subtitle = element_text(size = 11, color = "grey30")
+    )
+}
+
+group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00")
+
+```
+
+
+
+class: middle
+
+# .center[Presentation Roadmap]
+
+<div style="display: flex; flex-direction: column; gap: 0.65rem; max-width: 750px; margin: 0 auto;">
+
+  <!-- Card 01 -->
+  <div style="background: #F8FAFC; border-left: 4px solid #0A2540; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <div style="display: flex; align-items: center; margin-bottom: 0.15em;">
+      <span style="background: #0A2540; color: #FFFFFF; font-weight: 700; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-right: 8px; flex-shrink: 0;">01</span>
+      <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';">Representational Architecture</h3>
+    </div>
+    <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
+      <strong style="color: #0A2540;">How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?</strong><br>
+      <span style="font-size: 0.68rem; color: #4B5563;">Unpacking Catalan /e/–/ɛ/ to separate stable phonological targets from flexible phonetic implementation.</span>
+    </p>
+  </div>
+
+--
+
+  <!-- Card 02 -->
+  <div style="background: #F8FAFC; border-left: 4px solid #3B6978; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <div style="display: flex; align-items: center; margin-bottom: 0.15em;">
+      <span style="background: #3B6978; color: #FFFFFF; font-weight: 700; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-right: 8px; flex-shrink: 0;">02</span>
+      <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';">Societal Language Effects Across Tiers</h3>
+    </div>
+    <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
+      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception, phonolexical encoding, and novel word learning?</strong><br>
+      <span style="font-size: 0.68rem; color: #4B5563;">Decoupling acoustic acuity, online mode dynamics, stored target fidelity (|UF|), and emergent encoding.</span>
+    </p>
+  </div>
+
+--
+
+  <!-- Card 03 -->
+  <div style="background: #F8FAFC; border-left: 4px solid #1E40AF; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <div style="display: flex; align-items: center; margin-bottom: 0.15em;">
+      <span style="background: #1E40AF; color: #FFFFFF; font-weight: 700; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-right: 8px; flex-shrink: 0;">03</span>
+      <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';">Input Variability & Adaptation</h3>
+    </div>
+    <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
+      <strong style="color: #0A2540;">Do bilinguals adapt to variability in the input or does this variability in the input affect phonolexical encoding?</strong><br>
+      <span style="font-size: 0.68rem; color: #4B5563;">Separating flexible online perceptual tolerance to community speech from underlying target precision.</span>
+    </p>
+  </div>
+
+</div>
+???
+
+"Good morning, colleagues and distinguished members of the Association. It is a true privilege to present here today at the 42nd Encontro Nacional da APL. Today I want to re-evaluate how early bilinguals perceive, represent, and store speech sounds in long-term memory. Specifically, we will examine the case of the Catalan mid-vowel contrast—/e/ versus /ɛ/—which has served as a central testing ground for speech learning theories for over three decades.To guide our talk today, we address three overarching questions at the intersection of bilingual phonetics and phonology :First: How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism? We re-evaluate the Catalan /e/–/ɛ/ contrast to determine whether early bilinguals possess merged, fuzzy memory targets or specified representations.Second: How does a majority societal language affect prelexical perception, phonolexical encoding, and novel word learning? Across two studies, I will examine bottom-up acoustic acuity, short-term language mode dynamics, stored phonolexical representations, and word learning using vulnerable minimal pairs.Third: Do bilinguals adapt to variability in the input, or does this variability in the input affect phonolexical encoding? We examine whether high mispronunciation acceptance in isolated tasks reflects an adaptive strategy for variable community speech, or a structural encoding deficit. These questions should bring us forth in the development of models for early bilingual speech perception and production models"
+---
+
+## Early bilingual Grammars
+
+
+* Early bilinguals are individuals who receive regular, continuous exposure to two languages during early childhood, acquiring them either simultaneously from birth or sequentially in their preschool years <small>(De Houwer, 2009; Kehoe, 2021; Mayr et al., 2021; Meisel, 2009)</small>.
+
+* While the two grammars of early bilingual speakers **develop largely independently**, they also **influence each other** throughout life in both childhood and adulthood <small>(e.g., Genesee, 1989; Kehoe, 2021; Mayr et al., 2021; Paradis & Genesee, 1996; Sundara, 2021)</small>.
+
+* This interaction often results in **crosslinguistic transfer patterns**, where speakers apply features or structures from one language when using the other <small>(Amengual, 2023, 2024; Bosch, 2021; James, 2012; Kehoe, 2021; Paradis & Genesee, 1996)</small>.
+
+* Crucially, age of initial exposure alone does not guarantee balanced, native-like competence; instead, an early bilingual's phonetic categories and lexical representations remain dynamic across the lifespan, shaped continuously by **language dominance, cumulative daily exposure, and the quality of environmental input**. <small>(e.g, Amengual & Simonet, 2020; Birdsong & Amengual, 2021; Bosch, 2021; Mayr et al., 2021; Pallier et al., 1997; Ramón-Casas et al., 2023)</small>
+
+???
+
+
+
+When we talk about early bilinguals, we refer to individuals who receive regular, continuous exposure to two languages from birth or early childhood. Classical work established that while their two grammars develop largely independently, they interact continuously throughout life. Crucially, early age of exposure alone does not guarantee balanced, native-like competence. Instead, phonetic categories and lexical entries remain dynamic across the lifespan, shaped continuously by language dominance, daily exposure, and input quality.
+---
+
+## Modeling Early Bilingual Sound Systems
+
+
+* Cross-linguistic transfer in early bilinguals' sound system is not a static default copy of L1 structures into L2; rather, it reflects a **bidirectional and continuous interaction** between two fully co-activated sound systems <small>(e.g., Amengual, 2024; Birdsong & Amengual, 2021; Flege & Bohn, 2021; Grosjean, 2008)</small>.
+
+* Rather than consisting of two isolated compartments, an early bilingual's sound system operates as an **integrated, multi-level architecture** sharing a common cognitive space <small>(e.g., Flege & Bohn, 2021; Natvig, 2021; Zhou & Hamann, 2024)</small>.
+
+* This interaction is **dynamic across the lifespan**, fluctuating continuously according to real-time language modes, shifts in language dominance, and the quality of environmental input <small>(e.g., Amengual & Simonet, 2020; Grosjean, 2011; Simonet & Amengual, 2020)</small>.
+
+???
+
+To understand this interaction, we must reject the notion of two isolated mental compartments. Instead, an early bilingual's sound system operates as an integrated, multi-level architecture sharing a common cognitive space. Cross-linguistic interaction is bidirectional and continuous, fluctuating dynamically according to real-time language modes, shifts in dominance, and environmental input.
+---
+
+## Modeling Early Bilingual Sound Systems
+
+
+* Empirical findings show that underlying phonological contrasts are stable, whereas cross-linguistic interaction operates at the phonetic level through flexible, gradient, and adaptive representations <small>(e.g., Amengual, 2016, 2024; Natvig, 2021; Ramón-Casas et al., 2023; Repiso-Puigdelliura, 2025)</small>
+
+--
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+# 1. Define the 3 Core Modular Tiers (Natvig, 2021)
+levels_df <- tribble(
+  ~xmin, ~xmax, ~ymin, ~ymax, ~title, ~spec, ~domain,
+  2.3, 5.7, 4.2, 5.0, "1. Phonology (Grammatical Knowledge)", "| Abstract Contrasts |", "Phonology",
+  2.3, 5.7, 2.6, 3.4, "2. Phonetics-Phonology Interface", "[ Articulatory Gestures, Completions & Enhancements]", "Interface / Procedural",
+  2.3, 5.7, 1.0, 1.8, "3. Phonetics (Physical Realization)", "[[ Gradient Acoustic & Motor Signal Execution]]", "Phonetics"
+)
+
+# 2. Grammar & Procedural Mapping Modules (Between Tiers)
+grammars_df <- tribble(
+  ~x, ~y, ~label,
+  4.0, 3.8, "Completions & Enhancements (Dimensions ↔ Gestures)",
+  4.0, 2.2, "Phonetic Implementation (Gestures ↔ Physical Signal)"
+)
+
+# 3. Process Direction Flow (Perception vs. Production)
+flow_arrows <- tribble(
+  ~x, ~y, ~xend, ~yend, ~label, ~side,
+  # Perception / Categorization (Bottom-Up)
+  1.5, 1.2, 1.5, 4.8, "PERCEPTION & CATEGORIZATION\n(Continuous Signal → Abstract Category)", "Perception",
+  # Production / Implementation (Top-Down)
+  6.5, 4.8, 6.5, 1.2, "PRODUCTION & IMPLEMENTATION\n(Abstract Category → Gestures → Signal)", "Production"
+)
+
+# 4. Render Diagram
+p_natvig <- ggplot() +
+  # Tier Representation Blocks
+  geom_rect(data = levels_df, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = domain),
+            color = "grey20", linewidth = 0.8, alpha = 0.88) +
+  
+  # Text Inside Blocks (Title + Specification)
+  geom_text(data = levels_df, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 + 0.12, label = title),
+            fontface = "bold", size = 3.9, color = "white") +
+  geom_text(data = levels_df, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 - 0.14, label = spec),
+            fontface = "italic", size = 3.1, color = "grey95") +
+  
+  # Grammar & Interface Mapping Labels
+  geom_label(data = grammars_df, aes(x = x, y = y, label = label),
+             fill = "white", color = "grey20", size = 3.0, fontface = "bold",
+             label.padding = unit(0.22, "lines"), border.color = "grey60") +
+  
+  # Vertical Directional Flow Arrows
+  geom_segment(data = flow_arrows, aes(x = x, y = y, xend = xend, yend = yend, color = side),
+               arrow = arrow(length = unit(0.35, "cm")), linewidth = 1.3) +
+  geom_text(data = flow_arrows, aes(x = x, y = (y + yend) / 2, label = label, color = side),
+            angle = ifelse(flow_arrows$side == "Perception", 90, -90),
+            vjust = -0.8, fontface = "bold", size = 3.2) +
+
+
+  # Color Scales
+  scale_fill_manual(values = c(
+    "Phonology" = "#0072B2", 
+    "Interface / Procedural" = "#009E73", 
+    "Phonetics" = "#E69F00"
+  )) +
+  scale_color_manual(values = c(
+    "Perception" = "#0072B2", 
+    "Production" = "#D55E00"
+  )) +
+  
+  # Layout Settings
+  scale_x_continuous(limits = c(0.5, 7.5)) +
+  scale_y_continuous(limits = c(0.4, 5.6)) +
+  labs(
+    title = "Integrated Multilingual Sound System Architecture",
+    caption = "Natvig (2021, Languages) "
+  ) +
+  theme_void(base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", size = 13, hjust = 0.5, margin = margin(b = 4)),
+    plot.subtitle = element_text(size = 9.5, face = "italic", hjust = 0.5, color = "grey30", margin = margin(b = 10)),
+    plot.caption = element_text(size = 8, color = "grey50", hjust = 0.95),
+    legend.position = "none"
+  )
+
+# Display plot in R Markdown slide
+p_natvig
+```
+
+???
+Crucially, empirical findings from early bilinguals demonstrate that underlying phonological contrasts are more likely to remain **stable**, while cross-linguistic interaction operates primarily at the **phonetic level of representation**, where procedural cue-weight mapping and articulatory implementation remain **flexible, gradient, and adaptive** to language mode, daily exposure, and community input <small>(e.g., Amengual, 2016, 2024; Amengual & Simonet, 2020; Natvig, 2021; Ramón-Casas et al., 2023; Repiso-Puigdelliura, 2025; Simonet & Amengual, 2020)</small>.
+To formalize these loci of interaction, Natvig's integrated framework lays out three explicit processing tiers: abstract phonological knowledge at the top. this level is highly stable and resistant to attrition or loss in early bilinguals and heritage speakers, even when surface pronunciation changes significantly. the phonetic-phonology interface in the middle. Cross-linguistic contact can lead bilinguals to adopt new enhancement gestures or adjust gesture completion rules from their majority language without deleting the underlying phonological category and gradient physical implementation at the bottom. this bottom tier is highly plastic, gradient, and variable
+
+
+---
+
+## Modeling Early Bilingual Sound Systems
+
+
+-   At the prelexical level, acoustic and phonotactic constraints filter continuous speech into discrete surface representations (/SF/), where L1 perceptual biases can collapse fine phonetic contrasts.
+When mapped to the lexicon, these merged surface forms share a single underlying entry (|UF|) <small>(Boersma & Hamann, 2008, 2009b; Boersma, 2011; Zhou & Hamann, 2024)</small> 
+
+```{r biphon-model, echo=FALSE, fig.width=9.5, fig.height=6.5, out.width="90%"}
+
+library(ggplot2)
+library(dplyr)
+
+# 1. Define the 5 Core Levels of Representation
+levels_df <- tribble(
+  ~xmin, ~xmax, ~ymin, ~ymax, ~title, ~spec, ~domain,
+  2.3, 5.7, 5.2, 6.0, "Semantic Representation (SemR)", "Meaning & Morphemes", "Phonology",
+  2.3, 5.7, 4.0, 4.8, "Underlying Representation (UR)", "| Abstract Phonological Word |", "Phonology",
+  2.3, 5.7, 2.8, 3.6, "Surface Representation (SR)", "/ Distinctive Phonological Features /", "Phonology",
+  2.3, 5.7, 1.6, 2.4, "Auditory Representation (AudR)", "[ Continuous Acoustic / Formant Space ]", "Phonetics",
+  2.3, 5.7, 0.4, 1.2, "Articulatory Representation (ArtR)", "[ Motor Gestures & Muscle Execution ]", "Phonetics"
+)
+
+# 2. Grammar Modules / Mapping Constraints (Between Levels)
+grammars_df <- tribble(
+  ~x, ~y, ~label,
+  4.0, 4.9, "Lexical Mapping (UR ↔ SemR)",
+  4.0, 3.7, "Phonological Grammar (Faithfulness & Structural / Markedness)",
+  4.0, 2.5, "Phonetic-Phonological Grammar (Cue Constraints: AudR ↔ SR)",
+  4.0, 1.3, "Sensorimotor Grammar (Effort & Sensorimotor Constraints)"
+)
+
+# 3. Process Direction Flow (Comprehension vs. Production)
+flow_arrows <- tribble(
+  ~x, ~y, ~xend, ~yend, ~label, ~side,
+  # Perception / Comprehension (Bottom-Up)
+  1.5, 1.8, 1.5, 5.6, "COMPREHENSION / PERCEPTION\n(Bottom-Up Processing)", "Perception",
+  # Production (Top-Down)
+  6.5, 5.6, 6.5, 0.8, "PRODUCTION\n(Top-Down Processing)", "Production"
+)
+
+# Render Diagram
+ggplot() +
+  # Representation Blocks
+  geom_rect(data = levels_df, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = domain),
+            color = "grey30", linewidth = 0.7, alpha = 0.85) +
+  
+  # Text inside Blocks (Title + Specification)
+  geom_text(data = levels_df, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 + 0.12, label = title),
+            fontface = "bold", size = 4, color = "white") +
+  geom_text(data = levels_df, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 - 0.15, label = spec),
+            fontface = "italic", size = 3.2, color = "grey95") +
+  
+  # Grammar Mapping Labels (Between Levels)
+  geom_label(data = grammars_df, aes(x = x, y = y, label = label),
+             fill = "white", color = "grey20", size = 3.1, fontface = "bold",
+             label.padding = unit(0.2, "lines"), border.color = "grey70") +
+  
+  # Vertical Directional Flow Arrows
+  geom_segment(data = flow_arrows, aes(x = x, y = y, xend = xend, yend = yend, color = side),
+               arrow = arrow(length = unit(0.35, "cm")), linewidth = 1.3) +
+  geom_text(data = flow_arrows, aes(x = x, y = (y + yend) / 2, label = label, color = side),
+            angle = ifelse(flow_arrows$side == "Perception", 90, -90),
+            vjust = ifelse(flow_arrows$side == "Perception", -0.8, -0.8),
+            fontface = "bold", size = 3.5) +
+  
+  # Auditory-Articulatory Loop (Feedback connection)
+  geom_curve(aes(x = 5.7, y = 0.8, xend = 5.7, yend = 2.0),
+             arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+             color = "#D55E00", curvature = -0.5, linewidth = 0.8, linetype = "dashed") +
+  annotate("text", x = 6.4, y = 1.4, label = "Auditory Feedback\n(Sensorimotor Loop)", 
+           size = 2.8, color = "#D55E00", fontface = "italic") +
+
+  # Color Manual Scales
+  scale_fill_manual(values = c("Phonology" = "#0072B2", "Phonetics" = "#E69F00")) +
+  scale_color_manual(values = c("Perception" = "#009E73", "Production" = "#D55E00")) +
+  
+  # Layout Settings
+  scale_x_continuous(limits = c(0.5, 7.5)) +
+  scale_y_continuous(limits = c(0.1, 6.5)) +
+  labs(
+       title = "The Bidirectional Phonology and Phonetics Model (BiPhon)"
+  ) +
+  theme_void(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, margin = margin(b = 3)),
+    plot.subtitle = element_text(size = 10.5, color = "grey30", margin = margin(b = 10)),
+    legend.position = "none",
+    plot.margin = margin(10, 10, 10, 10)
+  )
+```
+
+
+
+???
+In Paul Boersma's Bidirectional Phonology model, cross-linguistic transfer occurs at two distinct loci. First, at the prelexical level, Cue constraints map continuous acoustic form ([AudF]) onto surface categories (/SF/). When L1 cue weights act as an attractor grid, they filter incoming acoustics into existing categories. Second, at the lexical level, surface forms map to underlying entries (|UF|) in long-term memory. When prelexical filtering collapses a contrast into a single surface form, the lexicon builder creates functional homophones—such as mapping both gall[e]da and gall[ɛ]da to a single underlying entry.
+To summarize this core architectural principle: At the prelexical level, acoustic and phonotactic constraints filter continuous speech into discrete surface representations (/SF/), where L1 perceptual biases can collapse fine phonetic contrasts. When mapped to the lexicon, these merged surface forms share a single underlying entry (|UF|).
+
+
+While classical models like SLM-r and PAM-L2 established how native and non-native sounds map onto shared phonetic spaces
+, recent theoretical advances emphasize the necessity of separating surface phonetic variation from abstract lexical storage
+. As Yazawa and Escudero (2025) demonstrate, high variability in speech tasks does not imply 'fuzzy' underlying representations
+. Rather, by adopting multi-level architectures like L2LP/BiPhon and Natvig's integrated framework, we see that variability operates as a probabilistic mapping rule at the surface interface (/surface/), leaving stored lexical targets (|underlying|) fully specified
+."
+---
+---
+class: middle
+
+# .center[Theoretical Models of Bilingual Speech]
+<p style="text-align: center; color: #3B6978; margin-top: -15px; font-size: 0.82rem; font-style: italic;">
+  Comparing Architectural Assumptions, Levels of Abstraction, and Processing Loci
+</p>
+
+<br>
+
+.pull-left[
+  <!-- Card 01: SLM-r -->
+  <div style="background: #F8FAFC; border-left: 4px solid #0A2540; padding: 0.65em 0.9em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); margin-bottom: 0.7em;">
+    <h3 style="margin: 0 0 0.2em 0; color: #0A2540; font-size: 0.83rem; font-weight: 700; font-family: 'Merriweather';">
+      SLM-r <span style="font-weight: 400; font-size: 0.70rem; color: #3B6978;">(Flege & Bohn, 2021)</span>
+    </h3>
+    <p style="margin: 0; color: #1F2937; font-size: 0.72rem; line-height: 1.35;">
+      <strong>Locus:</strong> Shared L1–L2 Phonetic Common Space.<br>
+      <strong>Architecture:</strong> Position-sensitive allophones embedded in syllable/word contexts.<br>
+      <strong>Mechanism:</strong> Equivalence classification & category assimilation / dissimilarity.
+    </p>
+  </div>
+
+  <!-- Card 02: PAM-L2 -->
+  <div style="background: #F8FAFC; border-left: 4px solid #3B6978; padding: 0.65em 0.9em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <h3 style="margin: 0 0 0.2em 0; color: #0A2540; font-size: 0.83rem; font-weight: 700; font-family: 'Merriweather';">
+      PAM-L2 <span style="font-weight: 400; font-size: 0.70rem; color: #3B6978;">(Best & Tyler, 2007, 2024)</span>
+    </h3>
+    <p style="margin: 0; color: #1F2937; font-size: 0.72rem; line-height: 1.35;">
+      <strong>Locus:</strong> Perceptual Assimilation across Tiers.<br>
+      <strong>Architecture:</strong> Explicitly separates <em>phonetic assimilation</em> (allophones) from <em>phonological assimilation</em> (lexical phonemes).<br>
+      <strong>Mechanism:</strong> Perceptual overlap, goodness-of-fit & vocabulary size growth.
+    </p>
+  </div>
+]
+
+.pull-right[
+  <!-- Card 03: L2LP -->
+  <div style="background: #F8FAFC; border-left: 4px solid #1E40AF; padding: 0.65em 0.9em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); margin-bottom: 0.7em;">
+    <h3 style="margin: 0 0 0.2em 0; color: #0A2540; font-size: 0.83rem; font-weight: 700; font-family: 'Merriweather';">
+      L2LP <span style="font-weight: 400; font-size: 0.70rem; color: #3B6978;">(Escudero, 2005; Escudero & Yazawa, 2024)</span>
+    </h3>
+    <p style="margin: 0; color: #1F2937; font-size: 0.72rem; line-height: 1.35;">
+      <strong>Locus:</strong> Developmental Scenarios & Word Learning.<br>
+      <strong>Architecture:</strong> Initial state (Full Copying) & 5 ingredients (Similar, New, Subset).<br>
+      <strong>Mechanism:</strong> Optimal perception via Gradual Learning Algorithm & cross-situational word learning.
+    </p>
+  </div>
+
+  <!-- Card 04: BiPhon / BiPhon-HG -->
+  <div style="background: #F8FAFC; border-left: 4px solid #374151; padding: 0.65em 0.9em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+    <h3 style="margin: 0 0 0.2em 0; color: #0A2540; font-size: 0.83rem; font-weight: 700; font-family: 'Merriweather';">
+      BiPhon-HG <span style="font-weight: 400; font-size: 0.70rem; color: #3B6978;">(Boersma, 2011; Zhou & Hamann, 2024)</span>
+    </h3>
+    <p style="margin: 0; color: #1F2937; font-size: 0.72rem; line-height: 1.35;">
+      <strong>Locus:</strong> 4-Tier Bidirectional Generative Grammar.<br>
+      <strong>Architecture:</strong> <code>|UF|</code> &harr; <code>/SF/</code> &harr; <code>[AudF]</code> &harr; <code>[[ArtF]]</code> (+ Reading Grammar).<br>
+      <strong>Mechanism:</strong> Noisy Harmonic Grammar (weighted Cue, Structural & Orthographic constraints) explaining individual variability & phonotactics.
+    </p>
+  </div>
+]
+
+<br>
+
+<!-- Unifying Probabilistic Framework Footer -->
+<div style="background: #0A2540; color: #FFFFFF; padding: 0.55em 1em; border-radius: 2px; font-size: 0.72rem; text-align: center; max-width: 820px; margin: 0 auto;">
+  <strong>Unifying Paradigm (Yazawa & Escudero, 2025; Matzenauer et al., 2024):</strong> 
+  Probabilistic constraint-based grammars (<em>Stochastic OT / Noisy Harmonic Grammar</em>) reconcile surface task variability at <code>/surface/</code> with fully specified underlying lexical targets at <code>|underlying|</code>.
+</div>

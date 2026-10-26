@@ -1,0 +1,66 @@
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  if (!window.slideshow) return;
+
+  const R_SERVER_URL = "http://127.0.0.1:8000/slide";
+  let localVersion = 0;
+  let isProgrammatic = false;
+  let initialized = false;
+
+  // 1. Initial state fetch on startup (prevents overwriting server on page reload)
+  fetch(R_SERVER_URL)
+    .then(res => res.json())
+    .then(data => {
+      localVersion = data.version;
+      if (data.version > 0 && slideshow.getCurrentSlideIndex() !== data.slide) {
+        isProgrammatic = true;
+        slideshow.gotoSlide(data.slide + 1);
+      }
+      initialized = true;
+    })
+    .catch(() => { initialized = true; });
+
+  // 2. Listen for slide changes in remark.js
+  window.slideshow.on('afterShowSlide', function() {
+    if (!initialized || isProgrammatic) {
+      isProgrammatic = false;
+      return;
+    }
+
+    const index = slideshow.getCurrentSlideIndex();
+    localVersion++; // Increment version locally immediately
+
+    fetch(R_SERVER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slide: index })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.version > localVersion) {
+        localVersion = data.version;
+      }
+    })
+    .catch(err => console.error("Sync POST error:", err));
+  });
+
+  // 3. Poll R server for updates from other windows
+  setInterval(function() {
+    if (!initialized) return;
+
+    fetch(R_SERVER_URL)
+      .then(res => res.json())
+      .then(data => {
+        // DISCARD any server response that is older than or equal to our local version
+        if (data.version <= localVersion) return;
+
+        localVersion = data.version;
+        if (slideshow.getCurrentSlideIndex() !== data.slide) {
+          isProgrammatic = true;
+          slideshow.gotoSlide(data.slide + 1); // 1-based index in remark.js
+        }
+      })
+      .catch(err => console.error("Sync GET error:", err));
+  }, 150);
+});
+</script>
