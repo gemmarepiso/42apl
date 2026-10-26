@@ -9,10 +9,9 @@ institute: |
 date: "October 2026"
 output: 
   xaringan::moon_reader:
-    self_contained: false
+    self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
-    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
