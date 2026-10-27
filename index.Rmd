@@ -12,7 +12,6 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
-    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
