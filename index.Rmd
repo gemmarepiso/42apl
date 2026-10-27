@@ -12,6 +12,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -40,7 +41,19 @@ showtext_auto()  # Enables showtext rendering for all ggplot objects
 library(xaringanExtra)
 
 # Enable xaringanExtra broadcasting
-xaringanExtra::use_broadcast()
+
+
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast"))
+
+xaringanExtra::use_animate_all("slide_left")
+xaringanExtra::use_banner(
+  top_left = "Re-Evaluating Phonological Representation in the Early Bilingual Mind",
+  top_right = "42 APL",
+  bottom_left = "Gemma Repiso-Puigdelliura",
+  exclude = "title-slide"
+)
+xaringanExtra::use_fit_screen()
+
 ```
 
 
@@ -5041,18 +5054,18 @@ Turning to our discussion on surface tolerance, coupling our lexical decision re
 ## Conclusions
 
 .conclusion-card.blue[
-.card-title[⚡. Cooperative Co-Activation]
-Language-asymmetric contrasts (e.g., Catalan /e/- ɛ/ vs. Spanish /e/) enable parallel co-activation **without category overlap** or top-down boundary suppression. Acoustic acuity further sharpens discrimination.
+.card-title[1. Cooperative co-Activation]
+Language-asymmetric contrasts (e.g., Catalan /e/- ɛ/ vs. Spanish /e/) enable parallel co-activation **without category overlap** or top-down boundary suppression. Theoretical models need to incorporate phonology-sensitive activation level. 
 ]
 
 .conclusion-card.amber[
-.card-title[ 2. Surface Tolerance vs. Memory Storage]
-Lexical decision taps **surface-level perceptual tolerance** driven by community input, whereas paired lexical preference is required to uncover **intact underlying representations (URs)**.
+.card-title[ 2. Input-driven tolerance vs. underlying representations]
+Lexical decision taps **surface-level perceptual tolerance** driven by community input, whereas paired lexical preference is required to uncover **underlying representations (URs)**. Theoretical models should include mechanisms for activating community input in the perceptual grammars.
 ]
 
 .conclusion-card.green[
 .card-title[ 3. Differential Input Thresholds]
-Language dominance and exposure predict UR storage far better than prelexical perception—**phonolexical encoding requires a higher input threshold** than perceptual discrimination.
+Language dominance and exposure predict UR storage far better than prelexical perception—**phonolexical encoding requires a higher input threshold** than perceptual discrimination. Theoretical models should include the effects of input a different levels of the representation.
 ]
 
 
@@ -5744,432 +5757,3 @@ slope_plot
 ```
 ???
 What about boundary sharpness? What you see in this graph is an individual-level breakdown of slope differences, calculated by subtracting the slope of the curve between /i/–/e/ from /e/–/ɛ/. The central dashed line represents zero, meaning identical boundary steepness for both contrasts. Notice how the plot is overwhelmingly dominated by orange bars extending to the left. This shows that bilinguals in our sample maintain a much sharper categorical transition for the shared /i/–/e/ baseline than for the mid-vowel contrast. Crucially, when we examine these individual slopes across language modes, operating in a Spanish context does not flatten or attenuate this boundary steepness.
-
-
----
-
-# Individual effects: Age and Exposure
-xaringan::infinite_moon_reader("your_presentation.Rmd")library(ggplot2)
-library(ggeffects)
-library(patchwork)
-
-# Custom Colors
-COLOR_NAVY   <- "#0A2540"
-COLOR_STEEL  <- "#3B6978"
-COLOR_AMBER  <- "#D97706"
-COLOR_RED    <- "#DC2626"
-
-# Base Publication Theme with LARGE typography
-theme_publication_large <- function() {
-  theme_minimal(base_size = 14) +
-    theme(
-      panel.grid.minor = element_blank(),
-      panel.border = element_rect(color = "grey80", fill = NA, linewidth = 0.6),
-      plot.title = element_text(face = "bold", size = 15, color = COLOR_NAVY),
-      plot.subtitle = element_text(size = 12, color = "grey30"),
-      axis.title = element_text(face = "bold", size = 13),
-      axis.text = element_text(size = 12, color = "black"),
-      legend.title = element_text(face = "bold", size = 12),
-      legend.text = element_text(size = 12),
-      strip.text = element_text(face = "bold", size = 13),
-      legend.position = "bottom"
-    )
-}
-
-# 1. PANEL A: XAB Acoustic Discrimination
-pred_xab <- ggpredict(m_XAB_ch, terms = c("Age_z [-2:2, by=0.1]", "trial", "Exp_Home_z [-1, 1]"))
-pred_xab$facet <- factor(pred_xab$facet, levels = c(-1, 1), 
-                         labels = c("Low Catalan Home Exp (-1 SD)", "High Catalan Home Exp (+1 SD)"))
-
-plot_xab <- ggplot(pred_xab, aes(x = x, y = predicted, color = group, fill = group)) +
-  geom_line(linewidth = 1.3) +
-  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.15, color = NA) +
-  facet_wrap(~ facet) +
-  scale_color_manual(values = c("filler" = COLOR_NAVY, "experimental" = COLOR_AMBER), 
-                     labels = c("filler" = "Control Filler", "experimental" = "Target /e/–/ɛ/")) +
-  scale_fill_manual(values = c("filler" = COLOR_NAVY, "experimental" = COLOR_AMBER), 
-                    labels = c("filler" = "Control Filler", "experimental" = "Target /e/–/ɛ/")) +
-  scale_y_continuous(labels = scales::percent, limits = c(0.4, 1.0)) +
-  labs(
-    title = "A. Acoustic Discrimination (XAB)",
-    subtitle = "Age_z × Trial (p = .0019); 3-Way Age_z × Trial × Exp_Home_z (p = .062)",
-    x = "Age (z-score)", y = "Predicted Accuracy",
-    color = "Trial Type", fill = "Trial Type"
-  ) +
-  theme_publication_large()
-
-# 2. PANEL B: Auditory Lexical Decision
-pred_ld <- ggpredict(m_LD_ch, terms = c("Condition"))
-
-plot_ld <- ggplot(pred_ld, aes(x = x, y = predicted, fill = x)) +
-  geom_col(width = 0.55, color = "black", linewidth = 0.4) +
-  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.15, linewidth = 0.8) +
-  scale_fill_manual(values = c("canonical" = COLOR_NAVY, "easy" = COLOR_STEEL, 
-                               "mispron_e" = COLOR_AMBER, "mispron_open_e" = COLOR_RED)) +
-  scale_y_continuous(labels = scales::percent, limits = c(0, 1.05)) +
-  labs(
-    title = "B. Auditory Lexical Decision (LD)",
-    subtitle = "Difficult Mid-Vowel Swap Drop (p < .001)",
-    x = "Condition", y = "Predicted Rejection Accuracy"
-  ) +
-  theme_publication_large() +
-  theme(legend.position = "none")
-
-# 3. PANEL C: Lexical Preference
-pred_lp <- ggpredict(m_LP_ch, terms = c("Age_z [-2:2, by=0.1]", "target_vowel"))
-
-plot_lp <- ggplot(pred_lp, aes(x = x, y = predicted, color = group, fill = group)) +
-  geom_line(linewidth = 1.3) +
-  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.15, color = NA) +
-  scale_color_manual(values = c("close" = COLOR_NAVY, "open" = COLOR_STEEL), 
-                     labels = c("close" = "Close-mid /e/ (β = +1.14)", "open" = "Open-mid /ɛ/ (β = +0.49)")) +
-  scale_fill_manual(values = c("close" = COLOR_NAVY, "open" = COLOR_STEEL), 
-                    labels = c("close" = "Close-mid /e/ (β = +1.14)", "open" = "Open-mid /ɛ/ (β = +0.49)")) +
-  scale_y_continuous(labels = scales::percent, limits = c(0.4, 1.0)) +
-  labs(
-    title = "C. Lexical Preference (LP)",
-    subtitle = "Significant Target Vowel × Age_z Interaction (p = .022)",
-    x = "Age (z-score)", y = "Canonical Form Preference",
-    color = "Target Vowel", fill = "Target Vowel"
-  ) +
-  theme_publication_large()
-
-# 4. PANEL D: Novel Word Learning
-pred_wl <- ggpredict(m_WL_ch, terms = c("trial_type", "item_type"))
-
-plot_wl <- ggplot(pred_wl, aes(x = x, y = predicted, color = group, group = group)) +
-  geom_line(linewidth = 1.2, position = position_dodge(width = 0.2)) +
-  geom_point(size = 3.5, position = position_dodge(width = 0.2)) +
-  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.15, 
-                linewidth = 0.8, position = position_dodge(width = 0.2)) +
-  scale_color_manual(values = c("control" = COLOR_NAVY, "mid" = COLOR_RED),
-                     labels = c("control" = "Control Items", "mid" = "Mid-Vowel Items")) +
-  scale_y_continuous(labels = scales::percent, limits = c(0.3, 1.0)) +
-  labs(
-    title = "D. Novel Word Learning (WL)",
-    subtitle = "Significant Trial Type × Item Type Interaction (p = .0062)",
-    x = "Trial Type", y = "Predicted Accuracy",
-    color = "Item Type"
-  ) +
-  theme_publication_large()
-
-# Combine Panels with Patchwork
-combined_figure <- (plot_xab ) / (plot_lp ) +
-  plot_annotation(
-    title = "GLMM Model Interactions Across Multi-Task Battery in Child Bilinguals (N = 24)",
-    subtitle = "Predicted probabilities with 95% confidence intervals from GLMM fits",
-    theme = theme(
-      plot.title = element_text(size = 18, face = "bold", color = COLOR_NAVY),
-      plot.subtitle = element_text(size = 13, color = "grey30")
-    )
-  )
-combined_figure
-ggsave("ggplot_child_bilingual_interactions_large.png", combined_figure, width = 12, height = 9.5, dpi = 300)
-```
-???
-
-"Turning to individual differences within our child cohort, we modeled how developmental age and cumulative Catalan home exposure shape performance across the task battery. The two top panels display significant developmental age effects, drawn with solid lines, while the two bottom panels show marginal trends for home exposure, drawn with dashed lines.Looking first at Panel A, in Task 1 (XAB Discrimination), we find a significant Age by Trial Type interaction ($p = .049$). As children grow older—from age 7.5 to 10.4 years—their ability to discriminate acoustic mid-vowel contrasts improves significantly, widening the accuracy gap between experimental mid-vowel pairs and control fillers. This demonstrates that bottom-up acoustic acuity undergoes continuous maturation across middle childhood.Moving to Panel B, in Task 3 (Lexical Preference), we observe a strong Age by Target Vowel interaction ($p = .005$). Older children display significantly higher accuracy in choosing the canonical target over its mispronunciation, particularly for target /e/ words. This confirms that phonolexical target fidelity in long-term memory ($|UF|$) becomes increasingly robust and specified as children mature.When we examine language experience in Panel C, Catalan home exposure shows a strong marginal main effect on Lexical Preference ($p = .051$). Children who hear and use more Catalan in the home exhibit higher accuracy in choosing canonical word targets in forced choice.Finally, in Panel D, in Task 2 (Lexical Decision), home exposure marginally interacts with task condition ($p = .062$), showing that rich Catalan input at home helps children navigate the difficult mid-vowel swap condition.To synthesize these individual effects: Age drives the structural maturation of both bottom-up perceptual discrimination and stored target representations ($|UF|$), while cumulative home input provides the essential exposure needed to refine target fidelity and online processing strategies."*
-
-
-
----
-
-
-### Category Boundary Location (c) and Steepness (s) Remain Invariant Across Modes
-
-.pull-left[
-* **4PL Model:** $f(x) = a_1 + \frac{a_2 - a_1}{1 + e^{-s(x - c)}}$
-* **Boundary Location (c):** No significant shift across Catalan vs. Spanish modes ($p = .826$).
-* **Boundary Steepness (s):** /e/–/ɛ/ is less steep than /i/–/e/ ($b = -3.80, p < .001$), but slope $s$ is unaffected by language mode ($p = .826$) or dominance ($p = .248$).
-]
-
-.pull-right[
-```{r category, echo=FALSE, fig.width=9.5, fig.height=6.5, out.width="100%"}
-library(ggplot2)
-library(dplyr)
-
-# 1. Data preparation and factor labeling
-df_plot <- df_lmer %>%
-  filter(converged == TRUE) %>%
-  mutate(
-    Contrast_Label = case_when(
-      Contrast %in% c("i_e", "i-e") ~ "/i/ – /e/ (Control Contrast)",
-      Contrast %in% c("mid_low", "e_eps", "e-eps") ~ "/e/ – /ɛ/ (Target Contrast)",
-      TRUE ~ as.character(Contrast)
-    ),
-    Mode = factor(Mode, levels = c("Catalan", "Spanish"))
-  )
-
-# 2. Render ggplot
-category = ggplot(df_plot, aes(x = Dominance_Index, y = c, color = Mode, fill = Mode)) +
-  # Zero-dominance boundary line (Catalan-dominant < 0 | Spanish-dominant > 0)
-  geom_vline(xintercept = 0, linetype = "dashed", color = "grey60", linewidth = 0.6) +
-  
-  # Individual subject boundary parameter points
-  geom_point(
-    alpha = 0.75, 
-    size = 2.8, 
-    position = position_jitter(width = 1.2, height = 0, seed = 42)
-  ) +
-  
-  # Linear trendlines with 95% confidence intervals per Mode
-  geom_smooth(method = "lm", formula = y ~ x, alpha = 0.18, linewidth = 1.1) +
-  
-  # Facet by phonological contrast
-  facet_wrap(~ Contrast_Label, scales = "free_y") +
-  
-  # Accessible color palette (Catalan = Blue | Spanish = Vermillion)
-  scale_color_manual(values = c("Catalan" = "#0072B2", "Spanish" = "#D55E00")) +
-  scale_fill_manual(values = c("Catalan" = "#0072B2", "Spanish" = "#D55E00")) +
-  
-  # Titles and axis formatting
-  labs(
-    title = "Category Boundary (c) Across Language Dominance & Mode",
-    subtitle = "Tracking boundary crossover shifts across Catalan-dominant (<0) and Spanish-dominant (>0) bilinguals",
-    x = "Dominance Index (BLP Score: Spanish - Catalan)",
-    y = "Category Boundary Location (c Parameter)",
-    color = "Language Mode",
-    fill = "Language Mode",
-    caption = "Calculated from 4PL logistic fits per participant. Dashed line indicates balanced dominance (0)."
-  ) +
-  
-  # Minimal theme styling
-  theme_keynote() +
-  theme(
-    plot.title = element_text(face = "bold", size = 14),
-    plot.subtitle = element_text(color = "grey35", size = 11, margin = margin(b = 10)),
-    strip.text = element_text(face = "bold", size = 11),
-    strip.background = element_rect(fill = "grey95", color = NA),
-    panel.grid.minor = element_blank(),
-    panel.border = element_rect(color = "grey85", fill = NA, linewidth = 0.6),
-    legend.position = "bottom",
-    legend.title = element_text(face = "bold")
-  )
-
-
-
-ggsave("category.png", plot = category, device = ragg::agg_png, width = 8, height = 6, dpi = 300)
-category
-#knitr::include_graphics("category.png")
-
-```
-
-]
-
-
-???
-
-To evaluate perceptual processing with mathematical rigor, we deployed a two-tier analytic strategy: 4-parameter logistic models to isolate categorical boundaries, and Generalized Additive Mixed Models to trace trial-by-trial within-category sensitivity1.At the macro level, 4PL fits revealed that category boundary remained invariant across modes.
-
-For boundary sharpness (s), our 4-parameter logistic linear mixed-effects model revealed that category sharpness was significantly greater for the control /i/–/e/ contrast than for the target mid-vowel /e/–/ɛ/ contrast (b = -3.80, p < .001).
-As shown in this individual-level slope breakdown on the right—where negative orange bars indicate steeper slopes for /i/–/e/—virtually every single bilingual in our sample exhibited a significantly sharper, more categorical boundary transition for the baseline control contrast compared to the more vulnerable mid-vowel contrast.
-Crucially for our second research question, however, operating in Spanish language mode did not attenuate or flatten this boundary steepness (p = .826), nor was boundary sharpness modulated by continuous language dominance (p = .248)."
-
----
-# Integrated multilingual transfer
-
-```{r}
-library(ggplot2)
-library(dplyr)
-
-# 1. Define the 3 Core Modular Tiers (Natvig, 2021)
-levels_df <- tribble(
-  ~xmin, ~xmax, ~ymin, ~ymax, ~title, ~spec, ~domain,
-  2.3, 5.7, 4.2, 5.0, "1. Phonology (Grammatical Knowledge)", "| Abstract Contrasts |", "Phonology",
-  2.3, 5.7, 2.6, 3.4, "2. Phonetics-Phonology Interface", "[ Articulatory Gestures, Completions & Enhancements]", "Interface / Procedural",
-  2.3, 5.7, 1.0, 1.8, "3. Phonetics (Physical Realization)", "[[ Gradient Acoustic & Motor Signal Execution]]", "Phonetics"
-)
-
-# 2. Grammar & Procedural Mapping Modules (Between Tiers)
-grammars_df <- tribble(
-  ~x, ~y, ~label,
-  4.0, 3.8, "Completions & Enhancements (Dimensions ↔ Gestures)",
-  4.0, 2.2, "Phonetic Implementation (Gestures ↔ Physical Signal)"
-)
-
-# 3. Process Direction Flow (Perception vs. Production)
-flow_arrows <- tribble(
-  ~x, ~y, ~xend, ~yend, ~label, ~side,
-  # Perception / Categorization (Bottom-Up)
-  1.5, 1.2, 1.5, 4.8, "PERCEPTION & CATEGORIZATION\n(Continuous Signal → Abstract Category)", "Perception",
-  # Production / Implementation (Top-Down)
-  6.5, 4.8, 6.5, 1.2, "PRODUCTION & IMPLEMENTATION\n(Abstract Category → Gestures → Signal)", "Production"
-)
-
-# 4. Render Diagram
-p_natvig <- ggplot() +
-  # Tier Representation Blocks
-  geom_rect(data = levels_df, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = domain),
-            color = "grey20", linewidth = 0.8, alpha = 0.88) +
-  
-  # Text Inside Blocks (Title + Specification)
-  geom_text(data = levels_df, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 + 0.12, label = title),
-            fontface = "bold", size = 3.9, color = "white") +
-  geom_text(data = levels_df, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 - 0.14, label = spec),
-            fontface = "italic", size = 3.1, color = "grey95") +
-  
-  # Grammar & Interface Mapping Labels
-  geom_label(data = grammars_df, aes(x = x, y = y, label = label),
-             fill = "white", color = "grey20", size = 3.0, fontface = "bold",
-             label.padding = unit(0.22, "lines"), border.color = "grey60") +
-  
-  # Vertical Directional Flow Arrows
-  geom_segment(data = flow_arrows, aes(x = x, y = y, xend = xend, yend = yend, color = side),
-               arrow = arrow(length = unit(0.35, "cm")), linewidth = 1.3) +
-  geom_text(data = flow_arrows, aes(x = x, y = (y + yend) / 2, label = label, color = side),
-            angle = ifelse(flow_arrows$side == "Perception", 90, -90),
-            vjust = -0.8, fontface = "bold", size = 3.2) +
-
-
-  # Color Scales
-  scale_fill_manual(values = c(
-    "Phonology" = "#0072B2", 
-    "Interface / Procedural" = "#009E73", 
-    "Phonetics" = "#E69F00"
-  )) +
-  scale_color_manual(values = c(
-    "Perception" = "#0072B2", 
-    "Production" = "#D55E00"
-  )) +
-  
-  # Layout Settings
-  scale_x_continuous(limits = c(0.5, 7.5)) +
-  scale_y_continuous(limits = c(0.4, 5.6)) +
-  labs(
-    title = "Integrated Multilingual Sound System Architecture",
-    caption = "Natvig (2021, Languages) "
-  ) +
-  theme_void(base_size = 11) +
-  theme(
-    plot.title = element_text(face = "bold", size = 13, hjust = 0.5, margin = margin(b = 4)),
-    plot.subtitle = element_text(size = 9.5, face = "italic", hjust = 0.5, color = "grey30", margin = margin(b = 10)),
-    plot.caption = element_text(size = 8, color = "grey50", hjust = 0.95),
-    legend.position = "none"
-  )
-
-# Display plot in R Markdown slide
-p_natvig
-```
-
-
----
-## Correlation across tasks
-
-```{r, warning = FALSE, message = FALSE}
-library(tidyverse)
-library(patchwork)
-library(ragg)
-library(showtext)
-
-# ==============================================================================
-# 1. SETUP NOTO FONT
-# ==============================================================================
-font_add_google(name = "Noto Sans", family = "Noto Sans")
-showtext_auto()
-
-# ==============================================================================
-# 2. HELPER FUNCTION TO GENERATE UPPER-TRIANGULAR CORRELATION HEATMAPS
-# ==============================================================================
-plot_cor_heatmap <- function(data_subset, title_label) {
-  # Tasks order
-  task_vars <- c("XAB", "LD", "LP")
-  
-  # Compute Pearson correlation matrix
-  cor_mat <- cor(data_subset[, task_vars], use = "pairwise.complete.obs")
-  
-  # Mask lower triangle for clean upper-triangular display
-  cor_mat[lower.tri(cor_mat)] <- NA
-  
-  # Convert to tidy long format
-  df_cor <- as.data.frame(cor_mat) %>%
-    rownames_to_column(var = "Var1") %>%
-    pivot_longer(-Var1, names_to = "Var2", values_to = "r") %>%
-    filter(!is.na(r)) %>%
-    mutate(
-      Var1 = factor(Var1, levels = task_vars),
-      Var2 = factor(Var2, levels = rev(task_vars)) # Reverse y-axis for standard matrix layout
-    )
-  
-  # Heatmap Plot
-  ggplot(df_cor, aes(x = Var1, y = Var2, fill = r)) +
-    # White background grid lines between tiles
-    geom_tile(color = "white", linewidth = 1.5) +
-    
-    # Correlation value labels
-    geom_text(
-      aes(
-        label = sprintf("%.2f", r),
-        color = abs(r) > 0.55 # Dynamic text contrast (white text on dark background)
-      ),
-      family = "Noto Sans",
-      fontface = "bold",
-      size = 4.2
-    ) +
-    
-    # Diverging color scale (-1 to +1)
-    scale_fill_gradient2(
-      low = "#2B5C8F",      # Deep blue for negative correlations
-      mid = "#F7F7F7",      # Neutral grey-white for 0
-      high = "#D95F02",     # Orange-red for positive correlations
-      limits = c(-1, 1),
-      breaks = seq(-1, 1, by = 0.5),
-      name = "Pearson r: "
-    ) +
-    
-    # Text contrast color manual scale
-    scale_color_manual(values = c("TRUE" = "white", "FALSE" = "black"), guide = "none") +
-    
-    # Panel Title & Axis Formatting
-    labs(
-      title = title_label,
-      x = NULL,
-      y = NULL
-    ) +
-    coord_fixed() + # Ensure square cells
-    theme_minimal(base_family = "Noto Sans", base_size = 13) +
-    theme(
-      plot.title = element_text(face = "bold", size = 14, family = "Noto Sans", hjust = 0.5, margin = margin(b = 10)),
-      axis.text = element_text(face = "bold", size = 11, color = "black", family = "Noto Sans"),
-      panel.grid = element_blank(),
-      legend.position = "bottom",
-      legend.title = element_text(face = "bold", size = 11, family = "Noto Sans"),
-      legend.text = element_text(size = 10, family = "Noto Sans"),
-      legend.key.width = unit(1.8, "cm"),
-      legend.key.height = unit(0.4, "cm"),
-      plot.margin = margin(10, 15, 10, 15)
-    )
-}
-
-# ==============================================================================
-# 3. GENERATE INDIVIDUAL GROUP PLOTS
-# ==============================================================================
-perf_children <- task_performance %>% filter(Group == "Children")
-perf_adults   <- task_performance %>% filter(Group == "Adults")
-
-plot_cor_ch <- plot_cor_heatmap(perf_children, "A) Children")
-plot_cor_ad <- plot_cor_heatmap(perf_adults,   "B) Adults")
-
-# ==============================================================================
-# 4. COMBINE WITH PATCHWORK AND EXPORT HIGH-RES GRAPHIC
-# ==============================================================================
-cor_combined_plot <- plot_cor_ch + plot_cor_ad +
-  plot_layout(guides = "collect") +
-  theme(
-    legend.position = "bottom",
-    legend.margin = margin(t = 12)
-  )
-
-# Export with roomier aspect ratio to prevent compression
-ggsave(
-  "cross_task_correlations_noto.png",
-  plot = cor_combined_plot,
-  device = ragg::agg_png,
-  width = 10.5,
-  height = 6.0,
-  dpi = 300
-)
-
-# Display Plot
-knitr::include_graphics("cross_task_correlations_noto.png")
-
-```
