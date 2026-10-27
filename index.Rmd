@@ -12,6 +12,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -42,14 +43,16 @@ library(xaringanExtra)
 # Enable xaringanExtra broadcasting
 
 
-xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast", "banner"))
 
-xaringanExtra::use_animate_all("fade")
 
 
 ```
 
 ```{r xaringan-extra-setup, echo=FALSE}
+
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast"))
+
+xaringanExtra::use_animate_all("fade")
 xaringanExtra::use_banner(
   top_left = "Re-Evaluating Phonological Representation in the Early Bilingual Mind",
   top_right = "42 APL",
@@ -3471,7 +3474,7 @@ children_stats <- tibble(
   `N (Total)` = 40,
   `Gender (F/M)` = "20 F / 20 M",
   `Age Range` = "7.50 – 10.37 yrs",
-  `Questionnaire Subset` = "N = 28 parent questionnaires (Individual Differences subset)"
+  `Questionnaire Subset` = "N = 25 parent questionnaires (Individual Differences subset)"
 )
 
 # 3. Combine into unified summary table
@@ -4335,7 +4338,7 @@ LD_combined <- bind_rows(
     Condition = factor(
       Condition, 
       levels = c("canonical", "easy", "difficult"),
-      labels = c("Canonical ", "Easy", "Difficult vowel")
+      labels = c("Canonical vowel", "Easy vowel swap", "Difficult vowel swap")
     ),
     Item_type = factor(
       Item_type, 
@@ -4966,18 +4969,14 @@ Turning to our discussion on surface tolerance, coupling our lexical decision re
 
 ## Conclusions
 .conclusion-card.amber[
-.card-title[Cooperative Parallel Co-Activation]
-Language-asymmetric contrasts (e.g., Catalan $/e/$–$/ɛ/$ vs. Spanish $/e/$) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
+Cooperative Parallel Co-Activation: Language-asymmetric contrasts (e.g., Catalan /e/–/ɛ/ vs. Spanish /e/) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
 ]
 
 .conclusion-card.amber[
-.card-title[Surface Tolerance vs. Lexical Storage]
-Lexical decision taps **surface perceptual tolerance** driven by non-canonical community speech, whereas forced-choice preference tasks isolate **canonical underlying representations (URs)**. Models must incorporate dynamic weighting for non-canonical input in perceptual grammars.
+Surface Tolerance vs. Lexical Storage: Lexical decision taps **surface perceptual tolerance** driven by non-canonical community speech, whereas forced-choice preference tasks isolate **canonical underlying representations (URs)**. Models must incorporate dynamic weighting for non-canonical input in perceptual grammars.
 ]
 
-.conclusion-card.amber[
-.card-title[Tier-Specific Input Thresholds]
-Language dominance and exposure predict UR storage significantly better than pre-lexical sensitivity—**phono-lexical encoding demands higher input thresholds** than perceptual discrimination. Models must distinguish input effects across structural tiers.
+.conclusion-card.amber[Tier-Specific Input Thresholds: Language dominance and exposure predict UR storage significantly better than pre-lexical sensitivity, **phono-lexical encoding demands higher input thresholds** than perceptual discrimination. Models must distinguish input effects across structural tiers.
 ]
 
 
@@ -4989,127 +4988,12 @@ To conclude, our findings offer three key insights for modeling bilingual phonet
 Comparing lexical decision with lexical preference tasks reveals that speakers exhibit tolerance to variable ambient input. A standard lexical decision task alone is insufficient to reliably isolate underlying storage in bilinguals exposed to sustained variation. Comprehensive models must account for how speakers parse input variability and incorporate flexible surface-level mapping
 
 Language dominance and cumulative exposure serve as stronger predictors of underlying phonolexical encoding than prelexical discrimination abilities alone. Crucially, future models must account for how differential input yields distinct effects across phonetic versus phonological levels of representation.
----
-# Broader implications
-
-```{r}
-# ==============================================================================
-# R ggplot2 Script: Integrating Input Variability & Coactivation
-# BiPhon / L2LP Coactivated Grammar Model Framework
-# ==============================================================================
-
-library(ggplot2)
-library(dplyr)
-library(grid)
-
-# 1. Define Pillar Panels Data Frame (2 Balanced Pillars)
-df_pillars <- tribble(
-  ~xmin, ~xmax, ~ymin, ~ymax, ~title, ~subtitle, ~fill_color, ~border_color,
-  
-  # Pillar 1: Input Variability
-  0.08, 0.46, 0.12, 0.84, "1. INPUT VARIABILITY", "(Acoustic & Environmental)", "#EFF6FF", "#2563EB",
-  
-  # Pillar 2: Parallel Grammar Coactivation
-  0.54, 0.92, 0.12, 0.84, "2. PARALLEL COACTIVATION", "(Dual-Grammar Processing)", "#FEF3C7", "#D97706"
-)
-
-# 2. Define Internal Grammar Boxes for Parallel Coactivation
-df_grammars <- tribble(
-  ~xmin, ~xmax, ~ymin, ~ymax, ~label, ~subtext, ~fill_color, ~border_color,
-  0.57, 0.89, 0.52, 0.72, "Grammar 1: Catalan [ACTIVE]", "Surface Form: /SF-1/\nConstraints: C_Cat\nEvaluates [AudF] -> /SF/", "#E6F2FF", "#0072B2",
-  0.57, 0.89, 0.22, 0.42, "Grammar 2: Spanish [ACTIVE]", "Surface Form: /SF-2/\nConstraints: C_Span\nEvaluates [AudF] -> /SF/", "#FFF0E6", "#D55E00"
-)
-
-# 3. Define Connectors / Arrows
-df_arrows <- tribble(
-  ~x, ~y, ~xend, ~yend, ~label, ~color,
-  # Pillar 1 to Pillar 2
-  0.46, 0.48, 0.54, 0.48, "Feeds\nInput", "#2563EB",
-  
-  # Co-Activation Arrow inside Pillar 2
-  0.73, 0.52, 0.73, 0.42, "Co-Activation\n& Cross-Talk", "#B45309"
-)
-
-# 4. Text Description for Pillar 1
-text_p1 <- "• Sociolinguistic Input:\n  - Native Catalan: /e/ [e] vs. /ɛ/ [ɛ]\n  - Community Spanish: [e] for /ɛ/\n\n• Exposure Ratios:\n  - Home exposure buffers target |UF|\n  - Community input drives /SF/ tolerance\n\n• Probabilistic Acoustic Cues:\n  - Overlapping F1/F2 distributions"
-
-# 5. Build ggplot2 Diagram
-p_model <- ggplot() +
-  # Pillar Outer Rectangles
-  geom_rect(data = df_pillars, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = fill_color, color = border_color),
-            linewidth = 1.2, alpha = 0.95) +
-  
-  # Inner Grammar Rectangles inside Pillar 2
-  geom_rect(data = df_grammars, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = fill_color, color = border_color),
-            linewidth = 1.0) +
-  
-  # Pillar Titles & Subtitles
-  geom_text(data = df_pillars, aes(x = (xmin + xmax)/2, y = ymax - 0.04, label = title, color = border_color),
-            fontface = "bold", size = 4.2) +
-  geom_text(data = df_pillars, aes(x = (xmin + xmax)/2, y = ymax - 0.08, label = subtitle, color = border_color),
-            fontface = "bold", size = 3.2) +
-  
-  # Pillar 1 Content Text
-  annotate("text", x = 0.11, y = 0.48, label = text_p1, hjust = 0, size = 3.3, color = "#1E293B", lineheight = 1.1) +
-  
-  # Text inside Inner Grammar Boxes
-  geom_text(data = df_grammars, aes(x = (xmin + xmax)/2, y = ymax - 0.035, label = label, color = border_color),
-            fontface = "bold", size = 3.5) +
-  geom_text(data = df_grammars, aes(x = (xmin + xmax)/2, y = ymin + 0.06, label = subtext),
-            size = 2.8, color = "#1E293B", lineheight = 0.95) +
-  
-  # Inter-Pillar Connector Arrow (Pillar 1 -> Pillar 2)
-  geom_segment(data = df_arrows[1, ], aes(x = x, y = y, xend = xend, yend = yend, color = color),
-               linewidth = 1.2, arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  geom_text(data = df_arrows[1, ], aes(x = (x + xend)/2, y = y + 0.04, label = label, color = color),
-            fontface = "bold", size = 3.0, lineheight = 0.9) +
-  
-  # Bidirectional Co-Activation Arrow (Inside Pillar 2)
-  geom_segment(data = df_arrows[2, ], aes(x = x, y = y, xend = xend, yend = yend),
-               color = "#B45309", linewidth = 1.1, arrow = arrow(length = unit(0.2, "cm"), ends = "both", type = "closed")) +
-  geom_text(data = df_arrows[2, ], aes(x = x + 0.07, y = (y + yend)/2, label = label),
-            color = "#B45309", fontface = "bold", size = 2.8, lineheight = 0.9) +
-  
-  scale_color_identity() +
-  scale_fill_identity() +
-  coord_fixed(ratio = 0.8, xlim = c(0, 1), ylim = c(0.05, 0.95)) +
-  
-  labs(
-    title = "Integrating Key Pillars into Bilingual Phonetics-Phonology Models",
-    subtitle = "Coactivation Architecture (BiPhon/L2LP): Input Variability and Parallel Dual Grammars",
-    caption = "Synthesis based on Repiso-Puigdelliura et al. (2025) & Boersma (2011) BiPhon Architecture"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    panel.grid = element_blank(),
-    axis.title = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    plot.title = element_text(face = "bold", size = 13, color = "#0A2540", hjust = 0.5),
-    plot.subtitle = element_text(size = 9.5, color = "#3B6978", hjust = 0.5, margin = margin(b = 10)),
-    plot.caption = element_text(size = 8, color = "#6B7280", hjust = 0.5, margin = margin(t = 10)),
-    plot.background = element_rect(fill = "#FFFFFF", color = NA)
-  )
-
-# Display & Save
-ggsave("bilingual_model_integration_ggplot2.png", plot = p_model, width = 11, height = 7.5, dpi = 300)
-
-library(knitr)
-include_graphics("bilingual_model_integration_ggplot2.png")
-```
-
-
-???
-
-- Bilingual phonetics-phonology models should integrate input variability, mechanism for grammar coactivation, and a mechanism to allow for fuzzy representations.
-
-
 
 
 ---
 ## Selected References
 
-.refs-two-column[
+.pull.left[
 - **Boersma, P. (2011).** Generalizations and bidirectional phonology in Optimality Theory. *Phonology*, 28(1), 1–45.
 - **Bosch, L., & Sebastián-Gallés, N. (2003).** Simultaneous bilinguals' failure to discriminate a native vowel contrast in early infancy. *Language and Speech*, 46(2-3), 217–243.
 - **Casillas, J. V. (2024).** The speech production of bilingual adults. In *The Cambridge Handbook of Bilingual Phonetics and Phonology* (pp. 407–425). Cambridge University Press.
@@ -5118,8 +5002,9 @@ include_graphics("bilingual_model_integration_ggplot2.png")
 - **Fikkert, P., & Freitas, M. J. (2006).** Allophony and allomorphy cue phonological acquisition: Evidence from the European Portuguese vowel system. *Catalan Journal of Linguistics*, 5, 83–108.
 - **Flege, J. E., & Bohn, O. S. (2021).** The Revised Speech Learning Model (SLM-r). In *Second Language Speech Learning* (pp. 29–83). Cambridge University Press.
 - **Green, D. W., & Abutalebi, J. (2013).** Language control in the bilingual brain: The Adaptive Control Hypothesis. *Journal of Cognitive Psychology*, 25(5), 515–530.
+]
+.pull.right[
 - **Grosjean, F. (2001).** The bilingual's language modes. In *An Introduction to Bilingualism* (pp. 1–22).
-- **Natvig, D. (2021).** An integrated multilingual architecture for phonetics and phonology. *Languages*, 6(4), 209.
 - **Pallier, C., Bosch, L., & Sebastián-Gallés, N. (1997).** A limit on behavioral plasticity in speech perception in early bilinguals. *Cognition*, 64(3), B9–B17.
 - **Ramón-Casas, M., Swingley, D., Sebastián-Gallés, N., & Bosch, L. (2013).** Vowels and words in early bilingual lexical acquisition. *Journal of Memory and Language*, 69(3), 312–323.
 - **Repiso-Puigdelliura, G. (2025).** Development of vowel representation and sociolinguistic input tuning in Spanish-Catalan bilinguals. *Glossa: A Journal of General Linguistics*, 10(1).
