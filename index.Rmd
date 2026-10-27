@@ -12,6 +12,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -40,7 +41,19 @@ showtext_auto()  # Enables showtext rendering for all ggplot objects
 library(xaringanExtra)
 
 # Enable xaringanExtra broadcasting
-xaringanExtra::use_broadcast()
+
+
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast"))
+
+xaringanExtra::use_animate_all("slide_left")
+xaringanExtra::use_banner(
+  top_left = "Re-Evaluating Phonological Representation in the Early Bilingual Mind",
+  top_right = "42 APL",
+  bottom_left = "Gemma Repiso-Puigdelliura",
+  exclude = "title-slide"
+)
+xaringanExtra::use_fit_screen()
+
 ```
 
 
@@ -5041,18 +5054,18 @@ Turning to our discussion on surface tolerance, coupling our lexical decision re
 ## Conclusions
 
 .conclusion-card.blue[
-.card-title[⚡. Cooperative Co-Activation]
-Language-asymmetric contrasts (e.g., Catalan /e/- ɛ/ vs. Spanish /e/) enable parallel co-activation **without category overlap** or top-down boundary suppression. Acoustic acuity further sharpens discrimination.
+.card-title[1. Cooperative co-Activation]
+Language-asymmetric contrasts (e.g., Catalan /e/- ɛ/ vs. Spanish /e/) enable parallel co-activation **without category overlap** or top-down boundary suppression. Theoretical models need to incorporate phonology-sensitive activation level. 
 ]
 
 .conclusion-card.amber[
-.card-title[ 2. Surface Tolerance vs. Memory Storage]
-Lexical decision taps **surface-level perceptual tolerance** driven by community input, whereas paired lexical preference is required to uncover **intact underlying representations (URs)**.
+.card-title[ 2. Input-driven tolerance vs. underlying representations]
+Lexical decision taps **surface-level perceptual tolerance** driven by community input, whereas paired lexical preference is required to uncover **underlying representations (URs)**. Theoretical models should include mechanisms for activating community input in the perceptual grammars.
 ]
 
 .conclusion-card.green[
 .card-title[ 3. Differential Input Thresholds]
-Language dominance and exposure predict UR storage far better than prelexical perception—**phonolexical encoding requires a higher input threshold** than perceptual discrimination.
+Language dominance and exposure predict UR storage far better than prelexical perception—**phonolexical encoding requires a higher input threshold** than perceptual discrimination. Theoretical models should include the effects of input a different levels of the representation.
 ]
 
 
