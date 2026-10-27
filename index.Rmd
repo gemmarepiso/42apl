@@ -55,8 +55,7 @@ xaringanExtra::use_animate_all("fade")
 xaringanExtra::use_banner(
   top_left = "Re-Evaluating Phonological Representation in the Early Bilingual Mind",
   top_right = "42 APL",
-  bottom_left = "Gemma Repiso-Puigdelliura",
-  exclude = "title-slide"
+  bottom_left = "Gemma Repiso-Puigdelliura"
 )
 
 xaringanExtra::style_banner(
@@ -4994,7 +4993,10 @@ Language dominance and cumulative exposure serve as stronger predictors of under
 ---
 ## Selected References
 
-.pull.left[
+
+<div style="font-size: 0.6em; line-height: 1.2;">
+
+.pull-left[
 - **Boersma, P. (2011).** Generalizations and bidirectional phonology in Optimality Theory. *Phonology*, 28(1), 1–45.
 - **Bosch, L., & Sebastián-Gallés, N. (2003).** Simultaneous bilinguals' failure to discriminate a native vowel contrast in early infancy. *Language and Speech*, 46(2-3), 217–243.
 - **Casillas, J. V. (2024).** The speech production of bilingual adults. In *The Cambridge Handbook of Bilingual Phonetics and Phonology* (pp. 407–425). Cambridge University Press.
@@ -5004,7 +5006,8 @@ Language dominance and cumulative exposure serve as stronger predictors of under
 - **Flege, J. E., & Bohn, O. S. (2021).** The Revised Speech Learning Model (SLM-r). In *Second Language Speech Learning* (pp. 29–83). Cambridge University Press.
 - **Green, D. W., & Abutalebi, J. (2013).** Language control in the bilingual brain: The Adaptive Control Hypothesis. *Journal of Cognitive Psychology*, 25(5), 515–530.
 ]
-.pull.right[
+
+.pull-right[
 - **Grosjean, F. (2001).** The bilingual's language modes. In *An Introduction to Bilingualism* (pp. 1–22).
 - **Pallier, C., Bosch, L., & Sebastián-Gallés, N. (1997).** A limit on behavioral plasticity in speech perception in early bilinguals. *Cognition*, 64(3), B9–B17.
 - **Ramón-Casas, M., Swingley, D., Sebastián-Gallés, N., & Bosch, L. (2013).** Vowels and words in early bilingual lexical acquisition. *Journal of Memory and Language*, 69(3), 312–323.
@@ -5017,6 +5020,10 @@ Language dominance and cumulative exposure serve as stronger predictors of under
 - **Yazawa, K., & Escudero, P. (2025).** Combining phonetics and phonology in LX acquisition using current theoretical models. *Languages*, 10(1), 15.
 - **Zhou, C., & Hamann, S. (2024).** Loci of cross-linguistic influence in BiPhon-HG. *Glossa: A Journal of General Linguistics*, 9(1).
 ]
+
+</div>
+
+
 ---
 class: inverse, center, middle
 
