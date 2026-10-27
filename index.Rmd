@@ -12,7 +12,6 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
-    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -284,9 +283,9 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
 
 Good morning, colleagues and members of the Association—of the Associação Portuguesa de Linguística. It is a true privilege to present here today at the Universidade do Algarve.
 
-And today, what I want to do is to re-evaluate how early bilinguals perceive, represent, and store speech sounds in long-term memory. Specifically, we will examine the case of the Catalan mid-vowel contrast /e/ versus /ɛ/—we will be talking a lot about it—which has served as a central testing ground for the speech system of early Catalan-Spanish bilinguals.
+And today, what I want to do is to think about - maybe reexamine here is too ambitious - how early bilinguals perceive, represent, and store speech sounds using the test case of the Catalan mid vowel contrast e-E and two recent projects. For the second one, we are currently collecting data, so it is the first time I am presenting these results.
 
-Our goal today is to bridge classical perceptual frameworks with modern multi-tier architectural models, demonstrating that early bilingual speech representations are neither static nor structurally deficient. We will be asking the questions, more specifically:
+Alright so, more specifically, our goal today is to think about the following questions: 
 
 How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?
 
@@ -4968,6 +4967,8 @@ Turning to our discussion on surface tolerance, coupling our lexical decision re
 ---
 
 ## Conclusions
+
+
 .conclusion-card.amber[
 Cooperative Parallel Co-Activation: Language-asymmetric contrasts (e.g., Catalan /e/–/ɛ/ vs. Spanish /e/) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
 ]
@@ -5555,3 +5556,206 @@ slope_plot
 ```
 ???
 What about boundary sharpness? What you see in this graph is an individual-level breakdown of slope differences, calculated by subtracting the slope of the curve between /i/–/e/ from /e/–/ɛ/. The central dashed line represents zero, meaning identical boundary steepness for both contrasts. Notice how the plot is overwhelmingly dominated by orange bars extending to the left. This shows that bilinguals in our sample maintain a much sharper categorical transition for the shared /i/–/e/ baseline than for the mid-vowel contrast. Crucially, when we examine these individual slopes across language modes, operating in a Spanish context does not flatten or attenuate this boundary steepness.
+
+
+
+
+---
+## Task: Novel Word Learning Task
+
+.pull-left[
+
+- **Training Structure:** 8 learning blocks pairing **8 novel words** with unfamiliar objects.
+- **Presentation Conditions:**
+  * **Minimal Pair:** `/pemu/` – `/pɛmu/` 
+  * **Non-Minimal Pair:** `/tisu/` – `/pɛmu/` 
+  * **Control Pair:** `/tisu/` – `/tasu/` 
+
+
+```{r, echo=FALSE}
+library(htmltools)
+
+tags$div(style = "display: flex; flex-direction: column; gap: 8px; margin-top: 10px;",
+  tags$div(style = "background: #F8FAFC; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #388E3C;",
+    tags$p(tags$strong("Target [e]: "), "/pemu/", style = "margin: 0 0 4px 0; font-size: 0.85em; color: #1F2937;"),
+    tags$audio(src = "pemu_1.wav", type = "audio/wav", controls = NA, style = "width: 100%; height: 30px;")
+  ),
+  tags$div(style = "background: #F8FAFC; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #E65100;",
+    tags$p(tags$strong("Target [ɛ]: "), "/pɛmu/", style = "margin: 0 0 4px 0; font-size: 0.85em; color: #1F2937;"),
+    tags$audio(src = "peemu_2.wav", type = "audio/wav", controls = NA, style = "width: 100%; height: 30px;")
+  )
+)
+```
+]
+
+.pull-right[
+```{r , echo=FALSE, out.width="100%", fig.align="center"}
+knitr::include_graphics("wl.png")
+```
+
+
+
+```{r}
+library(ggplot2)
+library(tibble)
+library(showtext)
+
+font_add_google("Noto Sans", "noto")
+showtext_auto()
+
+# 3 Condition Types Data
+conditions_df <- tribble(
+  ~y, ~w1, ~w2, ~title, ~desc, ~color, ~fill,
+  3, "/pemu/", "/pɛmu/", "Minimal Pair", "Critical L2 Target (/e/–/ɛ/)", "#EA580C", "#FFF7ED",
+  2, "/tisu/", "/pɛmu/", "Non-Minimal Pair", "Distinct Consonants & Vowels", "#9333EA", "#FAF5FF",
+  1, "/tisu/", "/tasu/", "Control Pair", "Salient Control Contrast (/i/–/a/)", "#2563EB", "#EFF6FF"
+)
+
+ggplot(conditions_df) +
+  # Word Box 1
+  geom_tile(aes(x = 1.0, y = y), width = 0.85, height = 0.65, fill = "#F8FAFC", color = "#0A2540", linewidth = 0.7) +
+  geom_text(aes(x = 1.0, y = y, label = w1), fontface = "bold", size = 3.6, color = "#0A2540", family = "noto") +
+  
+  # "VS" Connector
+  geom_text(aes(x = 1.7, y = y), label = "vs", fontface = "bold.italic", size = 3.0, color = "#64748B", family = "noto") +
+  
+  # Word Box 2
+  geom_tile(aes(x = 2.4, y = y), width = 0.85, height = 0.65, fill = "#F8FAFC", color = "#0A2540", linewidth = 0.7) +
+  geom_text(aes(x = 2.4, y = y, label = w2), fontface = "bold", size = 3.6, color = "#0A2540", family = "noto") +
+  
+  # Condition Badge Box
+  geom_tile(aes(x = 4.2, y = y, fill = fill, color = color), width = 2.2, height = 0.72, linewidth = 0.8, show.legend = FALSE) +
+  geom_text(aes(x = 4.2, y = y + 0.12, label = title, color = color), fontface = "bold", size = 3.4, family = "noto") +
+  geom_text(aes(x = 4.2, y = y - 0.14, label = desc), size = 2.4, color = "#475569", family = "noto") +
+  
+  scale_fill_identity() +
+  scale_color_identity() +
+  scale_x_continuous(limits = c(0.4, 5.5)) +
+  scale_y_continuous(limits = c(0.4, 3.6)) +
+  theme_void(base_family = "noto") +
+  theme(plot.margin = margin(2, 2, 2, 2))
+```
+]
+
+???
+
+Finally, in Experiment 4, we evaluated novel word learning by pairing eight auditory pseudo-words with unfamiliar visual objects. Participants received immediate visual feedback on each trial. Visual pairings spanned three conditions: target minimal pairs (pemo / pɛmo), control minimal pairs (tisu / tasu), and non-minimal pairs (tisu / pemo)
+
+
+
+Visual pairings are manipulated across three conditions:
+
+Target Minimal Pair Condition: Objects with labels contrasting solely on Catalan mid-vowels (e.g., /pemu/ vs. /pɛmu/).
+
+Control Minimal Pair Condition: Objects with labels contrasting on salient high/low vowels (e.g., /tisu/ vs. /tasu/).
+
+Non-Minimal Pair Condition: Objects with phonologically distinct labels (e.g., /tisu/ vs. /pɛmu/).
+
+Two Levels of Word Learning & Analytical Insights
+Learning in this task operates on two distinct levels:
+
+Coarse-Grained Mapping: Learning that a word form matches a specific visual referent rather than a phonologically distant distractor (e.g., distinguishing /pemu/ from /tisu/). Both children and adults master coarse mapping rapidly within a few blocks, performing well above chance.
+
+Fine-Grained Phonological Encoding: Building robust representations capable of resolving minimal pair competition (distinguishing /pemu/ from /pɛmu/).
+
+---
+
+### Task 4: Novel Word Learning Task
+
+```{r}
+
+# ==============================================================================
+# Task 4: 2-Cutoff Boxplot with Individual Participant Points (Slide 2)
+# Levels: item_type = c("mid", "filler")
+# ==============================================================================
+
+library(tidyverse)
+library(scales)
+library(showtext)
+
+# 1. SETUP NOTO FONT
+font_add_google(name = "Noto Sans", family = "Noto Sans")
+showtext_auto()
+
+# 2. DATA PREPARATION (PARTICIPANT MEANS ACROSS BOTH CUTOFFS)
+WL_c1 <- WL_all_full %>%
+  filter(block >= 3) %>%
+  mutate(Cutoff = "Blocks 3–8")
+
+WL_c2 <- WL_all_full %>%
+  filter(block >= 6) %>%
+  mutate(Cutoff = "Blocks 6–8")
+
+WL_two_cutoffs <- bind_rows(WL_c1, WL_c2) %>%
+  mutate(
+    Cutoff = factor(Cutoff, levels = c("Blocks 3–8", "Blocks 6–8")),
+    Group = factor(Group, levels = c("Children", "Adults")),
+    trial_type = factor(
+      trial_type,
+      levels = c("minimal", "nonminimal"),
+      labels = c("Minimal Pair", "Non-minimal Pair")
+    ),
+    item_type = factor(
+      item_type,
+      levels = c("mid", "filler"),
+      labels = c("Target (/e/–/ɛ/)", "Control (/i/–/a/)")
+    )
+  ) %>%
+  group_by(number, Cutoff, Group, trial_type, item_type) %>%
+  summarise(accuracy = mean(correct, na.rm = TRUE), .groups = "drop")
+
+# 3. FACETED BOXPLOT (2 CUTOFFS x 2 GROUPS)
+p2_cutoff_boxplot <- ggplot(
+  WL_two_cutoffs, 
+  aes(x = item_type, y = accuracy, fill = trial_type)
+) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey50", linewidth = 0.6) +
+  geom_boxplot(
+    position = position_dodge(width = 0.8),
+    width = 0.6,
+    outlier.shape = NA,
+    alpha = 0.6,
+    linewidth = 0.6
+  ) +
+  geom_point(
+    aes(color = trial_type),
+    position = position_jitterdodge(jitter.width = 0.15, dodge.width = 0.8),
+    alpha = 0.35,
+    size = 1.4,
+    show.legend = FALSE
+  ) +
+  facet_grid(Cutoff ~ Group) +
+  scale_y_continuous(labels = percent_format(accuracy = 1), breaks = seq(0, 1, by = 0.2)) +
+  coord_cartesian(ylim = c(0, 1.05)) +
+  scale_fill_manual(values = c("Minimal Pair" = "#D95F02", "Non-minimal Pair" = "#7570B3")) +
+  scale_color_manual(values = c("Minimal Pair" = "#A63603", "Non-minimal Pair" = "#542788")) +
+  labs(
+    x = "Vowel Contrast Type (Item Type)",
+    y = "Participant Mean Accuracy",
+    fill = "Trial Type:"
+  ) +
+  theme_classic(base_family = "Noto Sans", base_size = 12) +
+  theme(
+    panel.grid.major.y = element_line(color = "grey92", linewidth = 0.4),
+    strip.background = element_rect(fill = "grey95", color = NA),
+    strip.text = element_text(face = "bold", size = 11, family = "Noto Sans"),
+    axis.text = element_text(color = "black", size = 9.5, family = "Noto Sans"),
+    axis.title = element_text(face = "bold", size = 10.5, family = "Noto Sans"),
+    legend.position = "top",
+    legend.title = element_text(face = "bold", size = 10, family = "Noto Sans"),
+    legend.text = element_text(size = 9.5, family = "Noto Sans"),
+    plot.margin = margin(10, 15, 10, 10)
+  )
+
+print(p2_cutoff_boxplot)
+```
+
+
+???
+
+X-Axis (Item Type): Displays the vowel contrast type, comparing the Target L2 Contrast ($/\text{e}/ - /\varepsilon/$, mid) against the Control Contrast ($/\text{i}/ - /\text{a}/$, filler).   Y-Axis (Accuracy): Shows mean accuracy, with a 50% dashed reference line representing chance performance.   Color Coding (Trial Type): Distinguishes between Minimal Pairs (e.g., /pemu/ vs. /pɛmu/) and Non-minimal Pairs (e.g., /tisu/ vs. /pɛmu/).   Facets: Compares performance across age groups (Children vs. Adults).
+
+
+Looking at the broader learning trajectories across Blocks 3 through 8, we observe a striking divergence between adults and children.In the initial training blocks, adult accuracy on target mid-vowel minimal pairs averaged around 60 to 65%. However, as exposure accumulated, performance improved systematically, reaching approximately 75% in the final asymptotic blocks. This demonstrates that adults successfully leveraged extended practice to establish sharp, fine-grained mid-vowel representations within newly formed lexical entries.   For the children, however, the pattern is fundamentally different.   Crucially, control conditions confirm that this difficulty is not attributable to task artifact or general learning fatigue. When mapping coarse-grained contrasts—such as non-minimal pairs or control vowel distinctions—children performed near ceiling, demonstrating full task comprehension and robust word-object mapping capabilities.   The bottleneck occurs specifically on target mid-vowel minimal pairs (pemu vs. pɛmu). Across all blocks, child accuracy remained persistently at the 50% chance baseline, showing no significant acquisition curve over time.   These findings indicate that while adults can recruit extended exposure to construct fine-grained phonological specifications from scratch, child learners face a distinct developmental constraint when attempting to encode subtle mid-vowel contrasts into novel lexical representations on the fly. 
+
+
