@@ -42,14 +42,15 @@ library(xaringanExtra)
 # Enable xaringanExtra broadcasting
 
 
-xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast", "banner"))
-
-xaringanExtra::use_animate_all("fade")
-
 
 ```
 
 ```{r xaringan-extra-setup, echo=FALSE}
+
+
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast"))
+
+xaringanExtra::use_animate_all("fade")
 xaringanExtra::use_banner(
   top_left = "Re-Evaluating Phonological Representation in the Early Bilingual Mind",
   top_right = "42 APL",
@@ -4966,18 +4967,14 @@ Turning to our discussion on surface tolerance, coupling our lexical decision re
 
 ## Conclusions
 .conclusion-card.amber[
-.card-title[Cooperative Parallel Co-Activation]
-Language-asymmetric contrasts (e.g., Catalan $/e/$–$/ɛ/$ vs. Spanish $/e/$) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
+Cooperative Parallel Co-Activation: Language-asymmetric contrasts (e.g., Catalan /e/–/ɛ/ vs. Spanish /e/) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
 ]
 
 .conclusion-card.amber[
-.card-title[Surface Tolerance vs. Lexical Storage]
-Lexical decision taps **surface perceptual tolerance** driven by non-canonical community speech, whereas forced-choice preference tasks isolate **canonical underlying representations (URs)**. Models must incorporate dynamic weighting for non-canonical input in perceptual grammars.
+Surface Tolerance vs. Lexical Storage: Lexical decision taps **surface perceptual tolerance** driven by non-canonical community speech, whereas forced-choice preference tasks isolate **canonical underlying representations (URs)**. Models must incorporate dynamic weighting for non-canonical input in perceptual grammars.
 ]
 
-.conclusion-card.amber[
-.card-title[Tier-Specific Input Thresholds]
-Language dominance and exposure predict UR storage significantly better than pre-lexical sensitivity—**phono-lexical encoding demands higher input thresholds** than perceptual discrimination. Models must distinguish input effects across structural tiers.
+.conclusion-card.amber[Tier-Specific Input Thresholds: Language dominance and exposure predict UR storage significantly better than pre-lexical sensitivity, **phono-lexical encoding demands higher input thresholds** than perceptual discrimination. Models must distinguish input effects across structural tiers.
 ]
 
 
