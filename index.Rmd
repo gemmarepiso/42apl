@@ -3471,7 +3471,7 @@ children_stats <- tibble(
   `N (Total)` = 40,
   `Gender (F/M)` = "20 F / 20 M",
   `Age Range` = "7.50 – 10.37 yrs",
-  `Questionnaire Subset` = "N = 25 parent questionnaires (Individual Differences subset)"
+  `Questionnaire Subset` = "N = 28 parent questionnaires (Individual Differences subset)"
 )
 
 # 3. Combine into unified summary table
@@ -4335,7 +4335,7 @@ LD_combined <- bind_rows(
     Condition = factor(
       Condition, 
       levels = c("canonical", "easy", "difficult"),
-      labels = c("Canonical vowel", "Easy vowel swap", "Difficult vowel swap")
+      labels = c("Canonical ", "Easy", "Difficult vowel")
     ),
     Item_type = factor(
       Item_type, 
