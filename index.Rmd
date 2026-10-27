@@ -42,8 +42,14 @@ library(xaringanExtra)
 # Enable xaringanExtra broadcasting
 
 
-xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast"))
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast", "banner"))
 
+xaringanExtra::use_animate_all("fade")
+
+
+```
+
+```{r xaringan-extra-setup, echo=FALSE}
 xaringanExtra::use_banner(
   top_left = "Re-Evaluating Phonological Representation in the Early Bilingual Mind",
   top_right = "42 APL",
@@ -53,11 +59,16 @@ xaringanExtra::use_banner(
 
 xaringanExtra::style_banner(
   text_color = "#F8FAFC",
-  background_color = "#3B6978",
-  selector = ".special-slide"
+  background_color = "#3B6978"
 )
 
+xaringanExtra::use_progress_bar(
+  color = "#0051BA", 
+  location = "top", 
+  height = "10px")
+
 ```
+
 
 
 ```{css, echo = FALSE, eval = FALSE}
@@ -239,8 +250,6 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
     </p>
   </div>
 
---
-
   <!-- Card 02 -->
   <div style="background: #F8FAFC; border-left: 4px solid #3B6978; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
     <div style="display: flex; align-items: center; margin-bottom: 0.15em;">
@@ -253,7 +262,6 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
     </p>
   </div>
 
---
 
   <!-- Card 03 -->
   <div style="background: #F8FAFC; border-left: 4px solid #1E40AF; padding: 0.6em 1em; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
@@ -306,117 +314,12 @@ When we talk about early bilinguals, we refer to individuals who receive regular
 * An early bilingual’s sound system operates within a shared phonetic space, where cross-linguistic interaction is bidirectional, continuous, and dynamic across the lifespan—fluctuating continuously according to shifts in language dominance, additional language acquisition, and environmental input <small>(e.g., Amengual, 2024; Amengual & Simonet, 2020; Birdsong & Amengual, 2021; Flege & Bohn, 2021; Grosjean, 2008; Kupisch et al., 2021; Natvig, 2021; Repiso-Puigdelliura, 2025; Simonet & Amengual, 2020)</small>.
 
 
---
-
-
-
-*Regressive Drift in Early Bilinguals: L3 English Effect on L1 Vowels Language Dominance Mediates Phonetic Permeability (Repiso-Puigdelliura, 2025, *Glossa*)*
-
-.pull-left[
-<div style="background-color: #F8FAFC; border: 1px solid #CBD5E1; border-left: 4px solid #0072B2; padding: 10px 12px; border-radius: 6px; margin: 6px 0;">
-  <div style="color: #0072B2; margin-bottom: 6px; font-size: 0.80rem; font-weight: bold;">
-    Word-external vocalic sequences
-  </div>
-  <div style="margin-bottom: 8px;">
-    <div style="font-weight: bold; color: #1E293B; font-size: 0.73rem;">
-      1. Canonical L1 Catalan (continuous speech):
-    </div>
-    <div style="margin: 2px 0 0 8px; font-size: 0.68rem; color: #334155; line-height: 1.3;">
-      modal phonation (<code>[u.i]</code>):<br>
-      <span style="font-family: monospace; color: #0072B2; font-weight: 600; font-size: 0.66rem;"><em>Perú íntim</em> &#8594; [Pe.ˈru.ˈin.tim]</span>
-    </div>
-  </div>
-  <div>
-    <div style="font-weight: bold; color: #1E293B; font-size: 0.73rem;">
-      2. Regressive L3 Drift (Glottal Insertion):
-    </div>
-    <div style="margin: 2px 0 0 8px; font-size: 0.68rem; color: #334155; line-height: 1.3;">
-      Epenthetic glottal stop <code>[ʔ]</code> before stressed V2 (<code>[u.ˈʔi]</code>):<br>
-      <span style="font-family: monospace; color: #D55E00; font-weight: 600; font-size: 0.66rem;"><em>Perú íntim</em> &#8594; [Pe.ˈruˈʔin.tim]</span>
-    </div>
-  </div>
-</div>
-
-
-]
-
-.pull-right[
-
-
-
-```{r, out.width="90%", fig.align="center"}
-# ==============================================================================
-# Regressive Glottal Drift by L3 Rate & Prosodic Stress (Panel A Only)
-# Repiso-Puigdelliura (2025), Glossa
-# ==============================================================================
-
-library(ggplot2)
-library(dplyr)
-
-# 1. Generate Synthetic Data for Panel A
-x <- seq(0, 100, length.out = 150)
-
-logistic <- function(x, x0, k, max_val) {
-  max_val / (1 + exp(-k * (x - x0)))
-}
-
-df_plot <- data.frame(
-  x = rep(x, 4),
-  y = c(
-    logistic(x, 45, 0.08, 0.72), # Cat Stressed
-    logistic(x, 60, 0.05, 0.32), # Cat Unstressed
-    logistic(x, 40, 0.09, 0.81), # Spa Stressed
-    logistic(x, 55, 0.06, 0.38)  # Spa Unstressed
-  ),
-  Language = factor(rep(c("L1 Catalan", "L1 Catalan", "L1 Spanish", "L1 Spanish"), each = 150)),
-  Stress = factor(rep(c("V2 Stressed", "V2 Unstressed", "V2 Stressed", "V2 Unstressed"), each = 150)),
-  Group = factor(rep(c("L1 Catalan (V2 Stressed)", "L1 Catalan (V2 Unstressed)", 
-                        "L1 Spanish (V2 Stressed)", "L1 Spanish (V2 Unstressed)"), each = 150))
-)
-
-# 2. Plot Panel A
-p_panelA <- ggplot(df_plot, aes(x = x, y = y, color = Group, linetype = Stress)) +
-  geom_line(linewidth = 1.2) +
-  scale_color_manual(values = c(
-    "L1 Catalan (V2 Stressed)" = "#0072B2",
-    "L1 Catalan (V2 Unstressed)" = "#0072B2",
-    "L1 Spanish (V2 Stressed)" = "#D55E00",
-    "L1 Spanish (V2 Unstressed)" = "#D55E00"
-  )) +
-  scale_linetype_manual(values = c("V2 Stressed" = "solid", "V2 Unstressed" = "dashed")) +
-  scale_y_continuous(limits = c(0, 1.0), breaks = seq(0, 1, 0.2)) +
-  scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
-  labs(
-    title = "Regressive Glottal Drift by L3 Rate & Prosodic Stress",
-    subtitle = "Higher L3 English glottal marking rate increases glottal insertion in L1 Catalan & Spanish",
-    x = "L3 English Glottal Marking Rate (%)",
-    y = "Predicted Probability of L1 Glottal Insertion",
-    caption = "Repiso-Puigdelliura (2025), Glossa"
-  ) +
-  theme_minimal(base_family = "Noto Sans", base_size = 11) +
-  theme(
-    plot.title = element_text(face = "bold", size = 12, color = "#0A2540"),
-    plot.subtitle = element_text(size = 9.5, color = "#3B6978"),
-    plot.caption = element_text(size = 8.5, color = "#64748B", face = "italic"),
-    legend.position = "bottom",
-    legend.title = element_blank(),
-    panel.grid.minor = element_blank()
-  )
-
-print(p_panelA)
-ggsave("glossa_regressive_glottal_drift.png", plot = p_panelA, width = 7, height = 5.2, dpi = 300)
-
-```
-
-]
-
 
 ???
 
 To understand this cross-linguistic interaction, we must probably reject the notion of two isolated mental compartments. Instead, an early bilingual sound system probably operates as an integrated, multi-level architecture sharing a single—as an integrated, multi-level architecture. Early speech models, such as the Speech Learning Model, for example, proposed that bilinguals have a single phonetic space.
 
-Now, cross-linguistic interaction is bidirectional and continuous, and it dynamically fluctuates with real-time shifts in dominance in the environmental input. Crucially, this holds true even for sequential bilinguals. Let me here just digress for one second: to provide empirical evidence for this lifespan phonetic permeability, my 2025 study in Glossa evaluates regressive cross-linguistic influence from an L3 (in this case, English) into an L1 Catalan and Spanish (in this case, our early Catalan-Spanish bilinguals). Now, in canonical L1 Catalan and Spanish, vowel-to-vowel sequences across words, such as in perú íntim [parú íntim], the two vowels—the word-final vowel and the vowel-initial at the word boundary of the second word—are produced with a modal transition, so with continuous speech. But in English, there is an option of inserting a glottal stop, so this would sound something like perú [ʔ]íntim.So, what I found is that specifically for speakers who had had experience living abroad in English-speaking countries, they showed transfer from an L3 or a foreign language (L$n$, in this case) into their L1 Catalan and Spanish. This graph shows percentage of glottalization on the y-axis, and then use of glottal marking in their English, and that also correlated with exposure to English. Ultimately, this confirms that even early-acquired native sound systems remain permeable across the lifespan
-
+Now, cross-linguistic interaction is bidirectional and continuous, and it dynamically fluctuates with real-time shifts in dominance in the environmental input. Crucially, this holds true even for sequential bilinguals. 
 
 
 ---
@@ -456,18 +359,19 @@ We can see here in Figure A how child and adult bilinguals on the right show a r
 ```{r ,  fig.width=9.5, fig.height=6.5, out.width="90%"}
 library(ggplot2)
 library(dplyr)
+library(tidyverse)
 
-# 1. Define L2LP Representational Levels
+# 1. Define L2LP / BiPhon Representational Levels
 levels_l2lp <- tribble(
   ~xmin, ~xmax, ~ymin, ~ymax, ~title, ~spec, ~domain,
   2.3, 5.7, 5.2, 6.0, "Semantic Representation (SemR)", "Meaning & Morphemes", "Phonology",
   2.3, 5.7, 4.0, 4.8, "Underlying Representation (UR)", "| Lexical Categories / Target Forms |", "Phonology",
   2.3, 5.7, 2.8, 3.6, "Surface Representation (SR)", "/ Phonological Features & Segments /", "Phonology",
   2.3, 5.7, 1.6, 2.4, "Auditory Representation (AudR)", "[ Acoustic Cues & Continuous Distribution ]", "Phonetics",
-  2.3, 5.7, 0.4, 1.2, "Articulatory Representation (ArtR)", "[ Motor Execution & Gestures ]", "Phonetics"
+  2.3, 5.7, 0.4, 1.2, "Articulatory Representation (ArtR)*", "[[ Motor Execution & Gestures ]] (BiPhon only; absent in L2LP)", "Phonetics"
 )
 
-# 2. Grammar Mappings & Acquisition Mechanisms (L2LP Mechanisms)
+# 2. Grammar Mappings & Acquisition Mechanisms
 grammars_l2lp <- tribble(
   ~x, ~y, ~label,
   4.0, 4.9, "Lexical Mapping (UR ↔ SemR)",
@@ -492,7 +396,7 @@ ggplot() +
   geom_text(data = levels_l2lp, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 + 0.12, label = title),
             fontface = "bold", size = 3.8, color = "white") +
   geom_text(data = levels_l2lp, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2 - 0.15, label = spec),
-            fontface = "italic", size = 3.0, color = "grey95") +
+            fontface = "italic", size = 2.8, color = "grey95") +
   
   # Grammar Mappings
   geom_label(data = grammars_l2lp, aes(x = x, y = y, label = label),
@@ -503,8 +407,6 @@ ggplot() +
   geom_label(data = acq_mechanisms, aes(x = x, y = y, label = label),
              fill = "#FFF2CC", color = "#7F6000", size = 2.7, fontface = "bold",
              label.padding = unit(0.3, "lines"), border.color = "#D6B656") +
-             
-  # Directional Flow Arrows
 
   # Manual Color Scales
   scale_fill_manual(values = c("Phonology" = "#0072B2", "Phonetics" = "#E69F00")) +
@@ -512,9 +414,8 @@ ggplot() +
   scale_y_continuous(limits = c(0.1, 6.6)) +
   
   labs(
-   
     subtitle = "Based on Second Language Linguistic Perception Model (Escudero, 2005, 2009; Yazawa and Escudero, 2025) and BiPhon (Boersma, 2007, 2011)",
-    caption = "References:\n- Boersma, P. (2007, 2011). BiPhon Model. | Escudero, P. (2005, 2009). Second Language Linguistic Perception (L2LP) Model.\n- Boersma & Escudero (2008). Computational modeling of L2 perception in Stochastic OT / HG."
+    caption = "Note: *Articulatory Representation (ArtR) and Sensorimotor Grammar are present in BiPhon but excluded in standard L2LP perceptual architecture.\nReferences:\n- Boersma, P. (2007, 2011). BiPhon Model. | Escudero, P. (2005, 2009). Second Language Linguistic Perception (L2LP) Model.\n- Boersma & Escudero (2008). Computational modeling of L2 perception in Stochastic OT / HG."
   ) +
   theme_void(base_size = 12) +
   theme(
@@ -543,11 +444,12 @@ Phonological Grammar: This matches these surface categories to canonical underly
 
 Lexical Constraints: These link underlying target representations to their semantic lexical forms.
 
-Under the L2LP model, which draws on full access, when a second language learner learns a second language, they copy their L1 grammar. So, second language acquisition begins with a complete duplicate of the listener's L1 optimal perception grammar. Cue constraints are copied in full to form the L2 initial state. This transfer operates across two distinct mappings:
+Under the Second Language Linguistic Perception Model model, which draws on full access, when a second language learner learns a second language, they copy their L1 grammar. So, second language acquisition begins with a complete duplicate of the listener's L1 optimal perception grammar. Cue constraints are copied in full to form the L2 initial state. This transfer operates across two distinct mappings:
 
 First, at the pre-lexical level, where L1 cue constraints filter the L2 acoustic input.
 
 Second, at the lexical level, where merged surface categories fail to trigger lexical targets.
+
 
 For example, take native Spanish speakers learning the Portuguese mid-vowel contrast in avô /a'vo/ versus avó /a'vɔ/. At the pre-lexical level, because the copied Spanish perception grammar lacks an open-mid vowel category /ɔ/ and contains only one back mid-vowel /o/, Spanish cue constraints map both Portuguese acoustic tokens of avô and avó onto the single surface category /o/. And at the lexical level, because surface perception outputs only /o/ for both items, the lexicon builder receives no phonological evidence to construct two separate targets, mapping both words onto a single underlying representation /a'vo/ and creating spurious homophony in memory.
 
@@ -628,7 +530,7 @@ ggplot() +
 
 
 ???
-Now, what happens with early bilinguals, however?  The L2LP speech model also accounts for simultaneous bilingual acquisition, but here, rather than forcing both languages into a copy of one or the other, the model posits that two systems can develop, establishing distinct bidirectional architectures that run in parallel.
+Now, early bilinguals develop the two grammars in parallel. So how is transfer modeled in this case?  The L2LP speech model leaves the explanation of transfer to cognitive constraints.
 
 Depending on the communicative context, executive control mechanisms modulate the systems through activation and inhibition. For example, when a bilingual is in monolingual mode, Grammar A is fully activated, enabling rapid feed-forward comprehension and top-down production. Meanwhile, Grammar B is suppressed through mechanisms of inhibitory control, which prevents cross-linguistic interference and involuntary code-switching. The degree to which these languages are activated or inhibited may ultimately result in cross-linguistic transfer, but this is crucially not left to the grammar, but left to executive control.
 
@@ -638,21 +540,31 @@ Depending on the communicative context, executive control mechanisms modulate th
 
 
 ---
-##  Open Questions in Current L2 Frameworks
+##  Some Considerations of Current L2 Frameworks
 
--   In general, L2 models <small>(SLM-r, PAM-L2, L2LP)</small> explain how new L2 categories emerge from L1 categories or cue weightings, but do not offer integrated mechanisms for real-time category co-existence in **simultaneous bilinguals**.
+-   In general, L2 models <small>(SLM-r, PAM-L2, L2LP)</small> explain how new L2 categories emerge from L1 categories or cue weightings, but do not offer grammar-integrated mechanisms for real-time language transfer in **simultaneous bilinguals**.
 
 
 -  They presume stable, homogeneous input, ignoring how **community-level input variability** (e.g., regional/accented speech) continuously reshapes sound categorization.
 
--  They assume prelexical perception directly dictates phonolexical encoding.
+-  They assume prelexical perception directly dictates phonolexical encoding. Distinction at the lexical level can arise without prelexical discrimination <small>(e.g., Cutler et al., 2005)</small> and lexical encoding is not guaranteed under prelexical discrimination <small>(Darcy et al., 2012, 2013; Darcy & Rothgerber, 2020)</small>.
+
+<br>
+<br>
+<br>
+
+
+<small>Distinction at the lexical level without prelexical discrimination can also be resolved through orthography, as multi-modal representations and written cues integrate directly into phonological categorization and lexical encoding (Zhou & Hamann, 2026).</small>
 
 ???
-Now, when evaluating existing models of non-native and second language speech perception, such as the one presented, we encounter several theoretical limitations:
+Now that we’ve reviewed the core architecture of these models, I’d like to highlight three critical limitations when applying them—specifically to early bilingual populations.
 
-Model Scope: These models were primarily built to explain how an L2 emerges from an established L1 grammar. So, these parts of the models are fully developed and are more developed than the parts of the models where early bilingual grammars are explained. As we have seen, even though the L2LP speech model provides a mechanism to explain early bilingual grammars through inhibition and activation, those mechanisms seem to operate outside of the grammar itself and are attributed to general cognitive mechanisms. While this may be the case, it remains to be evaluated whether that is indeed so or whether an interaction between the two grammars occurs within the grammar itself as well.
+First, Model Scope. These frameworks succeed in explaining how new L2 categories emerge from an established L1 sound system. However, they lack integrated grammatical mechanisms to account for real-time language interaction in simultaneous bilinguals. When mechanisms like activation and inhibition are proposed, they are typically treated as external domain-general cognitive processes, leaving the question open as to whether cross-linguistic interaction can occur directly within the grammar itself.
 
-Input Assumptions: Classic frameworks assume a stable, homogeneous input. In reality, however, specifically when we are talking about bilinguals that live in a situation of sustained bilingualism, they live in dynamic sociolinguistic environments that are characterized by high variability at the input level.Finally, these models assume a direct mapping between prelexical perception and phonolexical storage, where surface representations are passed directly onto underlying ones. Consequently, there is a carry-over from surface representations to phonolexical encoding—an assumption that must be evaluated across all contexts, as we will do in this presentation.   
+Second, Input Assumptions. Classic models presume a stable, homogeneous acoustic input. In reality, sustained bilinguals navigate dynamic sociolinguistic environments with high community-level variability—such as regional variation or accented speech—which continuously reshapes sound categorization over time.
+
+And third, Direct Mapping Assumptions. These models assume prelexical perception directly dictates phonolexical encoding. That is, surface representations are passed directly into underlying forms. This assumes a strict carry-over from surface-level perception to lexical representation—an assumption we will be evaluating today"
+
 
 ---
 
@@ -2283,7 +2195,7 @@ Regarding our core question on language mode effects, results demonstrate overal
   - The *lexicon builder* processes perceived surface forms (`/SF/`) to create underlying forms (`|UF|`).
   - Continuous mapping to a single surface category (e.g., `/e/` for both vowels) provides **no input evidence** to establish separate `|UF|` entries.
 
-* However, empirical work shows that perception and lexical encoding can decouple, accurate prelexical discrimination does not guarantee distinct lexical encoding  <small>(Darcy et al., 2012, 2013; Darcy & Rothgerber, 2020)</small>.
+* However, empirical work shows that perception and lexical encoding can decouple, accurate prelexical discrimination does not guarantee distinct lexical encoding  <small>(Darcy et al., 2012, 2013; Darcy & Rothgerber, 2020)</small> and lexical discrimination can exist without prelexical discrimination <small>(e.g., Cutler et al., 2005)</small>.
 
 
 ???
@@ -5053,23 +4965,21 @@ Turning to our discussion on surface tolerance, coupling our lexical decision re
 ---
 
 ## Conclusions
-
-## Conclusions
-
-.conclusion-card.blue[
-.card-title[1. Cooperative co-Activation]
-Language-asymmetric contrasts (e.g., Catalan /e/- ɛ/ vs. Spanish /e/) enable parallel co-activation **without category overlap** or top-down boundary suppression. Theoretical models need to incorporate phonology-sensitive activation level. 
+.conclusion-card.amber[
+.card-title[Cooperative Parallel Co-Activation]
+Language-asymmetric contrasts (e.g., Catalan $/e/$–$/ɛ/$ vs. Spanish $/e/$) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
 ]
 
 .conclusion-card.amber[
-.card-title[ 2. Input-driven tolerance vs. underlying representations]
-Lexical decision taps **surface-level perceptual tolerance** driven by community input, whereas paired lexical preference is required to uncover **underlying representations (URs)**. Theoretical models should include mechanisms for activating community input in the perceptual grammars.
+.card-title[Surface Tolerance vs. Lexical Storage]
+Lexical decision taps **surface perceptual tolerance** driven by non-canonical community speech, whereas forced-choice preference tasks isolate **canonical underlying representations (URs)**. Models must incorporate dynamic weighting for non-canonical input in perceptual grammars.
 ]
 
-.conclusion-card.green[
-.card-title[ 3. Differential Input Thresholds]
-Language dominance and exposure predict UR storage far better than prelexical perception—**phonolexical encoding requires a higher input threshold** than perceptual discrimination. Theoretical models should include the effects of input a different levels of the representation.
+.conclusion-card.amber[
+.card-title[Tier-Specific Input Thresholds]
+Language dominance and exposure predict UR storage significantly better than pre-lexical sensitivity—**phono-lexical encoding demands higher input thresholds** than perceptual discrimination. Models must distinguish input effects across structural tiers.
 ]
+
 
 
 ???
@@ -5269,7 +5179,7 @@ levels_df <- tribble(
   2.3, 5.7, 4.0, 4.8, "Underlying Representation (UR)", "| Abstract Phonological Word |", "Phonology",
   2.3, 5.7, 2.8, 3.6, "Surface Representation (SR)", "/ Distinctive Phonological Features /", "Phonology",
   2.3, 5.7, 1.6, 2.4, "Auditory Representation (AudR)", "[ Continuous Acoustic / Formant Space ]", "Phonetics",
-  2.3, 5.7, 0.4, 1.2, "Articulatory Representation (ArtR)", "[ Motor Gestures & Muscle Execution ]", "Phonetics"
+  2.3, 5.7, 0.4, 1.2, "Articulatory Representation (ArtR)", "[[ Motor Gestures & Muscle Execution ]]", "Phonetics"
 )
 
 # 2. Grammar Modules / Mapping Constraints (Between Levels)
