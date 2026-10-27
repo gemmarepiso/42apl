@@ -45,14 +45,18 @@ library(xaringanExtra)
 
 xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast"))
 
-xaringanExtra::use_animate_all("slide_left")
 xaringanExtra::use_banner(
   top_left = "Re-Evaluating Phonological Representation in the Early Bilingual Mind",
   top_right = "42 APL",
   bottom_left = "Gemma Repiso-Puigdelliura",
   exclude = "title-slide"
 )
-xaringanExtra::use_fit_screen()
+
+xaringanExtra::style_banner(
+  text_color = "#F8FAFC",
+  background_color = "#3B6978",
+  selector = ".special-slide"
+)
 
 ```
 
