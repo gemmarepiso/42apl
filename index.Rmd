@@ -1124,7 +1124,7 @@ A similar effect of language dominance was reported in a study by Ramon-Casas et
 
 ???
 
-In sum, the literature provides a static snapshot based on single-session tasks. This leaves open a fundamental question, which we examine next: is this prelexical contrast fixed, or does operating in Spanish mode attenuate boundary sharpness for Catalan-dominant bilinguals? Conversely, does operating in Catalan mode trigger greater boundary sharpness for Spanish-dominant bilinguals?
+These studies show discrimination of the contrast at the prelexical level using a statisc snapshot of the bilingual at one point in time. However, we have said that sound categories could be dynamically malleable. This leaves open a fundamental question, which we examine next: is this prelexical contrast fixed, or does it change depending on the communicative context? 
 
 ---
 class: inverse, center, middle
@@ -2040,7 +2040,7 @@ p_gaussian <- ggplot(data.frame(F1 = c(350, 700)), aes(x = F1)) +
                 aes(color = "Spanish-Accented /E/ Input"), linewidth = 1.2, linetype = "dashed") +
   
   # Annotation arrow pointing to overlap
-  annotate("text", x = 400, y = 0.014, label = "Overlapping Input Range\n(/E/ produced with close-vowel F1)", 
+  annotate("text", x = 400, y = 0.014, label = "Overlapping Input Range\n(low-mid vowel produced with close-vowel F1)", 
            fontface = "bold", size = 3.3, color = "#B8860B") +
   annotate("segment", x = 440, xend = 485, y = 0.013, yend = 0.011,
            arrow = arrow(length = unit(0.25, "cm")), color = "#E69F00", linewidth = 1) +
@@ -2088,7 +2088,7 @@ Second, we found a Catalan dominance effect across the /e/–/ɛ/ continuum. Thi
 ## Discussion 
 
 
-* **Stability across language modes:** Boundary location (*x*₀) and steepness (*s*) remain invariant across Catalan and Spanish contexts → **Spanish mode does not suppress non-target categories**. But, in Catalan mode high acuity listeners have enhanced perception in [e]-like tokens (activating a denser mid-vowel space demands higher acoustic acuity.)
+* **Stability across language modes:** Boundary location and steepness remain invariant across Catalan and Spanish contexts → **Spanish mode does not suppress non-target categories**. But, in Catalan mode high acuity listeners have enhanced perception in [e]-like tokens (activating a denser mid-vowel space demands higher acoustic acuity.)
 
 
 
@@ -2189,7 +2189,7 @@ knitr::include_graphics("biphon_coactivated_ggplot2-v2.png")
 ```
 ???
 
-Regarding our core question on language mode effects, results demonstrate overall stability across language modes in both category boundary location and boundary sharpness. This indicates that operating in Spanish mode does not suppress non-target phonemic categories when a contrast exists in only one of the bilingual's languages. Rather than deactivating the non-target system, the Catalan perceptual grammar remains active to process mid-vowel distinctions. Contrary to classical inhibition models, because the Spanish mid-vowel system contains only a single mid-vowel category and presents no direct competition, the Catalan perceptual grammar can remain active without causing processing conflicts. Furthermore, listeners with high acoustic acuity exhibited enhanced perceptual resolution for /e/-like tokens specifically when tested in Catalan mode. This interaction suggests that higher language activation in Catalan mode engages a perceptual grammar designed for a denser acoustic space, which differentiates /e/ and /ɛ/. Consequently, high sensory acuity provides greater perceptual advantage in a crowded mid-vowel space than in a less dense system like Spanish
+Regarding our core question on language mode effects, results demonstrate overall stability across language modes in both category boundary location and boundary sharpness. This indicates that operating in Spanish mode does not suppress non-target phonemic categories when a contrast exists in only one of the bilingual's languages. Rather than deactivating the non-target system, the Catalan perceptual grammar remains active to process mid-vowel distinctions. Because the Spanish mid-vowel system contains only a single mid-vowel category and presents no direct competition, the Catalan perceptual grammar can remain active without causing processing conflicts. Furthermore, listeners with high acoustic acuity exhibited enhanced perceptual resolution for /e/-like tokens specifically when tested in Catalan mode. This interaction suggests that higher language activation in Catalan mode engages a perceptual grammar designed for a denser acoustic space, which differentiates /e/ and /ɛ/. Consequently, high sensory acuity provides greater perceptual advantage in a crowded mid-vowel space than in a less dense system like Spanish
 
 ---
 
@@ -3477,7 +3477,7 @@ children_stats <- tibble(
   `N (Total)` = 40,
   `Gender (F/M)` = "20 F / 20 M",
   `Age Range` = "7.50 – 10.37 yrs",
-  `Questionnaire Subset` = "N = 25 parent questionnaires (Individual Differences subset)"
+  `Questionnaire Subset` = "N = 28 parent questionnaires (Individual Differences subset)"
 )
 
 # 3. Combine into unified summary table
@@ -4341,7 +4341,7 @@ LD_combined <- bind_rows(
     Condition = factor(
       Condition, 
       levels = c("canonical", "easy", "difficult"),
-      labels = c("Canonical vowel", "Easy vowel swap", "Difficult vowel swap")
+      labels = c("Canonical", "Easy", "Difficult")
     ),
     Item_type = factor(
       Item_type, 
@@ -4954,19 +4954,21 @@ First, Lexical Decision (LD) shows no meaningful correlation with pre-lexical ac
 # Discussion
 
 
-* **Surface tolerance**: High mispronunciation acceptance in Lexical Decision reflects flexible online surface tolerance (/SF/) to variable community speech, rather than imprecise underlying representations. However, our results show quite a lot of variation at th individual level.
-* **Input-driven parsing**: The directional asymmetry (accepting [e] for /ɛ/ targets) directly mirrors Spanish-accented input, demonstrating a parser that adapts to the variable input.
+* **Input-driven tolerance**: High acceptance of vowel swaps in Lexical Decision coupled with above chance performance in Lexical Preference task reflects flexible online tolerance to variable community speech, rather than imprecise underlying representations. 
+
+  - The directional asymmetry (accepting [e] for /ɛ/ targets) directly mirrors Spanish-accented input, demonstrating a parser/grammar that adapts to the variable input.
+  - Caveat, our results show quite a lot of variation at th individual level.
 
 
-* **Catalan home input and language dominance** directly consolidate underlying representations against variable community speech across both mid-vowels. Being exposed to more input may mean higher probability that you hear input with the mid vowel contrast.
 
-* There may be a higher threshold for input in phonolexical encoding than in prelexical discrimination because for the former speakers need word-by-word input.
+* **Catalan home input and language dominance** directly consolidate underlying representations against variable community speech across both mid-vowels. 
+
 
 
 
 ???
 
-Turning to our discussion on surface tolerance, coupling our lexical decision results with our lexical preference data demonstrates that the acceptance of vowel swaps—or mispronunciations—reflects online perceptual tolerance for Spanish-accented community input, rather than imprecise or "fuzzy" underlying representations in memory. Crucially, however, our data reveals substantial individual variation. In particular, children performed below chance in the lexical preference task, indicating that while these results reflect broad population trends, they do not apply identically across every individual speaker in our sample.Second, we observed a distinct directional asymmetry: speakers exhibit greater certainty regarding the phonolexical encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This directional bias directly mirrors ambient Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$.Third, Catalan home exposure and language dominance serve to consolidate underlying representations against variable community speech. A Catalan-dominant profile combined with higher home exposure increases the cumulative probability of encountering canonical mid-vowel tokens, thereby stabilizing long-term memory targets across both $/e/$ and $/ɛ/$.Finally, our findings point toward a differential input threshold hypothesis between prelexical perception and phonolexical encoding. While prelexical acoustic discrimination can be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold—demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory.
+Turning to our discussion on surface tolerance, coupling our lexical decision results with our lexical preference data demonstrates that the acceptance of vowel swaps—or mispronunciations—reflects online perceptual tolerance for Spanish-accented community input, rather than imprecise or "fuzzy" underlying representations in memory. Crucially, however, our data reveals substantial individual variation. In particular, children performed below chance in the lexical preference task, indicating that while these results reflect broad population trends, they do not apply identically across every individual speaker in our sample.Second, we observed a distinct directional asymmetry: speakers exhibit greater certainty regarding the phonolexical encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This directional bias directly mirrors ambient Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$. Next, Catalan home exposure and language dominance serve to consolidate underlying representations against variable community speech. A Catalan-dominant profile combined with higher home exposure increases the cumulative probability of encountering canonical mid-vowel tokens, thereby stabilizing long-term memory targets across both $/e/$ and $/ɛ/$.Finally, our findings point toward a differential input threshold hypothesis between prelexical perception and phonolexical encoding. While prelexical acoustic discrimination can be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold—demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory.
 
 ---
 
@@ -4974,7 +4976,7 @@ Turning to our discussion on surface tolerance, coupling our lexical decision re
 
 
 .conclusion-card.amber[
-Cooperative Parallel Co-Activation: Language-asymmetric contrasts (e.g., Catalan /e/–/ɛ/ vs. Spanish /e/) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
+Cooperative Parallel Co-Activation: Asymmetric contrasts (e.g., Catalan /e/–/ɛ/ vs. Spanish /e/) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
 ]
 
 .conclusion-card.amber[
@@ -4988,9 +4990,9 @@ Surface Tolerance vs. Lexical Storage: Lexical decision taps **surface perceptua
 
 ???
 
-To conclude, our findings offer three key insights for modeling bilingual phonetics and phonology:   Parallel Coactivation of Perceptual Grammars: Results from Study 1 demonstrate parallel coactivation of dual perceptual grammars. This occurs when a contrast is present in one language but absent in the other, avoiding direct cross-linguistic competition. Theoretical architectures must incorporate mechanisms that account for this coactivation.   
+To conclude, our findings offer three key insights for modeling bilingual phonetics and phonology:   Parallel Coactivation of Perceptual Grammars: Results from Study 1 demonstrate parallel coactivation of dual perceptual grammars. This occurs when a contrast is present in one language but absent in the other, avoiding direct cross-linguistic competition. This means that the the inhibitory process can be sensitive to the grammatical representation. Therefore, we believe that theoretical architectures must incorporate mechanisms that account for this coactivation.   
 
-Comparing lexical decision with lexical preference tasks reveals that speakers exhibit tolerance to variable ambient input. A standard lexical decision task alone is insufficient to reliably isolate underlying storage in bilinguals exposed to sustained variation. Comprehensive models must account for how speakers parse input variability and incorporate flexible surface-level mapping
+Our findings for study 2, comparing lexical decision with lexical preference tasks reveals that speakers exhibit tolerance to variable ambient input. First, this may mean that a standard lexical decision task alone is insufficient to reliably isolate underlying representations in bilinguals exposed to sustained variation. And our lexical preference task has been proved to be more informative to test vocalic preferences. Models of bilingual speech should thus account this flexible mapping at either level of the representation. 
 
 Language dominance and cumulative exposure serve as stronger predictors of underlying phonolexical encoding than prelexical discrimination abilities alone. Crucially, future models must account for how differential input yields distinct effects across phonetic versus phonological levels of representation.
 
@@ -5769,5 +5771,134 @@ X-Axis (Item Type): Displays the vowel contrast type, comparing the Target L2 Co
 
 
 Looking at the broader learning trajectories across Blocks 3 through 8, we observe a striking divergence between adults and children.In the initial training blocks, adult accuracy on target mid-vowel minimal pairs averaged around 60 to 65%. However, as exposure accumulated, performance improved systematically, reaching approximately 75% in the final asymptotic blocks. This demonstrates that adults successfully leveraged extended practice to establish sharp, fine-grained mid-vowel representations within newly formed lexical entries.   For the children, however, the pattern is fundamentally different.   Crucially, control conditions confirm that this difficulty is not attributable to task artifact or general learning fatigue. When mapping coarse-grained contrasts—such as non-minimal pairs or control vowel distinctions—children performed near ceiling, demonstrating full task comprehension and robust word-object mapping capabilities.   The bottleneck occurs specifically on target mid-vowel minimal pairs (pemu vs. pɛmu). Across all blocks, child accuracy remained persistently at the 50% chance baseline, showing no significant acquisition curve over time.   These findings indicate that while adults can recruit extended exposure to construct fine-grained phonological specifications from scratch, child learners face a distinct developmental constraint when attempting to encode subtle mid-vowel contrasts into novel lexical representations on the fly. 
+
+
+
+---
+## Correlation across tasks
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(patchwork)
+library(ragg)
+library(showtext)
+
+# ==============================================================================
+# 1. SETUP NOTO FONT
+# ==============================================================================
+font_add_google(name = "Noto Sans", family = "Noto Sans")
+showtext_auto()
+
+# ==============================================================================
+# 2. HELPER FUNCTION TO GENERATE UPPER-TRIANGULAR CORRELATION HEATMAPS
+# ==============================================================================
+plot_cor_heatmap <- function(data_subset, title_label) {
+  # Tasks order
+  task_vars <- c("XAB", "LD", "LP", "WL")
+  
+  # Compute Pearson correlation matrix
+  cor_mat <- cor(data_subset[, task_vars], use = "pairwise.complete.obs")
+  
+  # Mask lower triangle for clean upper-triangular display
+  cor_mat[lower.tri(cor_mat)] <- NA
+  
+  # Convert to tidy long format
+  df_cor <- as.data.frame(cor_mat) %>%
+    rownames_to_column(var = "Var1") %>%
+    pivot_longer(-Var1, names_to = "Var2", values_to = "r") %>%
+    filter(!is.na(r)) %>%
+    mutate(
+      Var1 = factor(Var1, levels = task_vars),
+      Var2 = factor(Var2, levels = rev(task_vars)) # Reverse y-axis for standard matrix layout
+    )
+  
+  # Heatmap Plot
+  ggplot(df_cor, aes(x = Var1, y = Var2, fill = r)) +
+    # White background grid lines between tiles
+    geom_tile(color = "white", linewidth = 1.5) +
+    
+    # Correlation value labels
+    geom_text(
+      aes(
+        label = sprintf("%.2f", r),
+        color = abs(r) > 0.55 # Dynamic text contrast (white text on dark background)
+      ),
+      family = "Noto Sans",
+      fontface = "bold",
+      size = 4.2
+    ) +
+    
+    # Diverging color scale (-1 to +1)
+    scale_fill_gradient2(
+      low = "#2B5C8F",      # Deep blue for negative correlations
+      mid = "#F7F7F7",      # Neutral grey-white for 0
+      high = "#D95F02",     # Orange-red for positive correlations
+      limits = c(-1, 1),
+      breaks = seq(-1, 1, by = 0.5),
+      name = "Pearson r: "
+    ) +
+    
+    # Text contrast color manual scale
+    scale_color_manual(values = c("TRUE" = "white", "FALSE" = "black"), guide = "none") +
+    
+    # Panel Title & Axis Formatting
+    labs(
+      title = title_label,
+      x = NULL,
+      y = NULL
+    ) +
+    coord_fixed() + # Ensure square cells
+    theme_minimal(base_family = "Noto Sans", base_size = 13) +
+    theme(
+      plot.title = element_text(face = "bold", size = 14, family = "Noto Sans", hjust = 0.5, margin = margin(b = 10)),
+      axis.text = element_text(face = "bold", size = 11, color = "black", family = "Noto Sans"),
+      panel.grid = element_blank(),
+      legend.position = "bottom",
+      legend.title = element_text(face = "bold", size = 11, family = "Noto Sans"),
+      legend.text = element_text(size = 10, family = "Noto Sans"),
+      legend.key.width = unit(1.8, "cm"),
+      legend.key.height = unit(0.4, "cm"),
+      plot.margin = margin(10, 15, 10, 15)
+    )
+}
+
+# ==============================================================================
+# 3. GENERATE INDIVIDUAL GROUP PLOTS
+# ==============================================================================
+perf_children <- task_performance %>% filter(Group == "Children")
+perf_adults   <- task_performance %>% filter(Group == "Adults")
+
+plot_cor_ch <- plot_cor_heatmap(perf_children, "A) Children")
+plot_cor_ad <- plot_cor_heatmap(perf_adults,   "B) Adults")
+
+# ==============================================================================
+# 4. COMBINE WITH PATCHWORK AND EXPORT HIGH-RES GRAPHIC
+# ==============================================================================
+cor_combined_plot <- plot_cor_ch + plot_cor_ad +
+  plot_layout(guides = "collect") +
+  theme(
+    legend.position = "bottom",
+    legend.margin = margin(t = 12)
+  )
+
+# Export with roomier aspect ratio to prevent compression
+ggsave(
+  "cross_task_correlations_noto.png",
+  plot = cor_combined_plot,
+  device = ragg::agg_png,
+  width = 10.5,
+  height = 6.0,
+  dpi = 300
+)
+
+# Display Plot
+knitr::include_graphics("cross_task_correlations_noto.png")
+
+```
+
+???
+
+Crucially, our cross-task correlation analysis reveals a striking developmental dissociation:In adults, stored phonolexical fidelity—measured in Lexical Preference—strongly predicts novel word learning performance ($r = .816, p < .001$). Adults directly leverage the precision of their existing lexical targets as structural templates when encoding new vocabulary.In children, however, this correlation drops to zero ($r = .075$, non-significant). Even though bilingual children possess well-specified representations for familiar words, that memory precision does not automatically guarantee successful novel word encoding. This proves that directly coupling stored phonolexical targets to the dynamic process of building new words is an emergent developmental milestone that matures between childhood and adulthood.
+
 
 
