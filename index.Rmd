@@ -12,6 +12,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -258,7 +259,7 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
       <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';"></h3>
     </div>
     <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
-      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception, phonolexical encoding, and novel word learning?</strong><br>
+      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception and phonolexical encoding?</strong><br>
       <span style="font-size: 0.68rem; color: #4B5563;"></span>
     </p>
   </div>
@@ -280,6 +281,10 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
 ???
 
 
+Bon dia, everyone. Before I begin, I want to express my warm thanks to the organizing committee—Jorge Baptista, Lucília Chacoto, Pedro Santos, Teresa Maló Sequeira, Sónia Reis, and Izabela Müller—and to the entire APL Board for inviting me to be here today.
+
+It is an absolute pleasure to join you at the Universidade do Algarve for this year's Encontro Nacional. I am truly honored to share my work with such an active and welcoming community of linguists, and I’m looking forward to our discussions today. Thank you so much for having me.
+
 Good morning, colleagues and members of the Association—of the Associação Portuguesa de Linguística. It is a true privilege to present here today at the Universidade do Algarve.
 
 And today, what I want to do is to think about - maybe reexamine here is too ambitious - how early bilinguals perceive, represent, and store speech sounds using the test case of the Catalan mid vowel contrast e-E and two recent projects. For the second one, we are currently collecting data, so it is the first time I am presenting these results.
@@ -288,7 +293,7 @@ Alright so, more specifically, our goal today is to think about the following qu
 
 How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?
 
-How does the majority societal language affect pre-lexical perception, phono-lexical encoding, and novel word learning?
+How does the majority societal language affect creation of phonetic categories and the encoding of these categories at the word level?
 
 Do bilinguals adapt to variability in the input? (This is going to be a recurring theme."
 ---
