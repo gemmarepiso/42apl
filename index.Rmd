@@ -6,6 +6,8 @@ institute: |
   Universitat Autònoma de Barcelona
   <br><br>
   <img src="logo_with_light_bg.png" width="160px"/>
+   <br><br>
+  Slides: https://gemmarepiso.github.io/42apl
 date: "October 2026"
 output: 
   xaringan::moon_reader:
@@ -77,6 +79,23 @@ xaringanExtra::use_search(show_icon = TRUE)
 
 
 ```{css, echo = FALSE, eval = TRUE}
+
+/* Force xaringanExtra banner above sydney.css / xaringan-themer layers */
+.xe-banner, div[class*="xe-banner"] {
+  z-index: 9999 !important;
+}
+
+/* Increase top and bottom slide padding so content doesn't cover the banner */
+.remark-slide-content {
+  padding-top: 3.2em !important;
+  padding-bottom: 3.2em !important;
+}
+
+/* Hide banner on title slide */
+.title-slide .xe-banner, 
+.title-slide div[class*="xe-banner"] {
+  display: none !important;
+}
 
 .refs-two-column {
   font-size: 11px;
