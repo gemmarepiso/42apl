@@ -14,6 +14,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -3519,12 +3520,13 @@ cat("<p style='font-size: 0.82em; color: #475569; margin-top: 6px; margin-bottom
 
 
 ```{r}
-
-library(tidyverse)
 library(readr)
-library(scales)
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
 
-# 1. Load raw dataset and define exclusions
+# 1. Load dataset and define exclusions
 excluded_ids <- c("F004_CH")
 
 participants <- read_csv("participants_Catalan_Spanish.csv")
@@ -3546,7 +3548,7 @@ participants_calculated <- participants %>%
   ) %>%
   filter(!is.na(Exp_Home))
 
-# 3. Reshape into long format for ggplot visualization
+# 3. Reshape into long format for ggplot
 context_df <- participants_calculated %>%
   select(
     number, 
@@ -3564,14 +3566,16 @@ context_df <- participants_calculated %>%
     Context = factor(Context, levels = c("Home", "School", "Community", "Holiday"))
   )
 
-# 4. Generate ggplot: Multi-Setting Relative Catalan Profile Comparison
+# 4. Generate ggplot with explicit scale_x_discrete()
 plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fill = Metric)) +
-  # 50% Balance Reference Line
+  # 50% Reference Line
   geom_hline(yintercept = 50, linetype = "dashed", color = "#64748B", linewidth = 0.8) +
+  
+  # Text Annotation (x = 0.6 maps position on discrete axis)
   annotate("text", x = 0.6, y = 52, label = "Balanced Input (50%)", 
            color = "#64748B", fontface = "italic", size = 3.5, hjust = 0) +
   
-  # Boxplots for distributions
+  # Boxplots
   geom_boxplot(
     alpha = 0.7, 
     outlier.shape = NA, 
@@ -3579,7 +3583,7 @@ plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fi
     width = 0.6
   ) +
   
-  # Individual Participant Points
+  # Individual Points
   geom_point(
     aes(color = Metric),
     position = position_jitterdodge(dodge.width = 0.8, jitter.width = 0.15),
@@ -3587,70 +3591,19 @@ plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fi
     alpha = 0.7
   ) +
   
-  # Color Palette & Scales
-  scale_fill_manual(values = c("Exposure" = "#0072B2", "Use" = "#D55E00")) +
-  scale_color_manual(values = c("Exposure" = "#004976", "Use" = "#9E4500")) +
-  scale_y_continuous(
-    limits = c(0, 105),
-    breaks = seq(0, 100, by = 20),
-    labels = function(x) paste0(x, "%")
-  ) +
-  
-  # Styling & Labels
-  labs(
-    title = "Relative Catalan Exposure & Use Across Settings",
-    subtitle = "Calculated as 100 × Catalan ",
-    x = "Context Setting",
-    y = "Relative Catalan Percentage (%)",
-    fill = "Metric Type",
-    color = "Metric Type"
-  ) +
-  theme_classic(base_size = 13) +
-  theme(
-    plot.title = element_text(face = "bold", size = 14, color = "#0A2540"),
-    plot.subtitle = element_text(size = 11, color = "#475569", margin = margin(b = 12)),
-    legend.position = "top",
-    axis.title = element_text(face = "bold"),
-    panel.grid.major.y = element_line(color = "grey90", linewidth = 0.4)
-  )
-
-# Display Plot
-print(plot_relative_exposure)
-plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fill = Metric)) +
-  # 50% Balance Reference Line
-  geom_hline(yintercept = 50, linetype = "dashed", color = "#64748B", linewidth = 0.8) +
-  annotate("text", x = 0.6, y = 52, label = "Balanced Input (50%)", 
-           color = "#64748B", fontface = "italic", size = 3.5, hjust = 0) +
-  
-  # Boxplots for distributions
-  geom_boxplot(
-    alpha = 0.7, 
-    outlier.shape = NA, 
-    position = position_dodge(width = 0.8),
-    width = 0.6
-  ) +
-  
-  # Individual Participant Points
-  geom_point(
-    aes(color = Metric),
-    position = position_jitterdodge(dodge.width = 0.8, jitter.width = 0.15),
-    size = 2,
-    alpha = 0.7
-  ) +
-  
-  # Color Palette
-  scale_fill_manual(values = c("Exposure" = "#0072B2", "Use" = "#D55E00")) +
-  scale_color_manual(values = c("Exposure" = "#004976", "Use" = "#9E4500")) +
-  
-  # Discrete scaling for x-axis (Categories)
+  # Explicit discrete scaling for x-axis
   scale_x_discrete(labels = c("Home", "School", "Community", "Holiday")) +
   
-  # Continuous scaling for y-axis (Percentages)
+  # Continuous scaling for y-axis
   scale_y_continuous(
     limits = c(0, 105),
     breaks = seq(0, 100, by = 20),
     labels = function(x) paste0(x, "%")
   ) +
+  
+  # Palettes
+  scale_fill_manual(values = c("Exposure" = "#0072B2", "Use" = "#D55E00")) +
+  scale_color_manual(values = c("Exposure" = "#004976", "Use" = "#9E4500")) +
   
   # Styling & Labels
   labs(
