@@ -335,16 +335,9 @@ Bon dia, everyone. It is an absolute pleasure to join you at the Universidade do
 Before I begin, I want to express my warm thanks to the Board of the Portuguese Association of Linguistics and to the local organisation committe for inviting me to be here today and I’m looking forward to our discussions these next days. 
 
 
-And today,I want to think about  how early bilinguals perceive, represent, and store speech sounds using the test case of the Catalan mid vowel contrast e-E and two recent experimental projects. 
+Today I want to devote the time that I have to think about how early bilinguals perceive, represent, and store speech sounds. And we will do so using the test case of Catalan vowels.
 
-more specifically, our goal today is to think about the following questions: 
-
-How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?
-
-How does the majority societal language affect creation of phonetic categories and the encoding of these categories at the word level?
-
-Do bilinguals adapt to variability in the input? (This is going to be a recurring theme."
-
+More specifically, our goal today is to think about the following questions: How are sounds represented in the minds of early bilinguals which are raised in an environment of sustained societal bilingualism? How does the majority societal language affect the creation of phonetic categories and also the encoding of those categories at the word level? And because these bilinguals have a very rich environmental input, we will also be asking whether bilinguals adapt to this variability in the input.
 
 
 ---
@@ -361,7 +354,7 @@ Do bilinguals adapt to variability in the input? (This is going to be a recurrin
 
 ???
 
-When we talk about early bilinguals, we refer to individuals who receive regular, continuous exposure to two languages from birth or early childhood. Classic research established that while their two grammars develop autonomously, they interact continuously throughout life. Crucially, early age of exposure alone does not guarantee balanced or static native-like competence. Instead, phonetic categories and lexical entries remain dynamic across the lifespan, and they are continuously shaped by shifts in language dominance, daily exposure, and community input.
+When we talk about early bilinguals, we refer to individuals who receive regular continuous exposure to two languages from birth or early childhood. And research has established that while their two grammars develop autonomously, they interact continuously throughout their lifespan. And this interaction results in cross-linguistic transfer.
 
 ---
 
@@ -374,9 +367,7 @@ When we talk about early bilinguals, we refer to individuals who receive regular
 
 ???
 
-To understand this cross-linguistic interaction, we must probably reject the notion of two isolated mental compartments. Instead, an early bilingual sound system probably operates as an integrated, multi-level architecture sharing a single—as an integrated, multi-level architecture. Early speech models, such as the Speech Learning Model, for example, proposed that bilinguals have a single phonetic space.
-
-Now, cross-linguistic interaction is bidirectional and continuous, and it dynamically fluctuates with real-time shifts in dominance in the environmental input. Crucially, this holds true even for sequential bilinguals. 
+To explain this cross-linguistic transfer, we should probably reject the notion of two isolated mental compartments. Instead, we should think of bilingual sound systems as operating as an integrated architecture, one in which can allow bidirectional cross-linguistic interaction and that it can also allow for dynamic shifts that are determined by language dominance or the communicative context in which these bilinguals are found in real time.
 
 
 ---
@@ -400,13 +391,13 @@ Now, cross-linguistic interaction is bidirectional and continuous, and it dynami
 
 ???
 
-Now, the question that we can ask is: what is vulnerable to being transferred? Findings from early bilinguals demonstrate that underlying phonological contrasts seem to be more stable than the phonetic level of representation.
+Findings from early bilinguals demonstrate that it seems like phonological contrasts are more robust than the realization of those contrasts at the phonetic level of representation.
 
-And to see how this operates in speech production, let's examine findings from my recent study with Scott Perry on the Spanish tap-trill contrast in intervocalic positions—so /ɾ/ and /r/, such as pero and perro. The tap is produced with one occlusion, while the trill is produced with two or more occlusions (/r/). In intervocalic rhotic positions, when primary canonical gestures (such as the number of tongue-tip occlusions) show surface variability under bilingual contact, adult heritage Spanish speakers do not collapse the two phonemes. Instead, they use secondary cues to show this contrast. So, they adaptively re-weight their mapping of cues, recruiting duration as a secondary acoustic cue to preserve a non-overlapping contrast between taps and trills.
+To see an example of this, I just want to diverge from the Catalan case to examine Spanish as a heritage language in the US. This is a recent study with my colleague Scott Perry on the Spanish tap-trill contrast in intervocalic position. So this is the tap /ɾ/ produced in, for example, pero, and the trill /r/ produced, for example, in perro.
 
-We can see here in Figure A how child and adult bilinguals on the right show a reduction in the durational implementation of the contrast, but they nevertheless show a non-overlapping contrast between the /ɾ/ and the /r/.
+Now, the contrast is primarily distinguished by the number of occlusions, with the tap having one occlusion and the trill having more than two occlusions. But when the primary cue is eroded, bilingual speakers do not collapse the two phonemes. Instead, they seem to be able to use secondary cues to show this contrast, so they reweight their mapping of cues, recruiting in this case duration as a secondary acoustic cue to preserve a non-overlapping contrast between taps and trills.
 
-
+We can see in Figure A how child and adult bilinguals on the right show reduction in the durational implementation of the contrast when compared to the Spanish monolingual speakers, but they nevertheless show a non-overlapping contrast between the /ɾ/ and the /r/.
 ---
 
 ## Modeling Early Bilingual Sound Systems
@@ -489,27 +480,21 @@ ggplot() +
 
 ???
 
-To formalize how bilinguals map continuous speech onto lexical meanings in their two grammars, several models have been proposed, but we will today draw upon the Second Language Linguistic Perception Model (L2LP), which has co-evolved with the Bidirectional Phonetics and Phonology framework, or the Bi-Phon model.
+So to formalize this type of cross-linguistic transfer, several models have been proposed. But today we will draw upon the Second Language Linguistic Perception model, which has evolved with the bidirectional phonetics and phonological framework, the BiPhon model, because they have a multi-layered architecture, and we are interested today in this multi-layered architecture.
 
-Under these models, processing unfolds across four distinct hierarchical tiers:
+First, these models posit a physical entry point where the continuous acoustic signal enters as an auditory form. This is where listeners receive formant structure for vowels, duration—for example, for the tap-trill contrast—and all other relevant acoustic signals.
 
-Physical Entry Point: The continuous acoustic signal enters as an auditory form. This is where listeners receive formant structure, duration, and all other relevant acoustic signals.
+At this point, there is a grammar that integrates these cues at the prelexical level, and it maps this acoustic information onto discrete surface forms. These surface forms encode language-specific phonetic categories as well as allophonic detail.
 
-Pre-lexical Cue Integration Grammar: This maps acoustic formants onto discrete surface forms. These surface forms encode language-specific phonetic categories, as well as allophonic detail.
+And then at the upper level, we have the phonological grammar that matches these surface categories to underlying forms. At the next level then, the lexical constraints link underlying target representations to their semantic lexical forms, but we will not be focusing on the semantics of these representations today.
 
-Phonological Grammar: This matches these surface categories to canonical underlying forms that are already stored in the lexicon.
+Under the Second Language Linguistic Perception model, or the L2LP model, when a second language learner learns a second language, they copy their L1 grammar. So second language acquisition begins with a complete duplicate of the listener's optimal L1 perception grammar. And then the cue constraints are copied in full to form the L2 initial state.
 
-Lexical Constraints: These link underlying target representations to their semantic lexical forms.
+We can see this transfer operating at two levels: first, at the prelexical level where the L1 cue constraints filter the L2 acoustic input, and second, at the lexical level, or phonolexical level, where these merged surface categories fail to trigger two different lexical targets.
 
-Under the Second Language Linguistic Perception Model model, which draws on full access, when a second language learner learns a second language, they copy their L1 grammar. So, second language acquisition begins with a complete duplicate of the listener's L1 optimal perception grammar. Cue constraints are copied in full to form the L2 initial state. This transfer operates across two distinct mappings:
+For example, take native Spanish speakers learning the Portuguese mid vowel contrast in avô and avó. At the prelexical level, because the copied Spanish perception grammar lacks an open mid vowel category /ɔ/ and contains only one back mid vowel /o/, Spanish cue constraints map both Portuguese acoustic tokens of avô and avó onto one single surface category /o/. At the lexical level, because surface perception outputs only /o/ for both items, the lexicon builder receives no phonological evidence to construct two separate targets, mapping both words onto a single underlying representation /avô/ and creating homophony in memory.
 
-First, at the pre-lexical level, where L1 cue constraints filter the L2 acoustic input.
-
-Second, at the lexical level, where merged surface categories fail to trigger lexical targets.
-
-
-For example, take native Spanish speakers learning the Portuguese mid-vowel contrast in avô /a'vo/ versus avó /a'vɔ/. At the pre-lexical level, because the copied Spanish perception grammar lacks an open-mid vowel category /ɔ/ and contains only one back mid-vowel /o/, Spanish cue constraints map both Portuguese acoustic tokens of avô and avó onto the single surface category /o/. And at the lexical level, because surface perception outputs only /o/ for both items, the lexicon builder receives no phonological evidence to construct two separate targets, mapping both words onto a single underlying representation /a'vo/ and creating spurious homophony in memory.
-
+It is possible, however, that one of the two vowels is unspecified at the lexical level, and bilinguals are still able to have a contrast that is not mapped at the prelexical level.
 
 ---
 ## Modeling Early Bilingual Sound Systems
@@ -587,10 +572,12 @@ ggplot() +
 
 
 ???
-Now, early bilinguals develop the two grammars in parallel. So how is transfer modeled in this case?  The L2LP speech model leaves the explanation of transfer to cognitive constraints.
 
-Depending on the communicative context, executive control mechanisms modulate the systems through activation and inhibition. For example, when a bilingual is in monolingual mode, Grammar A is fully activated, enabling rapid feed-forward comprehension and top-down production. Meanwhile, Grammar B is suppressed through mechanisms of inhibitory control, which prevents cross-linguistic interference and involuntary code-switching. The degree to which these languages are activated or inhibited may ultimately result in cross-linguistic transfer, but this is crucially not left to the grammar, but left to executive control.
+Now, early bilinguals develop the two grammars in parallel. So, how is transfer modeled in this case?
 
+The L2LP speech model leaves the explanation of transfer to cognitive constraints. This means that depending on the communicative context, executive control mechanisms, which are external to the grammar, modulate the system through a system of inhibition and activation.
+
+For example, when a bilingual is in monolingual mode, grammar A is fully activated, while grammar B is suppressed through mechanisms of inhibitory control, thus disallowing cross-linguistic interference or even involuntary code-switching. The degree to which these languages are activated or inhibited may ultimately result in cross-linguistic transfer. But crucially, this is not part of the grammar; this is left to executive control mechanisms.
 
 
 
@@ -614,15 +601,14 @@ Depending on the communicative context, executive control mechanisms modulate th
 <small>Distinction at the lexical level without prelexical discrimination can also be resolved through orthography, as multi-modal representations and written cues integrate directly into phonological categorization and lexical encoding (Zhou & Hamann, 2026).</small>
 
 ???
-Now that we’ve reviewed the core architecture of these models, I’d like to highlight three critical limitations when applying them—specifically to early bilingual populations.
 
-First, Model Scope. These frameworks succeed in explaining how new L2 categories emerge from an established L1 sound system. However, they lack integrated grammatical mechanisms to account for real-time language interaction in simultaneous bilinguals. When mechanisms like activation and inhibition are proposed, they are typically treated as external domain-general cognitive processes, leaving the question open as to whether cross-linguistic interaction can occur directly within the grammar itself.
+So now that we've reviewed the core architecture features of these models, I'd like to highlight three points that I will be thinking about in this presentation.
 
-Second, Input Assumptions. Classic models presume a stable, homogeneous acoustic input. In reality, sustained bilinguals navigate dynamic sociolinguistic environments with high community-level variability—such as regional variation or accented speech—which continuously reshapes sound categorization over time.
+First is the model's scope. These frameworks succeed in explaining how new L2 categories emerge from an established L1 system. However, they lack integrated grammatical mechanisms to account for this real-time language interaction in simultaneous bilinguals. When mechanisms like activation and inhibition are proposed, they are typically treated as external domain-general cognitive processes, leaving open the question as to whether cross-linguistic interaction can occur directly within the grammar itself.
 
-And third, Direct Mapping Assumptions. These models assume prelexical perception directly dictates phonolexical encoding. That is, surface representations are passed directly into underlying forms. This assumes a strict carry-over from surface-level perception to lexical representation—an assumption we will be evaluating today"
+Second are the input assumptions of these models. These models presume a stable, homogeneous acoustic input, with speakers failing to classify this acoustic input due to a filter from their L1, for example. In reality, however, bilinguals in a situation of sustained bilingualism have to navigate dynamic sociolinguistic environments that have a great level of input variation. So the input is not stable or homogeneous, and this may reshape sound categories over time.
 
-
+Third are the direct mapping assumptions from the lexical level to phonolexical encoding. In the strong version of these models, they assume a prelexical perception that directly dictates phonolexical encoding—that is, surface representations are passed directly into underlying forms. This assumes a strict carry-over from surface-level perception to lexical representation, and this is an assumption that we will be evaluating today.
 ---
 
 ## Sociolinguistic context in Catalonia (I)
@@ -1377,21 +1363,21 @@ The experimental stimuli consisted of 13-point acoustic continua generated throu
 ---
 
 ## Methodology: Design
-
-<!-- Using CSS grid to neatly arrange the 4 images -->
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
-  <div><img src="catalan_perception.png" width="100%" /></div>
-  <div><img src="spanish_perception.png" width="100%" /></div>
-  <div><img src="catalan_production.png" width="100%" /></div>
-  <div><img src="spanish_production.png" width="100%" /></div>
-</div>
-
-<br>
 <div align="center">
   <audio controls>
     <source src="chain1.wav" type="audio/mpeg">
   </audio>
 </div>
+<!-- Using CSS grid to neatly arrange the 4 images -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
+  <div><img src="catalan_perception.png" width="100%" /></div>
+  <div><img src="spanish_perception.png" width="100%" /></div>
+  <div><img src="catalan_production.png" width="80%" /></div>
+  <div><img src="spanish_production.png" width="80%" /></div>
+</div>
+
+<br>
+
 
 
 
@@ -5232,8 +5218,7 @@ knitr::include_graphics("cross_task_correlations_noto.png")
 ```
 
 ???
-Importantly, our cross-task correlation analysis reveals that lexical preference is associated with prelexical accuracy in children, and with both prelexical discrimination and vowel-swap acceptance in adults. Crucially, performance on the lexical decision task does not correlate with prelexical discrimination. This indicates that participants' acceptance of vowel mispronunciations does not stem from an inability to perceive the contrast."
-
+Importantly, our cross-task correlation analysis reveals that lexical preference is associated with prelexical accuracy in children, and with both prelexical discrimination and vowel-swap acceptance in adults. Crucially, performance on the lexical decision task does not correlate with prelexical discrimination—neither in children nor in adults. This indicates that participants' acceptance of vowel mispronunciations in the lexical decision task does not stem from an inability to perceive the contrast.
 ---
 
 # Discussion
@@ -5252,39 +5237,43 @@ Importantly, our cross-task correlation analysis reveals that lexical preference
  
 - **Effects of age in lexical preference**:
 While acoustic/prelexical discrimination of mid-vowels emerges early in infancy <small>Bosch & Sebastián Gallés, 2003</small>, encoding fine phonetic detail into stable, underlying lexical representations (URs) requires time and cumulative exposure.
-  - LP specifically taps into established URs—which require extended time and experience to consolidate[cite: 4, 6]—whereas LD measures online perceptual tolerance.
+  - LP specifically taps into established URs, which require extended time and experience to consolidate whereas LD measures online perceptual tolerance.
 
 
 ???
 
-Turning to our discussion on surface tolerance, coupling our lexical decision results with our lexical preference data demonstrates that the acceptance of vowel swaps—or mispronunciations—reflects online perceptual tolerance for Spanish-accented community input, rather than imprecise or "fuzzy" underlying representations in memory. Crucially, however, our data reveals substantial individual variation. In particular, children performed below chance in the lexical preference task, indicating that while these results reflect broad population trends, they do not apply identically across every individual speaker in our sample.Second, we observed a distinct directional asymmetry: speakers exhibit greater certainty regarding the phonolexical encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This directional bias directly mirrors ambient Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$. Next, Catalan home exposure and language dominance serve to consolidate underlying representations against variable community speech. A Catalan-dominant profile combined with higher home exposure increases the cumulative probability of encountering canonical mid-vowel tokens, thereby stabilizing long-term memory targets across both $/e/$ and $/ɛ/$.Finally, our findings point toward a differential input threshold hypothesis between prelexical perception and phonolexical encoding. While prelexical acoustic discrimination can be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold—demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory. And this is also supported by the fact that only the lexical preference task showed a significant effect of age, while prelexical perception and input-driven tolerance 
-
-
+Coupling our lexical decision results with the lexical preference data demonstrates that what we are seeing in bilingual representations is a perceptual tolerance for vowel swaps—reflecting tolerance for Spanish-accented community input—rather than an imprecise underlying representation in memory.   Our multi-task design shows that the lexical preference task taps into phonolexical encodings better than the lexical decision task.   We also observe a directional asymmetry in the lexical preference task, where speakers exhibit greater certainty regarding the encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This bias mirrors Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$.   Crucially, however, there is a caveat: our data reveals substantial individual variation. In particular, some children perform below chance in the lexical preference task, indicating that while these results may reflect broad population trends, they do not apply identically across every individual in our sample.   Next, we found an effect of Catalan exposure for children and Catalan dominance for adults. We believe that Catalan exposure and dominance increase the cumulative probability of encountering canonical mid-vowel tokens, thereby helping to stabilize targets in memory.   This also points toward a differential input threshold for prelexical perception versus phonolexical encoding, as we did not find an effect of exposure or dominance at the prelexical perception level. Here, we posit that while prelexical acoustic discrimination may be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold, demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory.   This is further supported by the age effects in our lexical preference task. While acoustic prelexical discrimination of mid vowels may emerge early in infancy, encoding phonetic detail into stable underlying lexical representations develops alongside the lexicon, requiring time and cumulative exposure.  
 ---
 
 ## Conclusions
 
 
 .conclusion-card.amber[
-Cooperative Parallel Co-Activation: Asymmetric contrasts (e.g., Catalan /e/–/ɛ/ vs. Spanish /e/) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
+Parallel Co-Activation: Asymmetric contrasts (e.g., Catalan /e/–/ɛ/ vs. Spanish /e/) support parallel co-activation **without category merger** or top-down inhibition. Phonological frameworks must implement **phonologically conditioned activation levels**.
 ]
 
 .conclusion-card.amber[
-Surface Tolerance vs. Lexical Storage: Lexical decision taps **surface perceptual tolerance** driven by non-canonical community speech, whereas forced-choice preference tasks isolate **canonical underlying representations (URs)**. Models must incorporate dynamic weighting for non-canonical input in perceptual grammars.
+Input-driven Tolderance: Lexical decision taps **surface perceptual tolerance** driven by non-canonical community speech, whereas forced-choice preference tasks isolate **canonical underlying representations (URs)**. Models must incorporate dynamic weighting for non-canonical input in perceptual grammars.
 ]
 
-.conclusion-card.amber[Tier-Specific Input Thresholds: Language dominance and exposure predict UR storage significantly better than pre-lexical sensitivity, **phono-lexical encoding demands higher input thresholds** than perceptual discrimination. Models must distinguish input effects across structural tiers.
+.conclusion-card.amber[Differential Input Thresholds: Language dominance and exposure predict UR storage significantly better than pre-lexical sensitivity, **phono-lexical encoding demands higher input thresholds** than perceptual discrimination. Models must distinguish input effects across structural tiers.
 ]
 
 
 
 ???
 
-To conclude, our findings offer three key insights for modeling bilingual phonetics and phonology:   Parallel Coactivation of Perceptual Grammars: Results from Study 1 demonstrate parallel coactivation of dual perceptual grammars. This occurs when a contrast is present in one language but absent in the other, avoiding direct cross-linguistic competition. This means that the the inhibitory process can be sensitive to the grammatical representation. Therefore, we believe that theoretical architectures must incorporate mechanisms that account for this coactivation.   
+Our findings offer three main insights for modeling bilingual phonetics and phonology:   
+M4A
 
-Our findings for study 2, comparing lexical decision with lexical preference tasks reveals that speakers exhibit tolerance to variable ambient input. First, this may mean that a standard lexical decision task alone is insufficient to reliably isolate underlying representations in bilinguals exposed to sustained variation. And our lexical preference task has been proved to be more informative to test vocalic preferences. Models of bilingual speech should thus account this flexible mapping at either level of the representation. 
+Parallel Co-Activation: Results from Study 1 demonstrate the possibility of parallel co-activation of perceptual grammars when a contrast is present in one language but absent in the other, avoiding direct cross-linguistic competition. This indicates that inhibitory processes are sensitive to grammatical representations, meaning theoretical architectures must incorporate mechanisms to account for co-activation.   
 
-Language dominance and cumulative exposure serve as stronger predictors of underlying phonolexical encoding than prelexical discrimination abilities alone. Crucially, future models must account for how differential input yields distinct effects across phonetic versus phonological levels of representation.
+
+Tolerance to Variable Input: Results from Study 2 demonstrate that speakers exhibit tolerance to variable input, suggesting that standard lexical decision tasks alone are insufficient to reliably isolate underlying representations in bilinguals exposed to sustained input variation. The lexical preference task proves more informative for testing vocalic preferences, indicating that models of bilingual speech must account for flexible mapping at both levels of representation.   
+
+
+
+Differential Input Thresholds: Language dominance and cumulative exposure serve as stronger predictors of underlying phonolexical encoding than prelexical discrimination abilities. Crucially, future models must account for how differential input yields distinct effects across phonetic versus phonological levels of representation when evaluating cross-linguistic influence.   
 
 
 ---
