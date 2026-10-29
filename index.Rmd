@@ -12,6 +12,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -68,11 +69,14 @@ xaringanExtra::use_progress_bar(
   location = "top", 
   height = "10px")
 
+xaringanExtra::use_search(show_icon = TRUE)
+
+
 ```
 
 
 
-```{css, echo = FALSE, eval = FALSE}
+```{css, echo = FALSE, eval = TRUE}
 
 .refs-two-column {
   font-size: 11px;
@@ -2403,12 +2407,12 @@ class: inverse, center, middle
 
   <div style="text-align: center;">
     <img src="miquel_llompart.jpg" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid #FFFFFF; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);" />
-    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Miquel Llompart</p>
+    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Miquel Llompart (UPF)</p>
   </div>
 
   <div style="text-align: center;">
     <img src="scottperry.jpeg" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid #FFFFFF; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);" />
-    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Scott Perry</p>
+    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Scott Perry (UPF)</p>
   </div>
 
 </div>
@@ -3430,7 +3434,7 @@ emtrends(m_WL_ch, ~ trial_type_c, var = "Exp_Home_z")
 
 
 
-```{r participant-profile-summary, echo=FALSE, message=FALSE, warning=FALSE}
+```{r participant-profile-summary, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 library(dplyr)
 library(stringr)
 library(knitr)
@@ -3476,22 +3480,182 @@ children_stats <- tibble(
   `N (Total)` = 40,
   `Gender (F/M)` = "20 F / 20 M",
   `Age Range` = "7.50 – 10.37 yrs",
-  `Questionnaire Subset` = "N = 28 parent questionnaires (Individual Differences subset)"
+  `Questionnaire Subset` = "(N = 28)* Exp. home 66.19% (25.68%)"
 )
 
 # 3. Combine into unified summary table
 participant_summary <- bind_rows(adult_stats, children_stats)
 
-# Render HTML table for xaringan / Quarto / R Markdown slides
-knitr::kable(
+# Render HTML table
+print(knitr::kable(
   participant_summary, 
   format = "html", 
   align = "llccccc",
-  col.names = c("Cohort", "Target Population", "N", "Gender", "Age Range", "Questionnaire / Language Profile")
-)
+  col.names = c("Cohort", "Target Population", "N", "Gender", "Age Range", "Questionnaire / Language Profile*")
+))
 
+# 4. HTML Footnote Note
+cat("<p style='font-size: 0.82em; color: #475569; margin-top: 6px; margin-bottom: 0px;'><sup>*</sup> Note: Individual differences for the child cohort are calculated with a subset of 28 participants with complete parental questionnaire data.</p>")
 
 ```
+
+
+```{r}
+
+library(tidyverse)
+library(readr)
+library(scales)
+
+# 1. Load raw dataset and define exclusions
+excluded_ids <- c("F004_CH")
+
+participants <- read_csv("participants_Catalan_Spanish.csv")
+
+# 2. Clean IDs and calculate relative Exposure and Use percentages
+participants_calculated <- participants %>%
+  mutate(number = str_remove(number, "_def")) %>%
+  filter(!number %in% excluded_ids) %>%
+  mutate(
+    Exp_Home      = 100 * `home current exposure Catalan` / (`home current exposure Catalan` + `home current exposure Spanish`),
+    Exp_School    = 100 * `school current exposure Catalan` / (`school current exposure Catalan` + `school current exposure Spanish`),
+    Exp_Community = 100 * `community current exposure Catalan` / (`community current exposure Catalan` + `community current exposure Spanish`),
+    Exp_Holiday   = 100 * `holiday current exposure Catalan` / (`holiday current exposure Catalan` + `holiday current exposure Spanish`),
+    
+    Use_Home      = 100 * `home current use Catalan` / (`home current use Catalan` + `home current use Spanish`),
+    Use_School    = 100 * `school current use Catalan` / (`school current use Catalan` + `school current use Spanish`),
+    Use_Community = 100 * `community current use Catalan` / (`community current use Catalan` + `community current use Spanish`),
+    Use_Holiday   = 100 * `holiday current use Catalan` / (`holiday current use Catalan` + `holiday current use Spanish`)
+  ) %>%
+  filter(!is.na(Exp_Home))
+
+# 3. Reshape into long format for ggplot visualization
+context_df <- participants_calculated %>%
+  select(
+    number, 
+    Exp_Home, Exp_School, Exp_Community, Exp_Holiday,
+    Use_Home, Use_School, Use_Community, Use_Holiday
+  ) %>%
+  pivot_longer(
+    cols = -number,
+    names_to = c("Metric", "Context"),
+    names_sep = "_",
+    values_to = "Percentage"
+  ) %>%
+  mutate(
+    Metric  = ifelse(Metric == "Exp", "Exposure", "Use"),
+    Context = factor(Context, levels = c("Home", "School", "Community", "Holiday"))
+  )
+
+# 4. Generate ggplot: Multi-Setting Relative Catalan Profile Comparison
+plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fill = Metric)) +
+  # 50% Balance Reference Line
+  geom_hline(yintercept = 50, linetype = "dashed", color = "#64748B", linewidth = 0.8) +
+  annotate("text", x = 0.6, y = 52, label = "Balanced Input (50%)", 
+           color = "#64748B", fontface = "italic", size = 3.5, hjust = 0) +
+  
+  # Boxplots for distributions
+  geom_boxplot(
+    alpha = 0.7, 
+    outlier.shape = NA, 
+    position = position_dodge(width = 0.8),
+    width = 0.6
+  ) +
+  
+  # Individual Participant Points
+  geom_point(
+    aes(color = Metric),
+    position = position_jitterdodge(dodge.width = 0.8, jitter.width = 0.15),
+    size = 2,
+    alpha = 0.7
+  ) +
+  
+  # Color Palette & Scales
+  scale_fill_manual(values = c("Exposure" = "#0072B2", "Use" = "#D55E00")) +
+  scale_color_manual(values = c("Exposure" = "#004976", "Use" = "#9E4500")) +
+  scale_y_continuous(
+    limits = c(0, 105),
+    breaks = seq(0, 100, by = 20),
+    labels = function(x) paste0(x, "%")
+  ) +
+  
+  # Styling & Labels
+  labs(
+    title = "Relative Catalan Exposure & Use Across Settings",
+    subtitle = "Calculated as 100 × Catalan ",
+    x = "Context Setting",
+    y = "Relative Catalan Percentage (%)",
+    fill = "Metric Type",
+    color = "Metric Type"
+  ) +
+  theme_classic(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, color = "#0A2540"),
+    plot.subtitle = element_text(size = 11, color = "#475569", margin = margin(b = 12)),
+    legend.position = "top",
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "grey90", linewidth = 0.4)
+  )
+
+# Display Plot
+print(plot_relative_exposure)
+plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fill = Metric)) +
+  # 50% Balance Reference Line
+  geom_hline(yintercept = 50, linetype = "dashed", color = "#64748B", linewidth = 0.8) +
+  annotate("text", x = 0.6, y = 52, label = "Balanced Input (50%)", 
+           color = "#64748B", fontface = "italic", size = 3.5, hjust = 0) +
+  
+  # Boxplots for distributions
+  geom_boxplot(
+    alpha = 0.7, 
+    outlier.shape = NA, 
+    position = position_dodge(width = 0.8),
+    width = 0.6
+  ) +
+  
+  # Individual Participant Points
+  geom_point(
+    aes(color = Metric),
+    position = position_jitterdodge(dodge.width = 0.8, jitter.width = 0.15),
+    size = 2,
+    alpha = 0.7
+  ) +
+  
+  # Color Palette
+  scale_fill_manual(values = c("Exposure" = "#0072B2", "Use" = "#D55E00")) +
+  scale_color_manual(values = c("Exposure" = "#004976", "Use" = "#9E4500")) +
+  
+  # Discrete scaling for x-axis (Categories)
+  scale_x_discrete(labels = c("Home", "School", "Community", "Holiday")) +
+  
+  # Continuous scaling for y-axis (Percentages)
+  scale_y_continuous(
+    limits = c(0, 105),
+    breaks = seq(0, 100, by = 20),
+    labels = function(x) paste0(x, "%")
+  ) +
+  
+  # Styling & Labels
+  labs(
+    title = "Relative Catalan Exposure & Use Across Settings - Q Bex results",
+    subtitle = "Calculated as 100 × Catalan / (Catalan + Spanish) for Child Cohort (N = 26)",
+    x = "Context Setting",
+    y = "Relative Catalan Percentage (%)",
+    fill = "Metric Type",
+    color = "Metric Type"
+  ) +
+  theme_classic(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, color = "#0A2540"),
+    plot.subtitle = element_text(size = 11, color = "#475569", margin = margin(b = 12)),
+    legend.position = "top",
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "grey90", linewidth = 0.4)
+  )
+
+# Display Plot
+print(plot_relative_exposure)
+```
+
 
 ???
 For these tasks, we recruited participants from the Barcelona Metropolitan Area across two cohorts: 19 adults and 40 primary school children aged 7 to 11. We were particularly interested in primary school children because they remain understudied compared to preschoolers. Investigating this age group is crucial because immersion in school-level Catalan can potentially override earlier home input patterns. For our individual difference analyses, we will report data for 28 participants due to incomplete parent questionnaires, as this is an ongoing three-year project.  
@@ -4960,14 +5124,20 @@ First, Lexical Decision (LD) shows no meaningful correlation with pre-lexical ac
 
 
 
-* **Catalan home input and language dominance** directly consolidate underlying representations against variable community speech across both mid-vowels. 
+* **Catalan home input and language dominance** directly consolidate URs against variable community speech across both mid-vowels. 
 
+* URs develop with age (LP), but age is not a predictor of prelexical perception or input-driven tolerance.
 
+ 
+- **Effects of age in lexical preference**:
+While acoustic/prelexical discrimination of mid-vowels emerges early in infancy, encoding fine phonetic detail into stable, underlying lexical representations (URs) requires time and cumulative exposure.
+  - LP specifically taps into established URs—which require extended time and experience to consolidate[cite: 4, 6]—whereas LD measures online perceptual tolerance.
 
 
 ???
 
-Turning to our discussion on surface tolerance, coupling our lexical decision results with our lexical preference data demonstrates that the acceptance of vowel swaps—or mispronunciations—reflects online perceptual tolerance for Spanish-accented community input, rather than imprecise or "fuzzy" underlying representations in memory. Crucially, however, our data reveals substantial individual variation. In particular, children performed below chance in the lexical preference task, indicating that while these results reflect broad population trends, they do not apply identically across every individual speaker in our sample.Second, we observed a distinct directional asymmetry: speakers exhibit greater certainty regarding the phonolexical encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This directional bias directly mirrors ambient Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$. Next, Catalan home exposure and language dominance serve to consolidate underlying representations against variable community speech. A Catalan-dominant profile combined with higher home exposure increases the cumulative probability of encountering canonical mid-vowel tokens, thereby stabilizing long-term memory targets across both $/e/$ and $/ɛ/$.Finally, our findings point toward a differential input threshold hypothesis between prelexical perception and phonolexical encoding. While prelexical acoustic discrimination can be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold—demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory.
+Turning to our discussion on surface tolerance, coupling our lexical decision results with our lexical preference data demonstrates that the acceptance of vowel swaps—or mispronunciations—reflects online perceptual tolerance for Spanish-accented community input, rather than imprecise or "fuzzy" underlying representations in memory. Crucially, however, our data reveals substantial individual variation. In particular, children performed below chance in the lexical preference task, indicating that while these results reflect broad population trends, they do not apply identically across every individual speaker in our sample.Second, we observed a distinct directional asymmetry: speakers exhibit greater certainty regarding the phonolexical encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This directional bias directly mirrors ambient Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$. Next, Catalan home exposure and language dominance serve to consolidate underlying representations against variable community speech. A Catalan-dominant profile combined with higher home exposure increases the cumulative probability of encountering canonical mid-vowel tokens, thereby stabilizing long-term memory targets across both $/e/$ and $/ɛ/$.Finally, our findings point toward a differential input threshold hypothesis between prelexical perception and phonolexical encoding. While prelexical acoustic discrimination can be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold—demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory. And this is also supported by the fact that only the lexical preference task showed a significant effect of age, while prelexical perception and input-driven tolerance 
+
 
 ---
 
@@ -5899,5 +6069,56 @@ knitr::include_graphics("cross_task_correlations_noto.png")
 
 Crucially, our cross-task correlation analysis reveals a striking developmental dissociation:In adults, stored phonolexical fidelity—measured in Lexical Preference—strongly predicts novel word learning performance ($r = .816, p < .001$). Adults directly leverage the precision of their existing lexical targets as structural templates when encoding new vocabulary.In children, however, this correlation drops to zero ($r = .075$, non-significant). Even though bilingual children possess well-specified representations for familiar words, that memory precision does not automatically guarantee successful novel word encoding. This proves that directly coupling stored phonolexical targets to the dynamic process of building new words is an emergent developmental milestone that matures between childhood and adulthood.
 
+---
+# Group variables
+```{r}
+library(dplyr)
+library(knitr)
+library(stringr)
 
+# 1. Process Adult Profile Summary
+adult_profile_summary <- responses_adults_clean %>%
+  distinct(Participant, .keep_all = TRUE) %>%
+  mutate(
+    Age_Years = suppressWarnings(as.numeric(str_extract(as.character(Edat), "\\d+")))
+  ) %>%
+  summarise(
+    Cohort = "Adults",
+    `N (Total)` = n(),
+    `Age Mean (SD)` = paste0(round(mean(Age_Years, na.rm = TRUE), 1), " (", round(sd(Age_Years, na.rm = TRUE), 1), " yrs)"),
+    `Key Language Metric` = "Categorical Dominance (Catalan-vs-Spanish)"
+  )
+
+# 2. Process Child Profile Summary
+child_profile_summary <- subject_covariates %>%
+  distinct(number, .keep_all = TRUE) %>%
+  summarise(
+    Cohort = "Children",
+    `N (Total)` = n(),
+    `Age Mean (SD)` = paste0(round(mean(age_in_months, na.rm = TRUE), 1), " (", round(sd(age_in_months, na.rm = TRUE), 1), " mos)"),
+    `Key Language Metric` = paste0("Home Catalan Exp: ", round(mean(Exp_Home, na.rm = TRUE), 1), "% (SD = ", round(sd(Exp_Home, na.rm = TRUE), 1), "%)")
+  )
+
+# 3. Combine into HTML/Markdown Table
+summary_table <- bind_rows(adult_profile_summary, child_profile_summary)
+knitr::kable(summary_table, align = "lccc", caption = "Participant Cohort Profile Summary")
+```
+
+
+```{r}
+library(ggplot2)
+library(scales)
+
+# Visualizing Child Catalan Home Exposure (Exp_Home)
+ggplot(subject_covariates, aes(x = Exp_Home)) +
+  geom_histogram(binwidth = 10, fill = "#0072B2", color = "white", alpha = 0.8) +
+  geom_vline(xintercept = 50, linetype = "dashed", color = "red", linewidth = 0.8) +
+  scale_x_continuous(breaks = seq(0, 100, 20), labels = function(x) paste0(x, "%")) +
+  labs(
+    title = "Distribution of Relative Catalan Home Exposure in Children",
+    x = "Relative Catalan Home Exposure (%)",
+    y = "Participant Count"
+  ) +
+  theme_minimal(base_size = 12)
+```
 
