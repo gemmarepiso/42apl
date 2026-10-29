@@ -14,6 +14,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -5130,6 +5131,134 @@ lp_ad_dominant_plot
 
 First, Lexical Decision (LD) shows no meaningful correlation with pre-lexical acoustic discrimination (XAB) in either group ($r = -0.01$ in children; $r = 0.08$ in adults). This demonstrates that individuals—whether children or adults—who reject more vowel swaps do not do so simply because they possess higher acoustic-perceptual acuity. The ability to reject mispronunciations in real words operates independently from raw perceptual sensitivity, pointing to distinct higher-level lexical and task-demand mechanisms.   Second, we observe a consistent moderate positive correlation between pre-lexical discrimination (XAB) and Lexical Preference (LP) in both children ($r = 0.52$) and adults ($r = 0.40$). This indicates that sharper acoustic distinction at the perceptual level directly supports the establishment of well-specified, canonical phonolexical targets in long-term memory across age groups.   
 
+
+
+---
+## Correlation across tasks
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(patchwork)
+library(ragg)
+library(showtext)
+
+# ==============================================================================
+# 1. SETUP NOTO FONT
+# ==============================================================================
+font_add_google(name = "Noto Sans", family = "Noto Sans")
+showtext_auto()
+
+# ==============================================================================
+# 2. HELPER FUNCTION TO GENERATE UPPER-TRIANGULAR CORRELATION HEATMAPS
+# ==============================================================================
+plot_cor_heatmap <- function(data_subset, title_label) {
+  # Tasks order
+  task_vars <- c("XAB", "LD", "LP")
+  
+  # Compute Pearson correlation matrix
+  cor_mat <- cor(data_subset[, task_vars], use = "pairwise.complete.obs")
+  
+  # Mask lower triangle for clean upper-triangular display
+  cor_mat[lower.tri(cor_mat)] <- NA
+  
+  # Convert to tidy long format
+  df_cor <- as.data.frame(cor_mat) %>%
+    rownames_to_column(var = "Var1") %>%
+    pivot_longer(-Var1, names_to = "Var2", values_to = "r") %>%
+    filter(!is.na(r)) %>%
+    mutate(
+      Var1 = factor(Var1, levels = task_vars),
+      Var2 = factor(Var2, levels = rev(task_vars)) # Reverse y-axis for standard matrix layout
+    )
+  
+  # Heatmap Plot
+  ggplot(df_cor, aes(x = Var1, y = Var2, fill = r)) +
+    # White background grid lines between tiles
+    geom_tile(color = "white", linewidth = 1.5) +
+    
+    # Correlation value labels
+    geom_text(
+      aes(
+        label = sprintf("%.2f", r),
+        color = abs(r) > 0.55 # Dynamic text contrast (white text on dark background)
+      ),
+      family = "Noto Sans",
+      fontface = "bold",
+      size = 4.2
+    ) +
+    
+    # Diverging color scale (-1 to +1)
+    scale_fill_gradient2(
+      low = "#2B5C8F",      # Deep blue for negative correlations
+      mid = "#F7F7F7",      # Neutral grey-white for 0
+      high = "#D95F02",     # Orange-red for positive correlations
+      limits = c(-1, 1),
+      breaks = seq(-1, 1, by = 0.5),
+      name = "Pearson r: "
+    ) +
+    
+    # Text contrast color manual scale
+    scale_color_manual(values = c("TRUE" = "white", "FALSE" = "black"), guide = "none") +
+    
+    # Panel Title & Axis Formatting
+    labs(
+      title = title_label,
+      x = NULL,
+      y = NULL
+    ) +
+    coord_fixed() + # Ensure square cells
+    theme_minimal(base_family = "Noto Sans", base_size = 13) +
+    theme(
+      plot.title = element_text(face = "bold", size = 14, family = "Noto Sans", hjust = 0.5, margin = margin(b = 10)),
+      axis.text = element_text(face = "bold", size = 11, color = "black", family = "Noto Sans"),
+      panel.grid = element_blank(),
+      legend.position = "bottom",
+      legend.title = element_text(face = "bold", size = 11, family = "Noto Sans"),
+      legend.text = element_text(size = 10, family = "Noto Sans"),
+      legend.key.width = unit(1.8, "cm"),
+      legend.key.height = unit(0.4, "cm"),
+      plot.margin = margin(10, 15, 10, 15)
+    )
+}
+
+# ==============================================================================
+# 3. GENERATE INDIVIDUAL GROUP PLOTS
+# ==============================================================================
+perf_children <- task_performance %>% filter(Group == "Children")
+perf_adults   <- task_performance %>% filter(Group == "Adults")
+
+plot_cor_ch <- plot_cor_heatmap(perf_children, "A) Children")
+plot_cor_ad <- plot_cor_heatmap(perf_adults,   "B) Adults")
+
+# ==============================================================================
+# 4. COMBINE WITH PATCHWORK AND EXPORT HIGH-RES GRAPHIC
+# ==============================================================================
+cor_combined_plot <- plot_cor_ch + plot_cor_ad +
+  plot_layout(guides = "collect") +
+  theme(
+    legend.position = "bottom",
+    legend.margin = margin(t = 12)
+  )
+
+# Export with roomier aspect ratio to prevent compression
+ggsave(
+  "cross_task_correlations_noto.png",
+  plot = cor_combined_plot,
+  device = ragg::agg_png,
+  width = 10.5,
+  height = 6.0,
+  dpi = 300
+)
+
+# Display Plot
+knitr::include_graphics("cross_task_correlations_noto.png")
+
+```
+
+???
+
+Crucially, our cross-task correlation analysis reveals a striking developmental dissociation:In adults, stored phonolexical fidelity—measured in Lexical Preference—strongly predicts novel word learning performance ($r = .816, p < .001$). Adults directly leverage the precision of their existing lexical targets as structural templates when encoding new vocabulary.In children, however, this correlation drops to zero ($r = .075$, non-significant). Even though bilingual children possess well-specified representations for familiar words, that memory precision does not automatically guarantee successful novel word encoding. This proves that directly coupling stored phonolexical targets to the dynamic process of building new words is an emergent developmental milestone that matures between childhood and adulthood.
+
 ---
 
 # Discussion
@@ -5962,132 +6091,6 @@ Looking at the broader learning trajectories across Blocks 3 through 8, we obser
 
 
 ---
-## Correlation across tasks
-
-```{r, warning = FALSE, message = FALSE}
-library(tidyverse)
-library(patchwork)
-library(ragg)
-library(showtext)
-
-# ==============================================================================
-# 1. SETUP NOTO FONT
-# ==============================================================================
-font_add_google(name = "Noto Sans", family = "Noto Sans")
-showtext_auto()
-
-# ==============================================================================
-# 2. HELPER FUNCTION TO GENERATE UPPER-TRIANGULAR CORRELATION HEATMAPS
-# ==============================================================================
-plot_cor_heatmap <- function(data_subset, title_label) {
-  # Tasks order
-  task_vars <- c("XAB", "LD", "LP", "WL")
-  
-  # Compute Pearson correlation matrix
-  cor_mat <- cor(data_subset[, task_vars], use = "pairwise.complete.obs")
-  
-  # Mask lower triangle for clean upper-triangular display
-  cor_mat[lower.tri(cor_mat)] <- NA
-  
-  # Convert to tidy long format
-  df_cor <- as.data.frame(cor_mat) %>%
-    rownames_to_column(var = "Var1") %>%
-    pivot_longer(-Var1, names_to = "Var2", values_to = "r") %>%
-    filter(!is.na(r)) %>%
-    mutate(
-      Var1 = factor(Var1, levels = task_vars),
-      Var2 = factor(Var2, levels = rev(task_vars)) # Reverse y-axis for standard matrix layout
-    )
-  
-  # Heatmap Plot
-  ggplot(df_cor, aes(x = Var1, y = Var2, fill = r)) +
-    # White background grid lines between tiles
-    geom_tile(color = "white", linewidth = 1.5) +
-    
-    # Correlation value labels
-    geom_text(
-      aes(
-        label = sprintf("%.2f", r),
-        color = abs(r) > 0.55 # Dynamic text contrast (white text on dark background)
-      ),
-      family = "Noto Sans",
-      fontface = "bold",
-      size = 4.2
-    ) +
-    
-    # Diverging color scale (-1 to +1)
-    scale_fill_gradient2(
-      low = "#2B5C8F",      # Deep blue for negative correlations
-      mid = "#F7F7F7",      # Neutral grey-white for 0
-      high = "#D95F02",     # Orange-red for positive correlations
-      limits = c(-1, 1),
-      breaks = seq(-1, 1, by = 0.5),
-      name = "Pearson r: "
-    ) +
-    
-    # Text contrast color manual scale
-    scale_color_manual(values = c("TRUE" = "white", "FALSE" = "black"), guide = "none") +
-    
-    # Panel Title & Axis Formatting
-    labs(
-      title = title_label,
-      x = NULL,
-      y = NULL
-    ) +
-    coord_fixed() + # Ensure square cells
-    theme_minimal(base_family = "Noto Sans", base_size = 13) +
-    theme(
-      plot.title = element_text(face = "bold", size = 14, family = "Noto Sans", hjust = 0.5, margin = margin(b = 10)),
-      axis.text = element_text(face = "bold", size = 11, color = "black", family = "Noto Sans"),
-      panel.grid = element_blank(),
-      legend.position = "bottom",
-      legend.title = element_text(face = "bold", size = 11, family = "Noto Sans"),
-      legend.text = element_text(size = 10, family = "Noto Sans"),
-      legend.key.width = unit(1.8, "cm"),
-      legend.key.height = unit(0.4, "cm"),
-      plot.margin = margin(10, 15, 10, 15)
-    )
-}
-
-# ==============================================================================
-# 3. GENERATE INDIVIDUAL GROUP PLOTS
-# ==============================================================================
-perf_children <- task_performance %>% filter(Group == "Children")
-perf_adults   <- task_performance %>% filter(Group == "Adults")
-
-plot_cor_ch <- plot_cor_heatmap(perf_children, "A) Children")
-plot_cor_ad <- plot_cor_heatmap(perf_adults,   "B) Adults")
-
-# ==============================================================================
-# 4. COMBINE WITH PATCHWORK AND EXPORT HIGH-RES GRAPHIC
-# ==============================================================================
-cor_combined_plot <- plot_cor_ch + plot_cor_ad +
-  plot_layout(guides = "collect") +
-  theme(
-    legend.position = "bottom",
-    legend.margin = margin(t = 12)
-  )
-
-# Export with roomier aspect ratio to prevent compression
-ggsave(
-  "cross_task_correlations_noto.png",
-  plot = cor_combined_plot,
-  device = ragg::agg_png,
-  width = 10.5,
-  height = 6.0,
-  dpi = 300
-)
-
-# Display Plot
-knitr::include_graphics("cross_task_correlations_noto.png")
-
-```
-
-???
-
-Crucially, our cross-task correlation analysis reveals a striking developmental dissociation:In adults, stored phonolexical fidelity—measured in Lexical Preference—strongly predicts novel word learning performance ($r = .816, p < .001$). Adults directly leverage the precision of their existing lexical targets as structural templates when encoding new vocabulary.In children, however, this correlation drops to zero ($r = .075$, non-significant). Even though bilingual children possess well-specified representations for familiar words, that memory precision does not automatically guarantee successful novel word encoding. This proves that directly coupling stored phonolexical targets to the dynamic process of building new words is an emergent developmental milestone that matures between childhood and adulthood.
-
----
 # Group variables
 ```{r}
 library(dplyr)
@@ -6139,4 +6142,91 @@ ggplot(subject_covariates, aes(x = Exp_Home)) +
   ) +
   theme_minimal(base_size = 12)
 ```
+
+---
+
+# Results: 4PL Nonlinear Modeling
+
+
+Perceptual categorization curves were evaluated by fitting a 4PL logistic function:
+
+$$f(x) = a_1 + \frac{a_2 - a_1}{1 + e^{-s(x - c)}}$$
+
+- $a_1, a_2$: Lower and upper asymptotes (constrained within $[0, 1]$).
+- $c$: Crossover point (category boundary location).
+- $s$: Boundary steepness/slope parameter (higher values = sharper perception).
+
+```{r, out.width = "80%"}
+library(ggplot2)
+
+# 1. Define the 4PL Logistic Function
+four_pl <- function(x, a1 = 0, a2 = 1, c = 4, s = 1.5) {
+  a1 + (a2 - a1) / (1 + exp(-s * (x - c)))
+}
+
+# 2. Generate data points across a 7-step acoustic continuum
+x_seq <- seq(1, 7, length.out = 300)
+
+df_curves <- data.frame(
+  Step = rep(x_seq, 3),
+  Profile = factor(
+    rep(c(
+      "Sharp Boundary (s = 2.5, c = 4.0)",
+      "Shallow Boundary (s = 0.7, c = 4.0)",
+      "Shifted Boundary Group (s = 2.5, c = 4.8)"
+    ), each = 300),
+    levels = c(
+      "Sharp Boundary (s = 2.5, c = 4.0)",
+      "Shallow Boundary (s = 0.7, c = 4.0)",
+      "Shifted Boundary Group (s = 2.5, c = 4.8)"
+    )
+  ),
+  Probability = c(
+    four_pl(x_seq, a1 = 0.02, a2 = 0.98, c = 4.0, s = 2.5),  # Sharp L1
+    four_pl(x_seq, a1 = 0.10, a2 = 0.88, c = 4.0, s = 0.7),  # Shallow
+    four_pl(x_seq, a1 = 0.02, a2 = 0.98, c = 4.8, s = 2.5)   # Shifted c
+  )
+)
+
+# 3. Plot Categorization Curves
+ggplot(df_curves, aes(x = Step, y = Probability, color = Profile, linetype = Profile)) +
+  # Reference lines for 50% crossover and boundary locations
+  geom_hline(yintercept = 0.50, linetype = "dashed", color = "grey70") +
+  geom_vline(xintercept = 4.0, linetype = "dotted", color = "#0072B2", alpha = 0.7) +
+  geom_vline(xintercept = 4.8, linetype = "dotted", color = "#D55E00", alpha = 0.7) +
+  
+  # 4PL Curves
+  geom_line(linewidth = 1.2) +
+  
+  # Parameter annotations
+  annotate("text", x = 4.1, y = 0.53, label = "c = 4.0", color = "#0072B2", hjust = 0, size = 3.5, fontface = "bold") +
+  annotate("text", x = 4.9, y = 0.53, label = "c = 4.8", color = "#D55E00", hjust = 0, size = 3.5, fontface = "bold") +
+  
+  # Styling
+  scale_color_manual(values = c("Native / Sharp Boundary (s = 2.5, c = 4.0)" = "#0072B2",
+                                "Heritage / Shallow Boundary (s = 0.7, c = 4.0)" = "#009E73",
+                                "Shifted Boundary Group (s = 2.5, c = 4.8)" = "#D55E00")) +
+  scale_linetype_manual(values = c("solid", "longdash", "twodash")) +
+  scale_x_continuous(breaks = 1:7, labels = paste0("s", 1:7)) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  labs(
+    title = "4PL Logistic Fit of Perceptual Categorization",
+    subtitle = "Modelling Category Boundary Location (c) and Boundary Sharpness (s)",
+    x = "Acoustic Continuum Step (e.g., F1 Step 1 [e] → Step 7 [ɛ])",
+    y = "Identified as Category B (%)",
+    color = "Group Profile",
+    linetype = "Group Profile"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+```
+
+???
+What we did to examine these results statistically is we calculated the crossover point—so where is the boundary for each speaker—and what is the boundary sharpness. To do this, we estimated floor and ceiling performance for each listener, which allowed us to mathematically isolate boundary location from boundary sharpness.
+
 
