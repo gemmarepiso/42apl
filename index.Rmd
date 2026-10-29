@@ -14,6 +14,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -3528,7 +3529,7 @@ children_stats <- tibble(
   `N (Total)` = 40,
   `Gender (F/M)` = "20 F / 20 M",
   `Age Range` = "7.50 – 10.37 yrs",
-  `Questionnaire Subset` = "(N = 28)* Exp. home 66.19% (25.68%)"
+  `Questionnaire Subset` = "(N = 27)* Exp. home 66.19% (25.68%)"
 )
 
 # 3. Combine into unified summary table
@@ -3548,7 +3549,7 @@ cat("<p style='font-size: 0.82em; color: #475569; margin-top: 6px; margin-bottom
 ```
 
 
-```{r}
+```{r, out.width="60%"}
 library(readr)
 library(dplyr)
 library(stringr)
@@ -4168,7 +4169,6 @@ Our multi-task battery decouples processing tiers across 3 tasks: XAB measures b
 - **Recording:** High-quality audio recorded with a Zoom H4n by a native Central Catalan speaker.
 - **Timing:** Equal Inter-Stimulus Intervals (ISIs) between all presented sounds.
 
-### Presentation Sequence
 
 ```{r xab-sequence, echo=FALSE, out.width="100%", fig.width=6, fig.height=3.2, dpi=300}
 library(ggplot2)
@@ -5233,8 +5233,7 @@ knitr::include_graphics("cross_task_correlations_noto.png")
 ```
 
 ???
-
-Crucially, our cross-task correlation analysis reveals a striking developmental dissociation:In adults, stored phonolexical fidelity—measured in Lexical Preference—strongly predicts novel word learning performance ($r = .816, p < .001$). Adults directly leverage the precision of their existing lexical targets as structural templates when encoding new vocabulary.In children, however, this correlation drops to zero ($r = .075$, non-significant). Even though bilingual children possess well-specified representations for familiar words, that memory precision does not automatically guarantee successful novel word encoding. This proves that directly coupling stored phonolexical targets to the dynamic process of building new words is an emergent developmental milestone that matures between childhood and adulthood.
+Importantly, our cross-task correlation analysis reveals that lexical preference is associated with prelexical accuracy in children, and with both prelexical discrimination and vowel-swap acceptance in adults. Crucially, performance on the lexical decision task does not correlate with prelexical discrimination. This indicates that participants' acceptance of vowel mispronunciations does not stem from an inability to perceive the contrast."
 
 ---
 
@@ -5250,11 +5249,10 @@ Crucially, our cross-task correlation analysis reveals a striking developmental 
 
 * **Catalan home input and language dominance** directly consolidate URs against variable community speech across both mid-vowels. 
 
-* URs develop with age (LP), but age is not a predictor of prelexical perception or input-driven tolerance.
 
  
 - **Effects of age in lexical preference**:
-While acoustic/prelexical discrimination of mid-vowels emerges early in infancy, encoding fine phonetic detail into stable, underlying lexical representations (URs) requires time and cumulative exposure.
+While acoustic/prelexical discrimination of mid-vowels emerges early in infancy <small>Bosch & Sebastián Gallés, 2003</small>, encoding fine phonetic detail into stable, underlying lexical representations (URs) requires time and cumulative exposure.
   - LP specifically taps into established URs—which require extended time and experience to consolidate[cite: 4, 6]—whereas LD measures online perceptual tolerance.
 
 
@@ -6328,3 +6326,22 @@ plot_adult_profiles <- ggplot(adults_long, aes(x = Context, y = Percentage, fill
 print(plot_adult_profiles)
 ```
 
+---
+class: no-banner
+
+## Child bilingual development
+
+.beamer-block[
+Early bilingual development also shows effects of language exposure.
+]
+
+- **Bosch & Sebastián-Gallés (2003)** (discrimination of novel words /deði/ from /dɛði/):
+  - 4-month-olds discriminate /e/–/ɛ/
+
+--
+
+  - By 8 months, only Catalan-dominant infants maintain sensitivity
+
+--
+
+  - By 12 months, sensitivity re-emerges
