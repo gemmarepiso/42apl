@@ -1363,11 +1363,18 @@ The experimental stimuli consisted of 13-point acoustic continua generated throu
 ---
 
 ## Methodology: Design
-<div align="center">
-  <audio controls>
-    <source src="chain1.wav" type="audio/mpeg">
-  </audio>
-</div>
+
+```{r}
+# HTML5 Audio Player for the stimulus
+htmltools::tagList(
+  htmltools::tags$audio(
+    src = "chain1.wav",
+    type = "audio/mpeg",
+    controls = NA
+  )
+)
+```
+
 <!-- Using CSS grid to neatly arrange the 4 images -->
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
   <div><img src="catalan_perception.png" width="100%" /></div>
