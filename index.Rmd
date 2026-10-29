@@ -6,6 +6,8 @@ institute: |
   Universitat Autònoma de Barcelona
   <br><br>
   <img src="logo_with_light_bg.png" width="160px"/>
+   <br><br>
+  Slides: https://gemmarepiso.github.io/42apl
 date: "October 2026"
 output: 
   xaringan::moon_reader:
@@ -68,11 +70,31 @@ xaringanExtra::use_progress_bar(
   location = "top", 
   height = "10px")
 
+xaringanExtra::use_search(show_icon = TRUE)
+
+
 ```
 
 
 
-```{css, echo = FALSE, eval = FALSE}
+```{css, echo = FALSE, eval = TRUE}
+
+/* Force xaringanExtra banner above sydney.css / xaringan-themer layers */
+.xe-banner, div[class*="xe-banner"] {
+  z-index: 9999 !important;
+}
+
+/* Increase top and bottom slide padding so content doesn't cover the banner */
+.remark-slide-content {
+  padding-top: 3.2em !important;
+  padding-bottom: 3.2em !important;
+}
+
+/* Hide banner on title slide */
+.title-slide .xe-banner, 
+.title-slide div[class*="xe-banner"] {
+  display: none !important;
+}
 
 .refs-two-column {
   font-size: 11px;
@@ -258,7 +280,7 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
       <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';"></h3>
     </div>
     <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
-      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception and phonolexical encoding?</strong><br>
+      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception (creation of phonetic categories) and phonolexical encoding (underlying representations at the word level)?</strong><br>
       <span style="font-size: 0.68rem; color: #4B5563;"></span>
     </p>
   </div>
@@ -280,21 +302,24 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
 ???
 
 
-Bon dia, everyone. Before I begin, I want to express my warm thanks to the organizing committee—Jorge Baptista, Lucília Chacoto, Pedro Santos, Teresa Maló Sequeira, Sónia Reis, and Izabela Müller—and to the entire APL Board for inviting me to be here today.
+Bon dia, everyone. It is an absolute pleasure to join you at the Universidade do Algarve for this year's APL.
 
-It is an absolute pleasure to join you at the Universidade do Algarve for this year's Encontro Nacional. I am truly honored to share my work with such an active and welcoming community of linguists, and I’m looking forward to our discussions today. Thank you so much for having me.
 
-Good morning, colleagues and members of the Association—of the Associação Portuguesa de Linguística. It is a true privilege to present here today at the Universidade do Algarve.
+Before I begin, I want to express my warm thanks to the Board of the Portuguese Association of Linguistics and to the local organisation committe for inviting me to be here today and I’m looking forward to our discussions these next days. 
 
-And today, what I want to do is to think about - maybe reexamine here is too ambitious - how early bilinguals perceive, represent, and store speech sounds using the test case of the Catalan mid vowel contrast e-E and two recent projects. For the second one, we are currently collecting data, so it is the first time I am presenting these results.
 
-Alright so, more specifically, our goal today is to think about the following questions: 
+And today,I want to think about  how early bilinguals perceive, represent, and store speech sounds using the test case of the Catalan mid vowel contrast e-E and two recent experimental projects. 
+
+more specifically, our goal today is to think about the following questions: 
 
 How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?
 
 How does the majority societal language affect creation of phonetic categories and the encoding of these categories at the word level?
 
 Do bilinguals adapt to variability in the input? (This is going to be a recurring theme."
+
+
+
 ---
 
 ## Early bilingual Grammars
@@ -1118,7 +1143,7 @@ A similar effect of language dominance was reported in a study by Ramon-Casas et
 * Spanish-dominant early bilinguals show reduced sensitivity to the /e/–/ɛ/ contrast in static XAB discrimination, whereas Catalan-dominant bilinguals exhibit robust category boundaries <small>(Pallier et al., 1997; Ramón-Casas et al., 2023)</small>.
 
 
-* Is prelexical sensitivity fixed, or does operating in a **Spanish language mode** temporarily attenuate boundary sharpness ($s$) versus maintaining cooperative co-activation without boundary flattening?
+* Is the prelexical discrimination contrast fixed, or does it change depending on the communicative context??
 
 
 ???
@@ -2403,12 +2428,12 @@ class: inverse, center, middle
 
   <div style="text-align: center;">
     <img src="miquel_llompart.jpg" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid #FFFFFF; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);" />
-    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Miquel Llompart</p>
+    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Miquel Llompart (UPF)</p>
   </div>
 
   <div style="text-align: center;">
     <img src="scottperry.jpeg" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid #FFFFFF; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);" />
-    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Scott Perry</p>
+    <p style="margin-top: 12px; font-weight: bold; font-size: 1.1em; margin-bottom: 2px;">Scott Perry (UPF)</p>
   </div>
 
 </div>
@@ -3430,7 +3455,7 @@ emtrends(m_WL_ch, ~ trial_type_c, var = "Exp_Home_z")
 
 
 
-```{r participant-profile-summary, echo=FALSE, message=FALSE, warning=FALSE}
+```{r participant-profile-summary, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 library(dplyr)
 library(stringr)
 library(knitr)
@@ -3476,22 +3501,130 @@ children_stats <- tibble(
   `N (Total)` = 40,
   `Gender (F/M)` = "20 F / 20 M",
   `Age Range` = "7.50 – 10.37 yrs",
-  `Questionnaire Subset` = "N = 28 parent questionnaires (Individual Differences subset)"
+  `Questionnaire Subset` = "(N = 28)* Exp. home 66.19% (25.68%)"
 )
 
 # 3. Combine into unified summary table
 participant_summary <- bind_rows(adult_stats, children_stats)
 
-# Render HTML table for xaringan / Quarto / R Markdown slides
-knitr::kable(
+# Render HTML table
+print(knitr::kable(
   participant_summary, 
   format = "html", 
   align = "llccccc",
-  col.names = c("Cohort", "Target Population", "N", "Gender", "Age Range", "Questionnaire / Language Profile")
-)
+  col.names = c("Cohort", "Target Population", "N", "Gender", "Age Range", "Questionnaire / Language Profile*")
+))
 
+# 4. HTML Footnote Note
+cat("<p style='font-size: 0.82em; color: #475569; margin-top: 6px; margin-bottom: 0px;'><sup>*</sup> Note: Individual differences for the child cohort are calculated with a subset of 28 participants with complete parental questionnaire data.</p>")
 
 ```
+
+
+```{r}
+library(readr)
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+
+# 1. Load dataset and define exclusions
+excluded_ids <- c("F004_CH")
+
+participants <- read.csv("participants_Catalan_Spanish.csv")
+
+# 2. Clean IDs and calculate relative Exposure and Use percentages
+participants_calculated <- participants_clean %>%
+  mutate(
+    Exp_Home      = 100 * `home.current.exposure.Catalan` / (`home.current.exposure.Catalan` + `home.current.exposure.Spanish`),
+    Exp_School    = 100 * `school.current.exposure.Catalan` / (`school.current.exposure.Catalan` + `school.current.exposure.Spanish`),
+    Exp_Community = 100 * `community.current.exposure.Catalan` / (`community.current.exposure.Catalan` + `community.current.exposure.Spanish`),
+    Exp_Holiday   = 100 * `holiday.current.exposure.Catalan` / (`holiday.current.exposure.Catalan` + `holiday.current.exposure.Spanish`),
+    Use_Home      = 100 * `home.current.use.Catalan` / (`home.current.use.Catalan` + `home.current.use.Spanish`),
+    Use_School    = 100 * `school.current.use.Catalan` / (`school.current.use.Catalan` + `school.current.use.Spanish`),
+    Use_Community = 100 * `community.current.use.Catalan` / (`community.current.use.Catalan` + `community.current.use.Spanish`),
+    Use_Holiday   = 100 * `holiday.current.use.Catalan` / (`holiday.current.use.Catalan` + `holiday.current.use.Spanish`)
+  )
+
+# 3. Reshape into long format for ggplot
+context_df <- participants_calculated %>%
+  select(
+    number, 
+    Exp_Home, Exp_School, Exp_Community, Exp_Holiday,
+    Use_Home, Use_School, Use_Community, Use_Holiday
+  ) %>%
+  pivot_longer(
+    cols = -number,
+    names_to = c("Metric", "Context"),
+    names_sep = "_",
+    values_to = "Percentage"
+  ) %>%
+  mutate(
+    Metric  = ifelse(Metric == "Exp", "Exposure", "Use"),
+    Context = factor(Context, levels = c("Home", "School", "Community", "Holiday"))
+  )
+
+# 4. Generate ggplot with explicit scale_x_discrete()
+plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fill = Metric)) +
+  # 50% Reference Line
+  geom_hline(yintercept = 50, linetype = "dashed", color = "#64748B", linewidth = 0.8) +
+  
+  # Text Annotation (x = 0.6 maps position on discrete axis)
+  annotate("text", x = 0.6, y = 52, label = "Balanced Input (50%)", 
+           color = "#64748B", fontface = "italic", size = 3.5, hjust = 0) +
+  
+  # Boxplots
+  geom_boxplot(
+    alpha = 0.7, 
+    outlier.shape = NA, 
+    position = position_dodge(width = 0.8),
+    width = 0.6
+  ) +
+  
+  # Individual Points
+  geom_point(
+    aes(color = Metric),
+    position = position_jitterdodge(dodge.width = 0.8, jitter.width = 0.15),
+    size = 2,
+    alpha = 0.7
+  ) +
+  
+  # Explicit discrete scaling for x-axis
+  scale_x_discrete(labels = c("Home", "School", "Community", "Holiday")) +
+  
+  # Continuous scaling for y-axis
+  scale_y_continuous(
+    limits = c(0, 105),
+    breaks = seq(0, 100, by = 20),
+    labels = function(x) paste0(x, "%")
+  ) +
+  
+  # Palettes
+  scale_fill_manual(values = c("Exposure" = "#0072B2", "Use" = "#D55E00")) +
+  scale_color_manual(values = c("Exposure" = "#004976", "Use" = "#9E4500")) +
+  
+  # Styling & Labels
+  labs(
+    title = "Relative Catalan Exposure & Use Across Settings - Q Bex results",
+    subtitle = "Calculated as 100 × Catalan / (Catalan + Spanish) for Child Cohort (N = 27)",
+    x = "Context Setting",
+    y = "Relative Catalan Percentage (%)",
+    fill = "Metric Type",
+    color = "Metric Type"
+  ) +
+  theme_classic(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, color = "#0A2540"),
+    plot.subtitle = element_text(size = 11, color = "#475569", margin = margin(b = 12)),
+    legend.position = "top",
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "grey90", linewidth = 0.4)
+  )
+
+# Display Plot
+print(plot_relative_exposure)
+```
+
 
 ???
 For these tasks, we recruited participants from the Barcelona Metropolitan Area across two cohorts: 19 adults and 40 primary school children aged 7 to 11. We were particularly interested in primary school children because they remain understudied compared to preschoolers. Investigating this age group is crucial because immersion in school-level Catalan can potentially override earlier home input patterns. For our individual difference analyses, we will report data for 28 participants due to incomplete parent questionnaires, as this is an ongoing three-year project.  
@@ -4948,6 +5081,134 @@ lp_ad_dominant_plot
 
 First, Lexical Decision (LD) shows no meaningful correlation with pre-lexical acoustic discrimination (XAB) in either group ($r = -0.01$ in children; $r = 0.08$ in adults). This demonstrates that individuals—whether children or adults—who reject more vowel swaps do not do so simply because they possess higher acoustic-perceptual acuity. The ability to reject mispronunciations in real words operates independently from raw perceptual sensitivity, pointing to distinct higher-level lexical and task-demand mechanisms.   Second, we observe a consistent moderate positive correlation between pre-lexical discrimination (XAB) and Lexical Preference (LP) in both children ($r = 0.52$) and adults ($r = 0.40$). This indicates that sharper acoustic distinction at the perceptual level directly supports the establishment of well-specified, canonical phonolexical targets in long-term memory across age groups.   
 
+
+
+---
+## Correlation across tasks
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(patchwork)
+library(ragg)
+library(showtext)
+
+# ==============================================================================
+# 1. SETUP NOTO FONT
+# ==============================================================================
+font_add_google(name = "Noto Sans", family = "Noto Sans")
+showtext_auto()
+
+# ==============================================================================
+# 2. HELPER FUNCTION TO GENERATE UPPER-TRIANGULAR CORRELATION HEATMAPS
+# ==============================================================================
+plot_cor_heatmap <- function(data_subset, title_label) {
+  # Tasks order
+  task_vars <- c("XAB", "LD", "LP")
+  
+  # Compute Pearson correlation matrix
+  cor_mat <- cor(data_subset[, task_vars], use = "pairwise.complete.obs")
+  
+  # Mask lower triangle for clean upper-triangular display
+  cor_mat[lower.tri(cor_mat)] <- NA
+  
+  # Convert to tidy long format
+  df_cor <- as.data.frame(cor_mat) %>%
+    rownames_to_column(var = "Var1") %>%
+    pivot_longer(-Var1, names_to = "Var2", values_to = "r") %>%
+    filter(!is.na(r)) %>%
+    mutate(
+      Var1 = factor(Var1, levels = task_vars),
+      Var2 = factor(Var2, levels = rev(task_vars)) # Reverse y-axis for standard matrix layout
+    )
+  
+  # Heatmap Plot
+  ggplot(df_cor, aes(x = Var1, y = Var2, fill = r)) +
+    # White background grid lines between tiles
+    geom_tile(color = "white", linewidth = 1.5) +
+    
+    # Correlation value labels
+    geom_text(
+      aes(
+        label = sprintf("%.2f", r),
+        color = abs(r) > 0.55 # Dynamic text contrast (white text on dark background)
+      ),
+      family = "Noto Sans",
+      fontface = "bold",
+      size = 4.2
+    ) +
+    
+    # Diverging color scale (-1 to +1)
+    scale_fill_gradient2(
+      low = "#2B5C8F",      # Deep blue for negative correlations
+      mid = "#F7F7F7",      # Neutral grey-white for 0
+      high = "#D95F02",     # Orange-red for positive correlations
+      limits = c(-1, 1),
+      breaks = seq(-1, 1, by = 0.5),
+      name = "Pearson r: "
+    ) +
+    
+    # Text contrast color manual scale
+    scale_color_manual(values = c("TRUE" = "white", "FALSE" = "black"), guide = "none") +
+    
+    # Panel Title & Axis Formatting
+    labs(
+      title = title_label,
+      x = NULL,
+      y = NULL
+    ) +
+    coord_fixed() + # Ensure square cells
+    theme_minimal(base_family = "Noto Sans", base_size = 13) +
+    theme(
+      plot.title = element_text(face = "bold", size = 14, family = "Noto Sans", hjust = 0.5, margin = margin(b = 10)),
+      axis.text = element_text(face = "bold", size = 11, color = "black", family = "Noto Sans"),
+      panel.grid = element_blank(),
+      legend.position = "bottom",
+      legend.title = element_text(face = "bold", size = 11, family = "Noto Sans"),
+      legend.text = element_text(size = 10, family = "Noto Sans"),
+      legend.key.width = unit(1.8, "cm"),
+      legend.key.height = unit(0.4, "cm"),
+      plot.margin = margin(10, 15, 10, 15)
+    )
+}
+
+# ==============================================================================
+# 3. GENERATE INDIVIDUAL GROUP PLOTS
+# ==============================================================================
+perf_children <- task_performance %>% filter(Group == "Children")
+perf_adults   <- task_performance %>% filter(Group == "Adults")
+
+plot_cor_ch <- plot_cor_heatmap(perf_children, "A) Children")
+plot_cor_ad <- plot_cor_heatmap(perf_adults,   "B) Adults")
+
+# ==============================================================================
+# 4. COMBINE WITH PATCHWORK AND EXPORT HIGH-RES GRAPHIC
+# ==============================================================================
+cor_combined_plot <- plot_cor_ch + plot_cor_ad +
+  plot_layout(guides = "collect") +
+  theme(
+    legend.position = "bottom",
+    legend.margin = margin(t = 12)
+  )
+
+# Export with roomier aspect ratio to prevent compression
+ggsave(
+  "cross_task_correlations_noto.png",
+  plot = cor_combined_plot,
+  device = ragg::agg_png,
+  width = 10.5,
+  height = 6.0,
+  dpi = 300
+)
+
+# Display Plot
+knitr::include_graphics("cross_task_correlations_noto.png")
+
+```
+
+???
+
+Crucially, our cross-task correlation analysis reveals a striking developmental dissociation:In adults, stored phonolexical fidelity—measured in Lexical Preference—strongly predicts novel word learning performance ($r = .816, p < .001$). Adults directly leverage the precision of their existing lexical targets as structural templates when encoding new vocabulary.In children, however, this correlation drops to zero ($r = .075$, non-significant). Even though bilingual children possess well-specified representations for familiar words, that memory precision does not automatically guarantee successful novel word encoding. This proves that directly coupling stored phonolexical targets to the dynamic process of building new words is an emergent developmental milestone that matures between childhood and adulthood.
+
 ---
 
 # Discussion
@@ -4960,14 +5221,20 @@ First, Lexical Decision (LD) shows no meaningful correlation with pre-lexical ac
 
 
 
-* **Catalan home input and language dominance** directly consolidate underlying representations against variable community speech across both mid-vowels. 
+* **Catalan home input and language dominance** directly consolidate URs against variable community speech across both mid-vowels. 
 
+* URs develop with age (LP), but age is not a predictor of prelexical perception or input-driven tolerance.
 
+ 
+- **Effects of age in lexical preference**:
+While acoustic/prelexical discrimination of mid-vowels emerges early in infancy, encoding fine phonetic detail into stable, underlying lexical representations (URs) requires time and cumulative exposure.
+  - LP specifically taps into established URs—which require extended time and experience to consolidate[cite: 4, 6]—whereas LD measures online perceptual tolerance.
 
 
 ???
 
-Turning to our discussion on surface tolerance, coupling our lexical decision results with our lexical preference data demonstrates that the acceptance of vowel swaps—or mispronunciations—reflects online perceptual tolerance for Spanish-accented community input, rather than imprecise or "fuzzy" underlying representations in memory. Crucially, however, our data reveals substantial individual variation. In particular, children performed below chance in the lexical preference task, indicating that while these results reflect broad population trends, they do not apply identically across every individual speaker in our sample.Second, we observed a distinct directional asymmetry: speakers exhibit greater certainty regarding the phonolexical encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This directional bias directly mirrors ambient Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$. Next, Catalan home exposure and language dominance serve to consolidate underlying representations against variable community speech. A Catalan-dominant profile combined with higher home exposure increases the cumulative probability of encountering canonical mid-vowel tokens, thereby stabilizing long-term memory targets across both $/e/$ and $/ɛ/$.Finally, our findings point toward a differential input threshold hypothesis between prelexical perception and phonolexical encoding. While prelexical acoustic discrimination can be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold—demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory.
+Turning to our discussion on surface tolerance, coupling our lexical decision results with our lexical preference data demonstrates that the acceptance of vowel swaps—or mispronunciations—reflects online perceptual tolerance for Spanish-accented community input, rather than imprecise or "fuzzy" underlying representations in memory. Crucially, however, our data reveals substantial individual variation. In particular, children performed below chance in the lexical preference task, indicating that while these results reflect broad population trends, they do not apply identically across every individual speaker in our sample.Second, we observed a distinct directional asymmetry: speakers exhibit greater certainty regarding the phonolexical encoding of words containing the close-mid vowel $/e/$ compared to those with the open-mid vowel $/ɛ/$. This directional bias directly mirrors ambient Spanish-accented community input, where $/ɛ/$ tokens are frequently realized as $[e]$. Next, Catalan home exposure and language dominance serve to consolidate underlying representations against variable community speech. A Catalan-dominant profile combined with higher home exposure increases the cumulative probability of encountering canonical mid-vowel tokens, thereby stabilizing long-term memory targets across both $/e/$ and $/ɛ/$.Finally, our findings point toward a differential input threshold hypothesis between prelexical perception and phonolexical encoding. While prelexical acoustic discrimination can be established with lower overall input density, phonolexical target creation requires a significantly higher input threshold—demanding robust, word-by-word exposure across individual vocabulary items to fully consolidate fine-grained contrasts in long-term memory. And this is also supported by the fact that only the lexical preference task showed a significant effect of age, while prelexical perception and input-driven tolerance 
+
 
 ---
 
@@ -5774,130 +6041,263 @@ Looking at the broader learning trajectories across Blocks 3 through 8, we obser
 
 
 ---
-## Correlation across tasks
+# Group variables
+```{r}
+library(dplyr)
+library(knitr)
+library(stringr)
 
-```{r, warning = FALSE, message = FALSE}
-library(tidyverse)
-library(patchwork)
-library(ragg)
-library(showtext)
-
-# ==============================================================================
-# 1. SETUP NOTO FONT
-# ==============================================================================
-font_add_google(name = "Noto Sans", family = "Noto Sans")
-showtext_auto()
-
-# ==============================================================================
-# 2. HELPER FUNCTION TO GENERATE UPPER-TRIANGULAR CORRELATION HEATMAPS
-# ==============================================================================
-plot_cor_heatmap <- function(data_subset, title_label) {
-  # Tasks order
-  task_vars <- c("XAB", "LD", "LP", "WL")
-  
-  # Compute Pearson correlation matrix
-  cor_mat <- cor(data_subset[, task_vars], use = "pairwise.complete.obs")
-  
-  # Mask lower triangle for clean upper-triangular display
-  cor_mat[lower.tri(cor_mat)] <- NA
-  
-  # Convert to tidy long format
-  df_cor <- as.data.frame(cor_mat) %>%
-    rownames_to_column(var = "Var1") %>%
-    pivot_longer(-Var1, names_to = "Var2", values_to = "r") %>%
-    filter(!is.na(r)) %>%
-    mutate(
-      Var1 = factor(Var1, levels = task_vars),
-      Var2 = factor(Var2, levels = rev(task_vars)) # Reverse y-axis for standard matrix layout
-    )
-  
-  # Heatmap Plot
-  ggplot(df_cor, aes(x = Var1, y = Var2, fill = r)) +
-    # White background grid lines between tiles
-    geom_tile(color = "white", linewidth = 1.5) +
-    
-    # Correlation value labels
-    geom_text(
-      aes(
-        label = sprintf("%.2f", r),
-        color = abs(r) > 0.55 # Dynamic text contrast (white text on dark background)
-      ),
-      family = "Noto Sans",
-      fontface = "bold",
-      size = 4.2
-    ) +
-    
-    # Diverging color scale (-1 to +1)
-    scale_fill_gradient2(
-      low = "#2B5C8F",      # Deep blue for negative correlations
-      mid = "#F7F7F7",      # Neutral grey-white for 0
-      high = "#D95F02",     # Orange-red for positive correlations
-      limits = c(-1, 1),
-      breaks = seq(-1, 1, by = 0.5),
-      name = "Pearson r: "
-    ) +
-    
-    # Text contrast color manual scale
-    scale_color_manual(values = c("TRUE" = "white", "FALSE" = "black"), guide = "none") +
-    
-    # Panel Title & Axis Formatting
-    labs(
-      title = title_label,
-      x = NULL,
-      y = NULL
-    ) +
-    coord_fixed() + # Ensure square cells
-    theme_minimal(base_family = "Noto Sans", base_size = 13) +
-    theme(
-      plot.title = element_text(face = "bold", size = 14, family = "Noto Sans", hjust = 0.5, margin = margin(b = 10)),
-      axis.text = element_text(face = "bold", size = 11, color = "black", family = "Noto Sans"),
-      panel.grid = element_blank(),
-      legend.position = "bottom",
-      legend.title = element_text(face = "bold", size = 11, family = "Noto Sans"),
-      legend.text = element_text(size = 10, family = "Noto Sans"),
-      legend.key.width = unit(1.8, "cm"),
-      legend.key.height = unit(0.4, "cm"),
-      plot.margin = margin(10, 15, 10, 15)
-    )
-}
-
-# ==============================================================================
-# 3. GENERATE INDIVIDUAL GROUP PLOTS
-# ==============================================================================
-perf_children <- task_performance %>% filter(Group == "Children")
-perf_adults   <- task_performance %>% filter(Group == "Adults")
-
-plot_cor_ch <- plot_cor_heatmap(perf_children, "A) Children")
-plot_cor_ad <- plot_cor_heatmap(perf_adults,   "B) Adults")
-
-# ==============================================================================
-# 4. COMBINE WITH PATCHWORK AND EXPORT HIGH-RES GRAPHIC
-# ==============================================================================
-cor_combined_plot <- plot_cor_ch + plot_cor_ad +
-  plot_layout(guides = "collect") +
-  theme(
-    legend.position = "bottom",
-    legend.margin = margin(t = 12)
+# 1. Process Adult Profile Summary
+adult_profile_summary <- responses_adults_clean %>%
+  distinct(Participant, .keep_all = TRUE) %>%
+  mutate(
+    Age_Years = suppressWarnings(as.numeric(str_extract(as.character(Edat), "\\d+")))
+  ) %>%
+  summarise(
+    Cohort = "Adults",
+    `N (Total)` = n(),
+    `Age Mean (SD)` = paste0(round(mean(Age_Years, na.rm = TRUE), 1), " (", round(sd(Age_Years, na.rm = TRUE), 1), " yrs)"),
+    `Key Language Metric` = "Categorical Dominance (Catalan-vs-Spanish)"
   )
 
-# Export with roomier aspect ratio to prevent compression
-ggsave(
-  "cross_task_correlations_noto.png",
-  plot = cor_combined_plot,
-  device = ragg::agg_png,
-  width = 10.5,
-  height = 6.0,
-  dpi = 300
+# 2. Process Child Profile Summary
+child_profile_summary <- subject_covariates %>%
+  distinct(number, .keep_all = TRUE) %>%
+  summarise(
+    Cohort = "Children",
+    `N (Total)` = n(),
+    `Age Mean (SD)` = paste0(round(mean(age_in_months, na.rm = TRUE), 1), " (", round(sd(age_in_months, na.rm = TRUE), 1), " mos)"),
+    `Key Language Metric` = paste0("Home Catalan Exp: ", round(mean(Exp_Home, na.rm = TRUE), 1), "% (SD = ", round(sd(Exp_Home, na.rm = TRUE), 1), "%)")
+  )
+
+# 3. Combine into HTML/Markdown Table
+summary_table <- bind_rows(adult_profile_summary, child_profile_summary)
+knitr::kable(summary_table, align = "lccc", caption = "Participant Cohort Profile Summary")
+```
+
+
+```{r}
+library(ggplot2)
+library(scales)
+
+# Visualizing Child Catalan Home Exposure (Exp_Home)
+ggplot(subject_covariates, aes(x = Exp_Home)) +
+  geom_histogram(binwidth = 10, fill = "#0072B2", color = "white", alpha = 0.8) +
+  geom_vline(xintercept = 50, linetype = "dashed", color = "red", linewidth = 0.8) +
+  scale_x_continuous(breaks = seq(0, 100, 20), labels = function(x) paste0(x, "%")) +
+  labs(
+    title = "Distribution of Relative Catalan Home Exposure in Children",
+    x = "Relative Catalan Home Exposure (%)",
+    y = "Participant Count"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+---
+
+# Results: 4PL Nonlinear Modeling
+
+
+Perceptual categorization curves were evaluated by fitting a 4PL logistic function:
+
+$$f(x) = a_1 + \frac{a_2 - a_1}{1 + e^{-s(x - c)}}$$
+
+- $a_1, a_2$: Lower and upper asymptotes (constrained within $[0, 1]$).
+- $c$: Crossover point (category boundary location).
+- $s$: Boundary steepness/slope parameter (higher values = sharper perception).
+
+```{r, out.width = "80%"}
+library(ggplot2)
+
+# 1. Define the 4PL Logistic Function
+four_pl <- function(x, a1 = 0, a2 = 1, c = 4, s = 1.5) {
+  a1 + (a2 - a1) / (1 + exp(-s * (x - c)))
+}
+
+# 2. Generate data points across a 7-step acoustic continuum
+x_seq <- seq(1, 7, length.out = 300)
+
+df_curves <- data.frame(
+  Step = rep(x_seq, 3),
+  Profile = factor(
+    rep(c(
+      "Sharp Boundary (s = 2.5, c = 4.0)",
+      "Shallow Boundary (s = 0.7, c = 4.0)",
+      "Shifted Boundary Group (s = 2.5, c = 4.8)"
+    ), each = 300),
+    levels = c(
+      "Sharp Boundary (s = 2.5, c = 4.0)",
+      "Shallow Boundary (s = 0.7, c = 4.0)",
+      "Shifted Boundary Group (s = 2.5, c = 4.8)"
+    )
+  ),
+  Probability = c(
+    four_pl(x_seq, a1 = 0.02, a2 = 0.98, c = 4.0, s = 2.5),  # Sharp L1
+    four_pl(x_seq, a1 = 0.10, a2 = 0.88, c = 4.0, s = 0.7),  # Shallow
+    four_pl(x_seq, a1 = 0.02, a2 = 0.98, c = 4.8, s = 2.5)   # Shifted c
+  )
 )
 
-# Display Plot
-knitr::include_graphics("cross_task_correlations_noto.png")
-
+# 3. Plot Categorization Curves
+ggplot(df_curves, aes(x = Step, y = Probability, color = Profile, linetype = Profile)) +
+  # Reference lines for 50% crossover and boundary locations
+  geom_hline(yintercept = 0.50, linetype = "dashed", color = "grey70") +
+  geom_vline(xintercept = 4.0, linetype = "dotted", color = "#0072B2", alpha = 0.7) +
+  geom_vline(xintercept = 4.8, linetype = "dotted", color = "#D55E00", alpha = 0.7) +
+  
+  # 4PL Curves
+  geom_line(linewidth = 1.2) +
+  
+  # Parameter annotations
+  annotate("text", x = 4.1, y = 0.53, label = "c = 4.0", color = "#0072B2", hjust = 0, size = 3.5, fontface = "bold") +
+  annotate("text", x = 4.9, y = 0.53, label = "c = 4.8", color = "#D55E00", hjust = 0, size = 3.5, fontface = "bold") +
+  
+  # Styling
+  scale_color_manual(values = c("Native / Sharp Boundary (s = 2.5, c = 4.0)" = "#0072B2",
+                                "Heritage / Shallow Boundary (s = 0.7, c = 4.0)" = "#009E73",
+                                "Shifted Boundary Group (s = 2.5, c = 4.8)" = "#D55E00")) +
+  scale_linetype_manual(values = c("solid", "longdash", "twodash")) +
+  scale_x_continuous(breaks = 1:7, labels = paste0("s", 1:7)) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  labs(
+    title = "4PL Logistic Fit of Perceptual Categorization",
+    subtitle = "Modelling Category Boundary Location (c) and Boundary Sharpness (s)",
+    x = "Acoustic Continuum Step (e.g., F1 Step 1 [e] → Step 7 [ɛ])",
+    y = "Identified as Category B (%)",
+    color = "Group Profile",
+    linetype = "Group Profile"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    panel.grid.minor = element_blank()
+  )
 ```
 
 ???
+What we did to examine these results statistically is we calculated the crossover point—so where is the boundary for each speaker—and what is the boundary sharpness. To do this, we estimated floor and ceiling performance for each listener, which allowed us to mathematically isolate boundary location from boundary sharpness.
 
-Crucially, our cross-task correlation analysis reveals a striking developmental dissociation:In adults, stored phonolexical fidelity—measured in Lexical Preference—strongly predicts novel word learning performance ($r = .816, p < .001$). Adults directly leverage the precision of their existing lexical targets as structural templates when encoding new vocabulary.In children, however, this correlation drops to zero ($r = .075$, non-significant). Even though bilingual children possess well-specified representations for familiar words, that memory precision does not automatically guarantee successful novel word encoding. This proves that directly coupling stored phonolexical targets to the dynamic process of building new words is an emergent developmental milestone that matures between childhood and adulthood.
+---
+# Participants: Adult bilinguals
 
+```{r}
+library(readxl)
+library(tidyverse)
+library(scales)
 
+# 1. Load Excel file
+responses_adults <- read_excel("responses_adults.xlsx")
+
+# 2. Rename questionnaire columns by 1-based position index
+colnames(responses_adults)[17] <- "q_friends"   # Col 17: Friends
+colnames(responses_adults)[18] <- "q_family"    # Col 18: Family
+colnames(responses_adults)[19] <- "q_work"      # Col 19: Work/Uni
+colnames(responses_adults)[20] <- "q_internal"  # Col 20: Internal Speech
+colnames(responses_adults)[21] <- "q_counting"  # Col 21: Mental Counting
+
+# 3. ASCII-safe recoding function
+recode_relative_catalan <- function(vec) {
+  case_when(
+    str_detect(vec, "(?i)^Nom.*s en catal")   ~ 100,  # "Només en català"
+    str_detect(vec, "(?i)^M.*s en catal")     ~ 75,   # "Més en català"
+    str_detect(vec, "(?i)dues|igual")         ~ 50,   # "Les dues llengües per igual"
+    str_detect(vec, "(?i)^M.*s en castell")   ~ 25,   # "Més en castellà"
+    str_detect(vec, "(?i)^Nom.*s en castell") ~ 0,    # "Només en castellà"
+    TRUE                                      ~ NA_real_
+  )
+}
+
+# 4. Data transformation using the clean column names
+adults_calculated <- responses_adults %>%
+  mutate(
+    Dominant = factor(
+      Dominant, 
+      levels = c("Catalan", "Spanish"), 
+      labels = c("Catalan-dominant", "Spanish-dominant")
+    ),
+    
+    Use_Family   = recode_relative_catalan(q_family),
+    Use_Friends  = recode_relative_catalan(q_friends),
+    Use_Work     = recode_relative_catalan(q_work),
+    Use_Internal = recode_relative_catalan(q_internal),
+    Use_Counting = recode_relative_catalan(q_counting)
+  )
+
+# 5. Reshape into long format
+adults_long <- adults_calculated %>%
+  select(Participant, Dominant, Use_Family, Use_Friends, Use_Work, Use_Internal, Use_Counting) %>%
+  pivot_longer(
+    cols = starts_with("Use_"),
+    names_to = "Context",
+    names_prefix = "Use_",
+    values_to = "Percentage"
+  ) %>%
+  filter(!is.na(Percentage)) %>%
+  mutate(
+    Context = factor(
+      Context, 
+      levels = c("Family", "Friends", "Work", "Internal", "Counting")
+    )
+  )
+
+# 6. Generate ggplot
+plot_adult_profiles <- ggplot(adults_long, aes(x = Context, y = Percentage, fill = Dominant)) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "#64748B", linewidth = 0.8) +
+  annotate("text", x = 0.55, y = 52.5, label = "Balanced Usage (50%)", 
+           color = "#64748B", fontface = "italic", size = 3.5, hjust = 0) +
+  
+  geom_boxplot(
+    alpha = 0.7, 
+    outlier.shape = NA, 
+    position = position_dodge(width = 0.8),
+    width = 0.6
+  ) +
+  
+  geom_point(
+    aes(color = Dominant),
+    position = position_jitterdodge(dodge.width = 0.8, jitter.width = 0.15),
+    size = 2.2,
+    alpha = 0.85
+  ) +
+  
+  scale_x_discrete(
+    labels = c(
+      "Family"   = "Family",
+      "Friends"  = "Friends",
+      "Work"     = "Work/Uni",
+      "Internal" = "Internal Speech",
+      "Counting" = "Mental Counting"
+    )
+  ) +
+  
+  scale_y_continuous(
+    limits = c(-2, 105),
+    breaks = seq(0, 100, by = 25),
+    labels = function(x) paste0(x, "%")
+  ) +
+  
+  scale_fill_manual(values = c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00")) +
+  scale_color_manual(values = c("Catalan-dominant" = "#004976", "Spanish-dominant" = "#9E4500")) +
+  
+  labs(
+    title = "Relative Catalan Language Usage Across Contexts in Adult Bilinguals",
+    subtitle = "Comparing Catalan-dominant vs. Spanish-dominant adult cohorts (N = 19)",
+    x = "Context / Setting",
+    y = "Relative Catalan Usage (%)",
+    fill = "Language Dominance",
+    color = "Language Dominance"
+  ) +
+  theme_classic(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, color = "#0A2540"),
+    plot.subtitle = element_text(size = 11, color = "#475569", margin = margin(b = 12)),
+    legend.position = "top",
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "grey90", linewidth = 0.4)
+  )
+
+print(plot_adult_profiles)
+```
 
