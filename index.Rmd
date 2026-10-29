@@ -280,7 +280,7 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
       <h3 style="margin: 0; color: #0A2540; font-size: 0.85rem; font-weight: 700; font-family: 'Merriweather';"></h3>
     </div>
     <p style="margin: 0; color: #1F2937; font-size: 0.74rem; line-height: 1.35;">
-      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception and phonolexical encoding?</strong><br>
+      <strong style="color: #0A2540;">How does a majority societal language affect prelexical perception (creation of phonetic categories) and phonolexical encoding (underlying representations at the word level)?</strong><br>
       <span style="font-size: 0.68rem; color: #4B5563;"></span>
     </p>
   </div>
@@ -302,21 +302,24 @@ group_colors <- c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00"
 ???
 
 
-Bon dia, everyone. Before I begin, I want to express my warm thanks to the organizing committee—Jorge Baptista, Lucília Chacoto, Pedro Santos, Teresa Maló Sequeira, Sónia Reis, and Izabela Müller—and to the entire APL Board for inviting me to be here today.
+Bon dia, everyone. It is an absolute pleasure to join you at the Universidade do Algarve for this year's APL.
 
-It is an absolute pleasure to join you at the Universidade do Algarve for this year's Encontro Nacional. I am truly honored to share my work with such an active and welcoming community of linguists, and I’m looking forward to our discussions today. Thank you so much for having me.
 
-Good morning, colleagues and members of the Association—of the Associação Portuguesa de Linguística. It is a true privilege to present here today at the Universidade do Algarve.
+Before I begin, I want to express my warm thanks to the Board of the Portuguese Association of Linguistics and to the local organisation committe for inviting me to be here today and I’m looking forward to our discussions these next days. 
 
-And today, what I want to do is to think about - maybe reexamine here is too ambitious - how early bilinguals perceive, represent, and store speech sounds using the test case of the Catalan mid vowel contrast e-E and two recent projects. For the second one, we are currently collecting data, so it is the first time I am presenting these results.
 
-Alright so, more specifically, our goal today is to think about the following questions: 
+And today,I want to think about  how early bilinguals perceive, represent, and store speech sounds using the test case of the Catalan mid vowel contrast e-E and two recent experimental projects. 
+
+more specifically, our goal today is to think about the following questions: 
 
 How are sounds represented in the minds of early bilinguals raised in an environment of sustained societal bilingualism?
 
 How does the majority societal language affect creation of phonetic categories and the encoding of these categories at the word level?
 
 Do bilinguals adapt to variability in the input? (This is going to be a recurring theme."
+
+
+
 ---
 
 ## Early bilingual Grammars
@@ -1140,7 +1143,7 @@ A similar effect of language dominance was reported in a study by Ramon-Casas et
 * Spanish-dominant early bilinguals show reduced sensitivity to the /e/–/ɛ/ contrast in static XAB discrimination, whereas Catalan-dominant bilinguals exhibit robust category boundaries <small>(Pallier et al., 1997; Ramón-Casas et al., 2023)</small>.
 
 
-* Is prelexical sensitivity fixed, or does operating in a **Spanish language mode** temporarily attenuate boundary sharpness ($s$) versus maintaining cooperative co-activation without boundary flattening?
+* Is the prelexical discrimination contrast fixed, or does it change depending on the communicative context??
 
 
 ???
@@ -3528,7 +3531,7 @@ library(ggplot2)
 # 1. Load dataset and define exclusions
 excluded_ids <- c("F004_CH")
 
-participants <- read_csv("participants_Catalan_Spanish.csv")
+participants <- read.csv("participants_Catalan_Spanish.csv")
 
 # 2. Clean IDs and calculate relative Exposure and Use percentages
 participants_calculated <- participants_clean %>%
@@ -6176,4 +6179,125 @@ ggplot(df_curves, aes(x = Step, y = Probability, color = Profile, linetype = Pro
 ???
 What we did to examine these results statistically is we calculated the crossover point—so where is the boundary for each speaker—and what is the boundary sharpness. To do this, we estimated floor and ceiling performance for each listener, which allowed us to mathematically isolate boundary location from boundary sharpness.
 
+---
+# Participants: Adult bilinguals
+
+```{r}
+library(readxl)
+library(tidyverse)
+library(scales)
+
+# 1. Load Excel file
+responses_adults <- read_excel("responses_adults.xlsx")
+
+# 2. Rename questionnaire columns by 1-based position index
+colnames(responses_adults)[17] <- "q_friends"   # Col 17: Friends
+colnames(responses_adults)[18] <- "q_family"    # Col 18: Family
+colnames(responses_adults)[19] <- "q_work"      # Col 19: Work/Uni
+colnames(responses_adults)[20] <- "q_internal"  # Col 20: Internal Speech
+colnames(responses_adults)[21] <- "q_counting"  # Col 21: Mental Counting
+
+# 3. ASCII-safe recoding function
+recode_relative_catalan <- function(vec) {
+  case_when(
+    str_detect(vec, "(?i)^Nom.*s en catal")   ~ 100,  # "Només en català"
+    str_detect(vec, "(?i)^M.*s en catal")     ~ 75,   # "Més en català"
+    str_detect(vec, "(?i)dues|igual")         ~ 50,   # "Les dues llengües per igual"
+    str_detect(vec, "(?i)^M.*s en castell")   ~ 25,   # "Més en castellà"
+    str_detect(vec, "(?i)^Nom.*s en castell") ~ 0,    # "Només en castellà"
+    TRUE                                      ~ NA_real_
+  )
+}
+
+# 4. Data transformation using the clean column names
+adults_calculated <- responses_adults %>%
+  mutate(
+    Dominant = factor(
+      Dominant, 
+      levels = c("Catalan", "Spanish"), 
+      labels = c("Catalan-dominant", "Spanish-dominant")
+    ),
+    
+    Use_Family   = recode_relative_catalan(q_family),
+    Use_Friends  = recode_relative_catalan(q_friends),
+    Use_Work     = recode_relative_catalan(q_work),
+    Use_Internal = recode_relative_catalan(q_internal),
+    Use_Counting = recode_relative_catalan(q_counting)
+  )
+
+# 5. Reshape into long format
+adults_long <- adults_calculated %>%
+  select(Participant, Dominant, Use_Family, Use_Friends, Use_Work, Use_Internal, Use_Counting) %>%
+  pivot_longer(
+    cols = starts_with("Use_"),
+    names_to = "Context",
+    names_prefix = "Use_",
+    values_to = "Percentage"
+  ) %>%
+  filter(!is.na(Percentage)) %>%
+  mutate(
+    Context = factor(
+      Context, 
+      levels = c("Family", "Friends", "Work", "Internal", "Counting")
+    )
+  )
+
+# 6. Generate ggplot
+plot_adult_profiles <- ggplot(adults_long, aes(x = Context, y = Percentage, fill = Dominant)) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "#64748B", linewidth = 0.8) +
+  annotate("text", x = 0.55, y = 52.5, label = "Balanced Usage (50%)", 
+           color = "#64748B", fontface = "italic", size = 3.5, hjust = 0) +
+  
+  geom_boxplot(
+    alpha = 0.7, 
+    outlier.shape = NA, 
+    position = position_dodge(width = 0.8),
+    width = 0.6
+  ) +
+  
+  geom_point(
+    aes(color = Dominant),
+    position = position_jitterdodge(dodge.width = 0.8, jitter.width = 0.15),
+    size = 2.2,
+    alpha = 0.85
+  ) +
+  
+  scale_x_discrete(
+    labels = c(
+      "Family"   = "Family",
+      "Friends"  = "Friends",
+      "Work"     = "Work/Uni",
+      "Internal" = "Internal Speech",
+      "Counting" = "Mental Counting"
+    )
+  ) +
+  
+  scale_y_continuous(
+    limits = c(-2, 105),
+    breaks = seq(0, 100, by = 25),
+    labels = function(x) paste0(x, "%")
+  ) +
+  
+  scale_fill_manual(values = c("Catalan-dominant" = "#0072B2", "Spanish-dominant" = "#D55E00")) +
+  scale_color_manual(values = c("Catalan-dominant" = "#004976", "Spanish-dominant" = "#9E4500")) +
+  
+  labs(
+    title = "Relative Catalan Language Usage Across Contexts in Adult Bilinguals",
+    subtitle = "Comparing Catalan-dominant vs. Spanish-dominant adult cohorts (N = 19)",
+    x = "Context / Setting",
+    y = "Relative Catalan Usage (%)",
+    fill = "Language Dominance",
+    color = "Language Dominance"
+  ) +
+  theme_classic(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, color = "#0A2540"),
+    plot.subtitle = element_text(size = 11, color = "#475569", margin = margin(b = 12)),
+    legend.position = "top",
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "grey90", linewidth = 0.4)
+  )
+
+print(plot_adult_profiles)
+```
 
