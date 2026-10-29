@@ -49,48 +49,6 @@ library(xaringanExtra)
 
 ```
 
-```{css1, echo=FALSE}
-/* Top Banner Background & Left Text */
-.remark-slide-content:not(.title-slide):not(.inverse)::before {
-  content: "Re-Evaluating Phonological Representation in the Early Bilingual Mind";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 38px;
-  background-color: #1a365d; /* Banner background color */
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  box-sizing: border-box;
-  z-index: 100;
-}
-
-/* Top Banner Right Text */
-.remark-slide-content:not(.title-slide):not(.inverse)::after {
-  content: "gemmarepiso.github.io/42apl";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 38px;
-  color: #e2e8f0; /* Light text color for URL */
-  display: flex;
-  align-items: center;
-  padding-right: 20px;
-  font-size: 0.8rem;
-  font-weight: 400;
-  z-index: 101;
-}
-
-/* Offset top slide content to prevent title overlap */
-.remark-slide-content:not(.title-slide):not(.inverse) {
-  padding-top: 55px !important;
-}
-```
-
 ```{r xaringan-extra-setup, echo=FALSE}
 
 xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "broadcast"))
