@@ -14,6 +14,7 @@ output:
     self_contained: true
     css: [xaringan-themer.css, 'hygge', "assets/sydney-fonts.css", "assets/sydney.css"]
     lib_dir: libs
+    chakra: libs/remark-latest.min.js
     nature:
       highlightStyle: github
       highlightLines: true
@@ -3531,21 +3532,17 @@ excluded_ids <- c("F004_CH")
 participants <- read_csv("participants_Catalan_Spanish.csv")
 
 # 2. Clean IDs and calculate relative Exposure and Use percentages
-participants_calculated <- participants %>%
-  mutate(number = str_remove(number, "_def")) %>%
-  filter(!number %in% excluded_ids) %>%
+participants_calculated <- participants_clean %>%
   mutate(
-    Exp_Home      = 100 * `home current exposure Catalan` / (`home current exposure Catalan` + `home current exposure Spanish`),
-    Exp_School    = 100 * `school current exposure Catalan` / (`school current exposure Catalan` + `school current exposure Spanish`),
-    Exp_Community = 100 * `community current exposure Catalan` / (`community current exposure Catalan` + `community current exposure Spanish`),
-    Exp_Holiday   = 100 * `holiday current exposure Catalan` / (`holiday current exposure Catalan` + `holiday current exposure Spanish`),
-    
-    Use_Home      = 100 * `home current use Catalan` / (`home current use Catalan` + `home current use Spanish`),
-    Use_School    = 100 * `school current use Catalan` / (`school current use Catalan` + `school current use Spanish`),
-    Use_Community = 100 * `community current use Catalan` / (`community current use Catalan` + `community current use Spanish`),
-    Use_Holiday   = 100 * `holiday current use Catalan` / (`holiday current use Catalan` + `holiday current use Spanish`)
-  ) %>%
-  filter(!is.na(Exp_Home))
+    Exp_Home      = 100 * `home.current.exposure.Catalan` / (`home.current.exposure.Catalan` + `home.current.exposure.Spanish`),
+    Exp_School    = 100 * `school.current.exposure.Catalan` / (`school.current.exposure.Catalan` + `school.current.exposure.Spanish`),
+    Exp_Community = 100 * `community.current.exposure.Catalan` / (`community.current.exposure.Catalan` + `community.current.exposure.Spanish`),
+    Exp_Holiday   = 100 * `holiday.current.exposure.Catalan` / (`holiday.current.exposure.Catalan` + `holiday.current.exposure.Spanish`),
+    Use_Home      = 100 * `home.current.use.Catalan` / (`home.current.use.Catalan` + `home.current.use.Spanish`),
+    Use_School    = 100 * `school.current.use.Catalan` / (`school.current.use.Catalan` + `school.current.use.Spanish`),
+    Use_Community = 100 * `community.current.use.Catalan` / (`community.current.use.Catalan` + `community.current.use.Spanish`),
+    Use_Holiday   = 100 * `holiday.current.use.Catalan` / (`holiday.current.use.Catalan` + `holiday.current.use.Spanish`)
+  )
 
 # 3. Reshape into long format for ggplot
 context_df <- participants_calculated %>%
@@ -3607,7 +3604,7 @@ plot_relative_exposure <- ggplot(context_df, aes(x = Context, y = Percentage, fi
   # Styling & Labels
   labs(
     title = "Relative Catalan Exposure & Use Across Settings - Q Bex results",
-    subtitle = "Calculated as 100 × Catalan / (Catalan + Spanish) for Child Cohort (N = 26)",
+    subtitle = "Calculated as 100 × Catalan / (Catalan + Spanish) for Child Cohort (N = 27)",
     x = "Context Setting",
     y = "Relative Catalan Percentage (%)",
     fill = "Metric Type",
